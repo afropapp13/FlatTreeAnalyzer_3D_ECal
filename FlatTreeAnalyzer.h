@@ -36,6 +36,9 @@ public :
    Float_t         pz[26];   //[nfsp]
    Float_t         E[26];   //[nfsp]
    Int_t           pdg[26];   //[nfsp]
+   Float_t         Weight;
+   Double_t        fScaleFactor;
+   Int_t           ninitp;
    Float_t         px_init[2];   //[ninitp]
    Float_t         py_init[2];   //[ninitp]
    Float_t         pz_init[2];   //[ninitp]
@@ -47,8 +50,6 @@ public :
    Float_t         pz_vert[18];   //[nvertp]
    Float_t         E_vert[18];   //[nvertp]
    Int_t           pdg_vert[18];   //[nvertp]
-   Float_t         Weight;
-   Double_t        fScaleFactor;
 
    // List of branches
    TBranch        *b_Mode;   //!
@@ -67,6 +68,8 @@ public :
    TBranch        *b_pz;   //!
    TBranch        *b_E;   //!
    TBranch        *b_pdg;   //!
+   TBranch        *b_Weight;   //!
+   TBranch        *b_fScaleFactor;   //!
    TBranch        *b_ninitp;   //!
    TBranch        *b_px_init;   //!
    TBranch        *b_py_init;   //!
@@ -79,8 +82,6 @@ public :
    TBranch        *b_pz_vert;   //!
    TBranch        *b_E_vert;   //!
    TBranch        *b_pdg_vert;   //!
-   TBranch        *b_Weight;   //!
-   TBranch        *b_fScaleFactor;   //!
 
    FlatTreeAnalyzer(TString in, TString out, TTree *tree=0);
    virtual ~FlatTreeAnalyzer();
@@ -101,12 +102,12 @@ FlatTreeAnalyzer::FlatTreeAnalyzer(TString InputFile, TString OutputFile, TTree 
 
 	fInputFile = InputFile;
 	fOutputFile = OutputFile;
-	TString FullName = "mySamples/" + fInputFile;
+	TString FullName = fInputFile;
 
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject(FullName+".root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject(FullName);
       if (!f || !f->IsOpen()) {
-         f = new TFile(FullName+".root");
+         f = new TFile(FullName);
       }
       f->GetObject("FlatTree_VARS",tree);
       fFile = f;
@@ -165,6 +166,9 @@ void FlatTreeAnalyzer::Init(TTree *tree)
    fChain->SetBranchAddress("pz", pz, &b_pz);
    fChain->SetBranchAddress("E", E, &b_E);
    fChain->SetBranchAddress("pdg", pdg, &b_pdg);
+   fChain->SetBranchAddress("Weight", &Weight, &b_Weight);
+   fChain->SetBranchAddress("fScaleFactor", &fScaleFactor, &b_fScaleFactor);
+   fChain->SetBranchAddress("ninitp", &ninitp, &b_ninitp);
    fChain->SetBranchAddress("px_init", px_init, &b_px_init);
    fChain->SetBranchAddress("py_init", py_init, &b_py_init);
    fChain->SetBranchAddress("pz_init", pz_init, &b_pz_init);
@@ -176,8 +180,6 @@ void FlatTreeAnalyzer::Init(TTree *tree)
    fChain->SetBranchAddress("pz_vert", pz_vert, &b_pz_vert);
    fChain->SetBranchAddress("E_vert", E_vert, &b_E_vert);
    fChain->SetBranchAddress("pdg_vert", pdg_vert, &b_pdg_vert);
-   fChain->SetBranchAddress("Weight", &Weight, &b_Weight);
-   fChain->SetBranchAddress("fScaleFactor", &fScaleFactor, &b_fScaleFactor);
 
    Notify();
 }
