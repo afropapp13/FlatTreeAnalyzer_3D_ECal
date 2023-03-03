@@ -1,4 +1,5 @@
 OutputFiles/*.txt
+OutputFiles/*.txt~
 *.d
 *.so
 *.pcm
