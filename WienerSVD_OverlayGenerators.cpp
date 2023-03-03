@@ -1,4 +1,4 @@
-include <TFile.h>
+#include <TFile.h>
 #include <TH1D.h>
 #include <TH2D.h>
 #include <TCanvas.h>
@@ -91,18 +91,19 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false) {
 		vector<TString> NameOfSamples; NameOfSamples.clear();
 		vector<int> Colors; Colors.clear();		
 		vector<TString> Labels; Labels.clear();
+		vector<int> LineStyle; LineStyle.clear();
 
 		// CV
 
-		NameOfSamples.push_back("Overlay9"); Colors.push_back(OverlayColor); Labels.push_back("G18 ");  
+		NameOfSamples.push_back("Overlay9"); Colors.push_back(OverlayColor); Labels.push_back("G18T "); LineStyle.push_back(G18LineStyle);
 
 		//----------------------------------------//	
 
 		if (PlotGENIE) {
 
-			NameOfSamples.push_back("GENIE_v2_12_10_MEC");	Colors.push_back(GENIEv2Color); Labels.push_back("Gv2 ");
-			NameOfSamples.push_back("GENIE_v3_0_6"); Colors.push_back(Geniev3OutOfTheBoxColor); Labels.push_back("G18 NoTune ");
-			NameOfSamples.push_back("GENIE_v3_0_6_G21_11b_00_000"); Colors.push_back(SuSav2Color); Labels.push_back("G21hN ");
+			NameOfSamples.push_back("GENIE_v2_12_10_MEC");	Colors.push_back(kBlue); Labels.push_back("Gv2 ");LineStyle.push_back(Gv2LineStyle);
+			NameOfSamples.push_back("GENIE_v3_0_6"); Colors.push_back(kMagenta); Labels.push_back("G18 "); LineStyle.push_back(G18LineStyle);
+			NameOfSamples.push_back("GENIE_v3_0_6_G21_11b_00_000"); Colors.push_back(kOrange+6); Labels.push_back("G21 "); LineStyle.push_back(G21LineStyle);
 
 		}
 
@@ -110,9 +111,9 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false) {
 
 		if (PlotGen) {
 
-			NameOfSamples.push_back("NuWro_19_02_1"); Colors.push_back(NuWroColor); Labels.push_back("NuWro ");
-			NameOfSamples.push_back("GiBUU_2021"); Colors.push_back(GiBUUColor); Labels.push_back("GiBUU ");
-			NameOfSamples.push_back("NEUT_5_4_0_1"); Colors.push_back(NEUTColor); Labels.push_back("NEUT ");
+		  NameOfSamples.push_back("NuWro_19_02_1"); Colors.push_back(NEUTColor); Labels.push_back("NuWro "); LineStyle.push_back(NuWroLineStyle);
+			NameOfSamples.push_back("GiBUU_2021"); Colors.push_back(GiBUUColor); Labels.push_back("GiBUU "); LineStyle.push_back(GiBUULineStyle);
+			NameOfSamples.push_back("NEUT_5_4_0_1"); Colors.push_back(kMagenta-9); Labels.push_back("NEUT "); LineStyle.push_back(NEUTLineStyle);
 
 		}	
 
@@ -335,22 +336,24 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false) {
 			midPad->SetRightMargin(0.03);			
 			midPad->Draw();
 
-			TLegend* leg = new TLegend(0.62,0.52,0.72,0.85);
-
+			TLegend* leg = new TLegend(0.39,0.69,0.72,0.85);
+			TLegend* legMC = new TLegend(0.7,0.69,0.8,0.85);
+			
 			if (
 
 				PlotNames[WhichPlot] == "DeltaPnParPlot" ||
 				PlotNames[WhichPlot] == "DeltaAlpha3DqPlot" ||
-				PlotNames[WhichPlot] == "DeltaAlpha3DMuPlot" ||				
+				PlotNames[WhichPlot] == "DeltaAlpha3DMuPlot" /*||				
 				PlotNames[WhichPlot] == "DeltaAlphaT_ProtonCosTheta_0_75To1_00Plot" ||		
 				PlotNames[WhichPlot] == "ProtonCosTheta_MuonCosTheta_Minus1_00To0_00Plot" ||
 				PlotNames[WhichPlot] == "ProtonCosTheta_MuonCosTheta_0_00To0_50Plot" ||
 				PlotNames[WhichPlot] == "ProtonCosTheta_MuonCosTheta_0_50To0_75Plot" ||
 				PlotNames[WhichPlot] == "ProtonCosTheta_MuonCosTheta_0_75To1_00Plot" ||	
-				PlotNames[WhichPlot] == "DeltaPn_DeltaPT_0_40To1_00Plot"
+				PlotNames[WhichPlot] == "DeltaPn_DeltaPT_0_40To1_00Plot"*/
 				) { 
-					
-					leg = new TLegend(0.22,0.52,0.32,0.85); 
+				
+			  leg = new TLegend(0.22,0.69,0.55,0.85);	
+			  legMC = new TLegend(0.53,0.69,0.63,0.85);
 
 			}
 
@@ -358,8 +361,13 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false) {
 			leg->SetTextSize(0.05);
 			leg->SetTextFont(FontStyle);
 			leg->SetNColumns(1);
-			if (PlotNames[WhichPlot] == "MuonPhiPlot" || PlotNames[WhichPlot] == "ProtonPhiPlot") { leg->SetNColumns(2); }
-			leg->SetMargin(0.15);		
+			leg->SetMargin(0.15);
+
+			legMC->SetBorderSize(0);
+			legMC->SetTextSize(0.05);
+			legMC->SetTextFont(FontStyle);
+			legMC->SetNColumns(1);
+			legMC->SetMargin(0.3);				
 
 			// ------------------------------------------------------------------------------------------------------------------
 
@@ -383,16 +391,6 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false) {
 			PlotsReco[0][WhichPlot]->GetYaxis()->SetTitle(VarLabel[PlotNames[WhichPlot]]);					
 
 			midPad->cd();
-
-			if (PlotNames[WhichPlot] == "MuonCosThetaSingleBinPlot") { 
-
-				PlotsReco[0][WhichPlot]->GetXaxis()->SetTitle("");
-				PlotsReco[0][WhichPlot]->GetXaxis()->SetLabelSize(0.);
-				PlotsReco[0][WhichPlot]->GetXaxis()->SetTickSize(0.);								
-
-				PlotsReco[0][WhichPlot]->GetYaxis()->SetTitle("#sigma #left[10^{-38} #frac{cm^{2}}{Ar}#right]");
-
-			}
 			
 			//------------------------------//
 
@@ -436,7 +434,7 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false) {
 			//PlotsXSecReco[0][WhichPlot]->Draw("e1x0 same"); // XSec Only			
 			
 			PrettyPlot(PlotsNormOnly[0][WhichPlot]); // includes scaling factor for multi dimensional analysis			
-			PlotsNormOnly[0][WhichPlot]->SetFillColorAlpha(kGray+1, 0.45);	
+			PlotsNormOnly[0][WhichPlot]->SetFillColorAlpha(kGray+1, 0.75);	
 			PlotsNormOnly[0][WhichPlot]->SetLineColor(kGray+1);
 			PlotsNormOnly[0][WhichPlot]->SetMarkerColor(kGray+1);
 			if (PlotNames[WhichPlot] != "MuonCosThetaSingleBinPlot") { PlotsNormOnly[0][WhichPlot]->Draw("e2 hist same"); } // Norm unc Only					
@@ -448,6 +446,7 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false) {
 			PrettyPlot(PlotsTrue[0][WhichPlot]); // includes scaling factor for multi dimensional analysis
 			PlotsTrue[0][WhichPlot]->SetLineColor(Colors[0]);
 			PlotsTrue[0][WhichPlot]->SetMarkerColor(Colors[0]);
+			PlotsTrue[0][WhichPlot]->SetLineStyle(LineStyle[0]);
 
 			// -----------------------------------------------------------------------------------------------------------------
 
@@ -482,6 +481,7 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false) {
 
 				//Clone[WhichSample-1] = PlotsTrue[WhichSample][WhichPlot];				
 				Clone[WhichSample-1]->SetLineColor(Colors[WhichSample]);
+				Clone[WhichSample-1]->SetLineStyle(LineStyle[WhichSample]);
 				Clone[WhichSample-1]->SetMarkerColor(Colors[WhichSample]);
 
 				PrettyPlot(Clone[WhichSample-1]); // includes scaling factor for multi dimensional analysis
@@ -492,12 +492,9 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false) {
 				TString Chi2NdofAlt = "(" + to_string_with_precision(Chi2[WhichSample],1) + "/" + TString(std::to_string(Ndof[WhichSample])) +")";
 				if (PlotNames[WhichPlot] == "MuonCosThetaSingleBinPlot") { Chi2NdofAlt = ""; } 
 
-				TLegendEntry* lGenie = leg->AddEntry(Clone[WhichSample-1],Labels[WhichSample] + Chi2NdofAlt,"l");
-
-//				TLegendEntry* lGenie = leg->AddEntry(Clone[WhichSample-1],Labels[WhichSample],"l");
+				TLegendEntry* lGenie = legMC->AddEntry(Clone[WhichSample-1],Labels[WhichSample] + Chi2NdofAlt,"l");
 				lGenie->SetTextColor(Colors[WhichSample]); 										
-				//TLegendEntry* lGenieChi2 = legChi2->AddEntry(Clone[WhichSample-1],Chi2NdofAlt,"");
-				//lGenieChi2->SetTextColor(Colors[WhichSample]);
+
 
 			}
 
@@ -523,15 +520,10 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false) {
 			// Shape + Stat Chi2
 			CalcChiSquared(PlotsTrue[0][WhichPlot],PlotsReco[0][WhichPlot],ShapeCovClone,ShapeChi2[0],Ndof[0],pval[0]);
 			TString ShapeChi2NdofNom = "(" + to_string_with_precision(ShapeChi2[0],1) + "/" + TString(std::to_string(Ndof[0])) +")";	
-			//cout << PlotNames[WhichPlot] << "  Total chi2 = " << Chi2[0] << ", Shape-Only Chi2 = " << ShapeChi2[0] << endl;
 			if (PlotNames[WhichPlot] == "MuonCosThetaSingleBinPlot") { ShapeChi2NdofNom = ""; }			
 
-			TLegendEntry* lGenie_GenieOverlay = leg->AddEntry(PlotsTrue[0][WhichPlot],Labels[0]+Chi2NdofNom,"l");
-
-//			TLegendEntry* lGenie_GenieOverlay = leg->AddEntry(PlotsTrue[0][WhichPlot],Labels[0],"l");
+			TLegendEntry* lGenie_GenieOverlay = legMC->AddEntry(PlotsTrue[0][WhichPlot],Labels[0]+Chi2NdofNom,"l");
 			PlotsTrue[0][WhichPlot]->Draw("hist same"); lGenie_GenieOverlay->SetTextColor(Colors[0]); 
-			//TLegendEntry* lGenie_GenieOverlayChi2 = legChi2->AddEntry(PlotsTrue[0][WhichPlot],Chi2NdofNom,"");
-			//lGenie_GenieOverlayChi2->SetTextColor(Colors[0]);				
 
 			// ---------------------------------------------------------------------------------------------------------
 			// ---------------------------------------------------------------------------------------------------------
@@ -539,34 +531,40 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false) {
 			PlotsTotalReco[0][WhichPlot]->Draw("e1x0 same"); // Stat Only
 			PlotsReco[0][WhichPlot]->Draw("e1x0 same"); // BeamOn Stat Total
 
-			leg->AddEntry(PlotsReco[0][WhichPlot],"MicroBooNE Data","ep");
-
-			if (PlotNames[WhichPlot] != "MuonCosThetaSingleBinPlot") { 
-				
-				leg->AddEntry(PlotsTotalReco[0][WhichPlot],"(Stat #oplus Shape Unc)","");
-			
-			} else {
-
-				leg->AddEntry(PlotsTotalReco[0][WhichPlot],"(Total Unc)","");
-
-			}
-
+			leg->AddEntry(PlotsReco[0][WhichPlot],"MicroBooNE Data","");
 			leg->AddEntry(PlotsReco[0][WhichPlot],Label,"");
-
-			if (PlotNames[WhichPlot] != "MuonCosThetaSingleBinPlot") { 
-				
-				leg->AddEntry(PlotsNormOnly[0][WhichPlot],"Norm Unc","f"); 
-			
-			}			
-
+			leg->AddEntry(PlotsReco[0][WhichPlot],"Stat #oplus Shape","ep");			
+			leg->AddEntry(PlotsNormOnly[0][WhichPlot],"Norm","f"); 
 			leg->Draw();			
+
+			legMC->Draw();			
 
 			TLatex *textSlice = new TLatex();
 			textSlice->SetTextFont(FontStyle);
 			textSlice->SetTextSize(0.06);
 			TString PlotNameDuplicate = PlotNames[WhichPlot];
 			TString ReducedPlotName = PlotNameDuplicate.ReplaceAll("Reco","") ;
-			textSlice->DrawLatexNDC(0.24, 0.92, LatexLabel[ ReducedPlotName ] );	
+			textSlice->DrawLatexNDC(0.24, 0.92, LatexLabel[ ReducedPlotName ].ReplaceAll("All events","") );
+
+			TLatex *textPanel = new TLatex();
+			textPanel->SetTextFont(FontStyle);
+			textPanel->SetTextSize(TextSize);
+			TString Panel = "(a)";
+			if (Extra == "Genie") { Panel = "(b)"; }
+
+			if (
+			    PlotNames[WhichPlot] == "DeltaPnPerpPlot" ||
+			    PlotNames[WhichPlot] == "DeltaPnPlot" ||
+			    PlotNames[WhichPlot] == "DeltaPhi3DPlot"
+			    ) {
+
+			  textPanel->DrawLatexNDC(0.22, 0.8, Panel);
+
+			} else {
+
+                          textPanel->DrawLatexNDC(0.87, 0.8, Panel);
+
+			}
 
 			//----------------------------------------//
 

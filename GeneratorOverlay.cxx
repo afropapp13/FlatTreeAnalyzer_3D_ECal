@@ -40,27 +40,27 @@ void GeneratorOverlay(TString Tag = "") {
 
 	std::vector<TString> Names; std::vector<TString> Labels; 
 
-	std::vector<int> Colors{kBlack,kBlue+2,kRed+1,kOrange+7,kGreen+1, kMagenta+1};
+	vector<int> Colors;  vector<int> LineStyle;
 
 	if (Tag == "") {
 
-	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"); Labels.push_back("GENIE v3.0.6");
-	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v2_12_10.root"); Labels.push_back("GENIE v2.12.10");
-	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v2_12_10_MEC.root"); Labels.push_back("GENIE v2.12.10.MEC");
-	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_NEUT_5_4_0_1.root"); Labels.push_back("NEUT 5.4.0.1");
-	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_NuWro_19_02_1.root"); Labels.push_back("NuWro 19.02.1");
-	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GiBUU_2021.root"); Labels.push_back("GiBUU 2021");
+	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"); Labels.push_back("G18"); Colors.push_back(kMagenta); LineStyle.push_back(kSolid);
+	  //Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v2_12_10.root"); Labels.push_back("Gv2"); Colors.push_back(kBlue); LineStyle.push_back(Gv2LineStyle);
+	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v2_12_10_MEC.root"); Labels.push_back("Gv2"); Colors.push_back(kBlue); LineStyle.push_back(Gv2LineStyle);
+	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_NEUT_5_4_0_1.root"); Labels.push_back("NEUT"); Colors.push_back(kMagenta-9); LineStyle.push_back(NEUTLineStyle);
+	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_NuWro_19_02_1.root"); Labels.push_back("NuWro"); Colors.push_back(NEUTColor); LineStyle.push_back(NuWroLineStyle);
+	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GiBUU_2021.root"); Labels.push_back("GiBUU"); Colors.push_back(GiBUUColor); LineStyle.push_back(GiBUULineStyle);
 
 	}
 
 	if (Tag == "GENIE") {
 
-	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"); Labels.push_back("v3.0.6");
-	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6_hN2018.root"); Labels.push_back("v3.0.6 hN2018");
-	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6_NoRPA.root"); Labels.push_back("v3.0.6 NoRPA");
-	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6_NoCoulomb.root"); Labels.push_back("v3.0.6 NoCoulomb");
-	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6_RFG.root"); Labels.push_back("v3.0.6 RFG");
-	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6_EffSF.root"); Labels.push_back("v3.0.6 EffSF");
+	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"); Labels.push_back("G18");Colors.push_back(kMagenta); LineStyle.push_back(kSolid);
+	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6_hN2018.root"); Labels.push_back("hN"); Colors.push_back(kBlue); LineStyle.push_back(Gv2LineStyle);
+	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6_NoRPA.root"); Labels.push_back("NoRPA"); Colors.push_back(kMagenta-9); LineStyle.push_back(NEUTLineStyle);
+	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6_NoCoulomb.root"); Labels.push_back("NoC"); Colors.push_back(NEUTColor); LineStyle.push_back(NuWroLineStyle);
+	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6_RFG.root"); Labels.push_back("RFG"); Colors.push_back(GiBUUColor); LineStyle.push_back(GiBUULineStyle);
+	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6_EffSF.root"); Labels.push_back("SF");Colors.push_back(kRed); LineStyle.push_back(kSolid);
 
 	}
 
@@ -85,16 +85,16 @@ void GeneratorOverlay(TString Tag = "") {
 
 	// 1D
 
-	PlotNames.push_back("TrueFineBinMuonCosThetaPlot"); YAxisLabel.push_back("#frac{d#sigma}{dcos#theta_{#mu}} [10^{-38} #frac{cm^{2}}{Ar}]");
-	PlotNames.push_back("TrueFineBinDeltaPTPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#deltap_{T}} [10^{-38} #frac{cm^{2}}{(GeV/c) Ar}]");
-	PlotNames.push_back("TrueFineBinDeltaPnPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n}} [10^{-38} #frac{cm^{2}}{(GeV/c) Ar}]");
-	PlotNames.push_back("TrueFineBinDeltaAlpha3DMuPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#alpha_{3D,#mu}} [10^{-38} #frac{cm^{2}}{deg Ar}]");
-	PlotNames.push_back("TrueFineBinDeltaAlpha3DqPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#alpha_{3D}} [10^{-38} #frac{cm^{2}}{deg Ar}]");
-	PlotNames.push_back("TrueFineBinDeltaAlphaTPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#delta#alpha_{T}} [10^{-38} #frac{cm^{2}}{deg Ar}]");
-	PlotNames.push_back("TrueFineBinDeltaPhiTPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#delta#phi_{T}} [10^{-38} #frac{cm^{2}}{deg Ar}]");
-	PlotNames.push_back("TrueFineBinDeltaPhi3DPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#phi_{3D}} [10^{-38} #frac{cm^{2}}{deg Ar}]");
-	PlotNames.push_back("TrueFineBinDeltaPnPerpPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n#perp}} [10^{-38} #frac{cm^{2}}{(GeV/c) Ar}]");
-	PlotNames.push_back("TrueFineBinDeltaPnParPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n#parallel}} [10^{-38} #frac{cm^{2}}{(GeV/c) Ar}]");
+	PlotNames.push_back("TrueFineBinMuonCosThetaPlot"); YAxisLabel.push_back("#frac{d#sigma}{dcos#theta_{#mu}} #left[10^{-38} #frac{cm^{2}}{Ar}#right]");
+	PlotNames.push_back("TrueFineBinDeltaPTPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#deltap_{T}} #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
+	PlotNames.push_back("TrueFineBinDeltaPnPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n}} #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
+	PlotNames.push_back("TrueFineBinDeltaAlpha3DMuPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#alpha_{3D,#mu}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
+	PlotNames.push_back("TrueFineBinDeltaAlpha3DqPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#alpha_{3D}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
+	PlotNames.push_back("TrueFineBinDeltaAlphaTPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#delta#alpha_{T}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
+	PlotNames.push_back("TrueFineBinDeltaPhiTPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#delta#phi_{T}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
+	PlotNames.push_back("TrueFineBinDeltaPhi3DPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#phi_{3D}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
+	PlotNames.push_back("TrueFineBinDeltaPnPerpPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n#perp}} #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
+	PlotNames.push_back("TrueFineBinDeltaPnParPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n#parallel}} #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
 
 	//------------------------------//
 
@@ -102,16 +102,16 @@ void GeneratorOverlay(TString Tag = "") {
 
 	// 1D
 	/*
-	PlotNames.push_back("NoFSITrueFineBinMuonCosThetaPlot"); YAxisLabel.push_back("#frac{d#sigma}{dcos#theta_{#mu}} [10^{-38} #frac{cm^{2}}{Ar}]");
-	PlotNames.push_back("NoFSITrueFineBinDeltaPTPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#deltap_{T}} [10^{-38} #frac{cm^{2}}{(GeV/c) Ar}]");
-	PlotNames.push_back("NoFSITrueFineBinDeltaPnPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n}} [10^{-38} #frac{cm^{2}}{(GeV/c) Ar}]");
-	PlotNames.push_back("NoFSITrueFineBinDeltaAlpha3DMuPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#alpha_{3D,#mu}} [10^{-38} #frac{cm^{2}}{deg Ar}]");
-	PlotNames.push_back("NoFSITrueFineBinDeltaAlpha3DqPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#alpha_{3D}} [10^{-38} #frac{cm^{2}}{deg Ar}]");
-	PlotNames.push_back("NoFSITrueFineBinDeltaAlphaTPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#delta#alpha_{T}} [10^{-38} #frac{cm^{2}}{deg Ar}]");
-	PlotNames.push_back("NoFSITrueFineBinDeltaPhiTPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#delta#phi_{T}} [10^{-38} #frac{cm^{2}}{deg Ar}]");
-	PlotNames.push_back("NoFSITrueFineBinDeltaPhi3DPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#phi_{3D}} [10^{-38} #frac{cm^{2}}{deg Ar}]");
-	PlotNames.push_back("NoFSITrueFineBinDeltaPnPerpPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n#perp}} [10^{-38} #frac{cm^{2}}{(GeV/c) Ar}]");
-	PlotNames.push_back("NoFSITrueFineBinDeltaPnParPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n#parallel}} [10^{-38} #frac{cm^{2}}{(GeV/c) Ar}]");
+	PlotNames.push_back("NoFSITrueFineBinMuonCosThetaPlot"); YAxisLabel.push_back("#frac{d#sigma}{dcos#theta_{#mu}} #left[10^{-38} #frac{cm^{2}}{Ar}#right]");
+	PlotNames.push_back("NoFSITrueFineBinDeltaPTPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#deltap_{T}} #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
+	PlotNames.push_back("NoFSITrueFineBinDeltaPnPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n}} #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
+	PlotNames.push_back("NoFSITrueFineBinDeltaAlpha3DMuPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#alpha_{3D,#mu}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
+	PlotNames.push_back("NoFSITrueFineBinDeltaAlpha3DqPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#alpha_{3D}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
+	PlotNames.push_back("NoFSITrueFineBinDeltaAlphaTPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#delta#alpha_{T}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
+	PlotNames.push_back("NoFSITrueFineBinDeltaPhiTPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#delta#phi_{T}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
+	PlotNames.push_back("NoFSITrueFineBinDeltaPhi3DPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#phi_{3D}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
+	PlotNames.push_back("NoFSITrueFineBinDeltaPnPerpPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n#perp}} #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
+	PlotNames.push_back("NoFSITrueFineBinDeltaPnParPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n#parallel}} [10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
 	*/
 
 	// 2D Post FSI
@@ -178,10 +178,10 @@ void GeneratorOverlay(TString Tag = "") {
 
 		TLegend* leg = new TLegend(0.17,0.855,0.94,0.985);
 		leg->SetBorderSize(0);
-		leg->SetNColumns(2);
+		leg->SetNColumns(6);
 		leg->SetTextSize(TextSize);	
 		leg->SetTextFont(FontStyle);						
-		leg->SetMargin(0.1);						
+		leg->SetMargin(0.3);						
 
 		// Loop over the samples to open the files and to get the corresponding plot
 
@@ -191,8 +191,9 @@ void GeneratorOverlay(TString Tag = "") {
 
 		        Histos[iSample] = (TH1D*)(Files[iSample]->Get(PlotNames[iPlot]));
 
-			Histos[iSample]->SetLineWidth(4);
+			Histos[iSample]->SetLineWidth(3);
 			Histos[iSample]->SetLineColor( Colors.at(iSample) );	
+			Histos[iSample]->SetLineStyle( LineStyle.at(iSample) );	
 
 			Histos[iSample]->GetXaxis()->SetTitleFont(FontStyle);
 			Histos[iSample]->GetXaxis()->SetLabelFont(FontStyle);
@@ -209,11 +210,11 @@ void GeneratorOverlay(TString Tag = "") {
 			Histos[iSample]->GetYaxis()->SetTitle(YAxisLabel.at(iPlot));
 			Histos[iSample]->GetYaxis()->SetTitleSize(TextSize);
 			Histos[iSample]->GetYaxis()->SetTitleOffset(1.2);
-			Histos[iSample]->GetYaxis()->SetTickSize(0);
+			//Histos[iSample]->GetYaxis()->SetTickSize(0);
 			Histos[iSample]->GetYaxis()->CenterTitle();	
 
 			double imax = TMath::Max(Histos[iSample]->GetMaximum(),Histos[0]->GetMaximum());
-			double MaxScale = 1.1;
+			double MaxScale = 1.05;
 			Histos[iSample]->GetYaxis()->SetRangeUser(0.,MaxScale*imax);
 			Histos[0]->GetYaxis()->SetRangeUser(0.,MaxScale*imax);			
 
@@ -229,7 +230,20 @@ void GeneratorOverlay(TString Tag = "") {
 			textSlice->SetTextSize(TextSize);
 			TString PlotNameDuplicate = PlotNames[iPlot];
 			TString ReducedPlotName = PlotNameDuplicate.ReplaceAll("TrueFineBin","") ;
-			textSlice->DrawLatexNDC(0.2, 0.8, LatexLabel[ReducedPlotName]);
+			textSlice->DrawLatexNDC(0.2, 0.8, LatexLabel[ReducedPlotName].ReplaceAll("All events",""));
+
+			if ( 
+			    PlotNames[iPlot] == "TrueFineBinDeltaPnParPlot" || PlotNames[iPlot] == "TrueFineBinDeltaPnPerpPlot" ||
+			    PlotNames[iPlot] == "TrueFineBinDeltaAlpha3DqPlot" || PlotNames[iPlot] == "TrueFineBinDeltaAlphaTPlot"
+			     ) {
+
+			  TLatex *textPanel = new TLatex();
+			  textPanel->SetTextFont(FontStyle);
+			  textPanel->SetTextSize(TextSize);
+			  if ( PlotNames[iPlot] == "TrueFineBinDeltaPnParPlot" || PlotNames[iPlot] == "TrueFineBinDeltaAlpha3DqPlot" ) { textPanel->DrawLatexNDC(0.87, 0.8, "(a)"); }
+			  if ( PlotNames[iPlot] == "TrueFineBinDeltaPnPerpPlot" || PlotNames[iPlot] == "TrueFineBinDeltaAlphaTPlot") { textPanel->DrawLatexNDC(0.87, 0.8, "(b)"); }
+			
+			}
 
 			//----------------------------------------//					
 

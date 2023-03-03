@@ -31,7 +31,7 @@ using namespace Constants;
 
 //----------------------------------------//
 
-void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false) {
+void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIndex = 0, int SecondDiscrIndex = 0, bool PlotGENIE = true, bool PlotGen = false) {
 
 	//----------------------------------------//
 
@@ -58,13 +58,10 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 
 	//----------------------------------------//		
 
-	// 2D analysis
+	// 3D names
 
-	PlotNames.push_back("DeltaPn_DeltaAlpha3DqPlot");
-        /*PlotNames.push_back("DeltaPn_DeltaAlpha3DMuPlot");		
-	PlotNames.push_back("DeltaAlpha3Dq_DeltaPnPlot");
-	PlotNames.push_back("DeltaAlpha3DMu_DeltaPnPlot");				
-	*/
+	PlotNames.push_back(PlotName);
+	
 	//----------------------------------------//	
 
 	const int N1DPlots = PlotNames.size();
@@ -118,7 +115,7 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 		  NameOfSamples.push_back("GENIE_v2_12_10_MEC");  Colors.push_back(GENIEv2Color); Labels.push_back("Gv2 ");
 		  NameOfSamples.push_back("GENIE_v3_0_6"); Colors.push_back(Geniev3OutOfTheBoxColor); Labels.push_back("G18 NoTune ");
 		  NameOfSamples.push_back("GENIE_v3_0_6_G21_11b_00_000"); Colors.push_back(SuSav2Color); Labels.push_back("G21hN ");
-
+		  
                 }
 
                 //----------------------------------------//                                                                                                                                              
@@ -128,13 +125,19 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 		  NameOfSamples.push_back("NuWro_19_02_1"); Colors.push_back(NuWroColor); Labels.push_back("NuWro ");
 		  NameOfSamples.push_back("GiBUU_2021"); Colors.push_back(GiBUUColor); Labels.push_back("GiBUU ");
 		  NameOfSamples.push_back("NEUT_5_4_0_1"); Colors.push_back(NEUTColor); Labels.push_back("NEUT ");
-
+		  
                 }
 
 		//----------------------------------------//
 
 		const int NSamples = NameOfSamples.size();
 		vector<TFile*> FileSample; FileSample.clear();
+
+		//----------------------------------------//
+
+		TString GenXSecName = "OutputFiles/All_XSecs_3D_" + PlotNames[0] + "_" + TString(std::to_string(FirstDiscrIndex)) + "_" + Runs[WhichRun] + "_"+UBCodeVersion+".root";
+
+		TFile* fGenXSec = TFile::Open(GenXSecName,"recreate");
 
 		//----------------------------------------//
 
@@ -279,33 +282,77 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 			SliceDiscriminators.clear();
 			SliceBinning.clear();
 
-			if (PlotNames[WhichPlot] == "DeltaPn_DeltaAlpha3DqPlot") {
+			int StartIndex = 0;
+			// Determine the global start bin number
+			int GlobalIndex = 0;
 
-				SliceDiscriminators.push_back(TwoDArrayNBinsDeltaAlpha3Dq); 
-				SliceBinning.push_back(TwoDArrayNBinsDeltaPnInDeltaAlpha3DqSlices);
+			if (PlotNames[WhichPlot] == "ECal_DeltaPTDeltaAlphaTPlot") {
+
+			  SliceDiscriminators.push_back(TwoDArrayNBinsDeltaAlphaT);
+			  SliceBinning.push_back(TwoDArrayNBinsECalInDeltaPTDeltaAlphaTSlices[FirstDiscrIndex]);
+
+			  for (int ig = 0; ig < FirstDiscrIndex; ig++) {
+
+			    for (int icolumn = 0; icolumn < TwoDArrayNBinsECalInDeltaPTDeltaAlphaTSlices[ig].size(); icolumn++) {
+
+			      GlobalIndex += TwoDArrayNBinsECalInDeltaPTDeltaAlphaTSlices[ig][icolumn].size()-1;
+
+			    }
+
+			  }
 
 			}
 
-			if (PlotNames[WhichPlot] == "DeltaPn_DeltaAlpha3DMuPlot") {
+			if (PlotNames[WhichPlot] == "ECal_DeltaPtxDeltaPtyPlot") {
 
-				SliceDiscriminators.push_back(TwoDArrayNBinsDeltaAlpha3DMu); 
-				SliceBinning.push_back(TwoDArrayNBinsDeltaPnInDeltaAlpha3DMuSlices);
+			  SliceDiscriminators.push_back(TwoDArrayNBinsDeltaPtx);
+			  SliceBinning.push_back(TwoDArrayNBinsECalInDeltaPtxDeltaPtySlices[FirstDiscrIndex]);
 
-			}							
+			  for (int ig = 0; ig < FirstDiscrIndex; ig++) {
 
-			if (PlotNames[WhichPlot] == "DeltaAlpha3Dq_DeltaPnPlot") {
+			    for (int icolumn = 0; icolumn < TwoDArrayNBinsECalInDeltaPtxDeltaPtySlices[ig].size(); icolumn++) {
 
-				SliceDiscriminators.push_back(TwoDArrayNBinsDeltaPn); 
-				SliceBinning.push_back(TwoDArrayNBinsDeltaAlpha3DqInDeltaPnSlices);
+			      GlobalIndex += TwoDArrayNBinsECalInDeltaPtxDeltaPtySlices[ig][icolumn].size()-1;
+
+			    }
+
+			  }
 
 			}
 
-			if (PlotNames[WhichPlot] == "DeltaAlpha3DMu_DeltaPnPlot") {
+			if (PlotNames[WhichPlot] == "ECal_MuonCosThetaMuonMomentumPlot") {
 
-				SliceDiscriminators.push_back(TwoDArrayNBinsDeltaPn); 
-				SliceBinning.push_back(TwoDArrayNBinsDeltaAlpha3DMuInDeltaPnSlices);
+			  SliceDiscriminators.push_back(TwoDArrayNBinsMuonMomentum);
+			  SliceBinning.push_back(TwoDArrayNBinsECalInMuonCosThetaMuonMomentumSlices[FirstDiscrIndex]);
 
-			}						
+			  for (int ig = 0; ig < FirstDiscrIndex; ig++) {
+
+			    for (int icolumn = 0; icolumn < TwoDArrayNBinsECalInMuonCosThetaMuonMomentumSlices[ig].size(); icolumn++) {
+
+			      GlobalIndex += TwoDArrayNBinsECalInMuonCosThetaMuonMomentumSlices[ig][icolumn].size()-1;
+
+			    }
+
+			  }
+
+			}
+
+			if (PlotNames[WhichPlot] == "ECal_ProtonCosThetaProtonMomentumPlot") {
+
+			  SliceDiscriminators.push_back(TwoDArrayNBinsProtonMomentum);
+			  SliceBinning.push_back(TwoDArrayNBinsECalInProtonCosThetaProtonMomentumSlices[FirstDiscrIndex]);
+
+			  for (int ig = 0; ig < FirstDiscrIndex; ig++) {
+
+			    for (int icolumn = 0; icolumn < TwoDArrayNBinsECalInProtonCosThetaProtonMomentumSlices[ig].size(); icolumn++) {
+
+			      GlobalIndex += TwoDArrayNBinsECalInProtonCosThetaProtonMomentumSlices[ig][icolumn].size()-1;
+
+			    }
+
+			  }
+
+			}
 
 			//----------------------------------------//
 
@@ -326,13 +373,13 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 			TH2D* Ac = (TH2D*)FileSample[0]->Get("AcSerial"+PlotNames[WhichPlot]);
 
 			TH2D* Cov = (TH2D*)FileSample[0]->Get("UnfCovSerial"+PlotNames[WhichPlot]);	
-			Cov->Scale(1./TMath::Power(MultiDimScaleFactor[PlotNames[WhichPlot]],2.)); // includes scaling factor for multi dimensional analysis
+			Cov->Scale(1./TMath::Power(MultiDimScaleFactor["Serial" + PlotNames[WhichPlot]],2.)); // includes scaling factor for multi dimensional analysis
 
 			TH2D* NormCov = (TH2D*)FileSample[0]->Get("NormUnfCovSerial"+PlotNames[WhichPlot]);	
-			NormCov->Scale(1./TMath::Power(MultiDimScaleFactor[PlotNames[WhichPlot]],2.)); // includes scaling factor for multi dimensional analysis
+			NormCov->Scale(1./TMath::Power(MultiDimScaleFactor["Serial"+PlotNames[WhichPlot]],2.)); // includes scaling factor for multi dimensional analysis
 
 			TH2D* ShapeCov = (TH2D*)FileSample[0]->Get("ShapeUnfCovSerial"+PlotNames[WhichPlot]);	
-			ShapeCov->Scale(1./TMath::Power(MultiDimScaleFactor[PlotNames[WhichPlot]],2.)); // includes scaling factor for multi dimensional analysis
+			ShapeCov->Scale(1./TMath::Power(MultiDimScaleFactor["Serial"+PlotNames[WhichPlot]],2.)); // includes scaling factor for multi dimensional analysis
 
 			//----------------------------------------//
 
@@ -421,39 +468,39 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 
 			// How many discriminators do we have ? e.g. cos theta mu, Pmu et al
 			for (int islice = 0; islice < (int)(SliceDiscriminators.size()); islice++) { 
-				
-				// For a given discriminator, how many slices do we have ? SliceDiscrimSize - 1
-				int SliceDiscrimSize = SliceDiscriminators.at(islice).size()-1;
-				NSlices *= SliceDiscrimSize; 
+			  
+			  // For a given discriminator, how many slices do we have ? SliceDiscrimSize - 1
+			  int SliceDiscrimSize = SliceDiscriminators.at(islice).size()-1;
+			  NSlices *= SliceDiscrimSize; 
 
-				for (int iSliceDiscrimSize = 0; iSliceDiscrimSize < SliceDiscrimSize; iSliceDiscrimSize++) {
+			  for (int iSliceDiscrimSize = 0; iSliceDiscrimSize < SliceDiscrimSize; iSliceDiscrimSize++) {
 
-					// Accessing the vector<double> with the bin ranges
-					int SliceDiscrimValue = SliceBinning.at(0).at(iSliceDiscrimSize).size();
+			    // Accessing the vector<double> with the bin ranges
+			    int SliceDiscrimValue = SliceBinning.at(0).at(iSliceDiscrimSize).size();
 
-					// Storing the number of bins for a specific slice					
-					SerialVectorBins.push_back(SliceDiscrimValue-1);
-					for (int iBin = 0; iBin < SliceDiscrimValue; iBin++) {
+			    // Storing the number of bins for a specific slice
+			    SerialVectorBins.push_back(SliceDiscrimValue-1);
+			    for (int iBin = 0; iBin < SliceDiscrimValue; iBin++) {
 
-						double BinValue = SliceBinning.at(0).at(iSliceDiscrimSize).at(iBin);
-						// First bin number for a given slice
-						if (iBin == 0) { SerialVectorLowBin.push_back(BinCounter); }
-						// Last bin number for a given slice
-						if (iBin == SliceDiscrimValue-2) { SerialVectorHighBin.push_back(BinCounter); }	
+			      double BinValue = SliceBinning.at(0).at(iSliceDiscrimSize).at(iBin);
+			      // First bin number for a given slice
+			      if (iBin == 0) { SerialVectorLowBin.push_back(GlobalIndex + BinCounter); }
+			      // Last bin number for a given slice
+			      if (iBin == SliceDiscrimValue-2) { SerialVectorHighBin.push_back(GlobalIndex + BinCounter); }
 
-						// Storing the binning for a specific slice
-						SerialVectorRanges.push_back(BinValue);
+			      // Storing the binning for a specific slice
+			      SerialVectorRanges.push_back(BinValue);
 
-						// Increase the global bin counter
-						// But not for the last bin
-						if (iBin != SliceDiscrimValue-1) { BinCounter++; }
+			      // Increase the global bin counter
+			      // But not for the last bin
+			      if (iBin != SliceDiscrimValue-1) { BinCounter++; }
 
-					} // End of the loop over the bins of a given slice
-					//cout << "End of the loop over the bins of a given slice" << endl;
+			    } // End of the loop over the bins of a given slice
+			    //cout << "End of the loop over the bins of a given slice" << endl;
 
-				} // End of the loop over the slices for a given discriminator
+			  } // End of the loop over the slices for a given discriminator
 
-			} // End of the loop over the number of discriminators	
+			} // End of the loop over the number of discriminators
 
 			//------------------------------------//
 
@@ -471,7 +518,6 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 
 			//------------------------------------//
 		       
-			int StartIndex = 0;
 			int BinStartIndex = 0;			
 
 			//------------------------------------//
@@ -522,7 +568,7 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 				NameCopy.ReplaceAll("_Run5","");
 				NameCopy.ReplaceAll("_Combined","");	
 
-				NameCopy = "Serial" + NameCopy + "_" + TString(std::to_string(NDimSlice));	
+				NameCopy = "Serial" + NameCopy + "_" + TString(std::to_string(SecondDiscrIndex + NDimSlice));
 
 				//------------------------------------//		
 				
@@ -541,8 +587,8 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 				//------------------------------------//
 
 				// Canvas, pads & legend				
-				
-				TString CanvasName = PlotNames[WhichPlot]+"_"+Runs[WhichRun]+"_Slice_"+TString(std::to_string(NDimSlice));
+
+				TString CanvasName = Extra + "_" + PlotNames[WhichPlot] + "_Slice_"+TString(std::to_string(SecondDiscrIndex + NDimSlice));
 				TCanvas* PlotCanvas = new TCanvas(CanvasName,CanvasName,205,34,1024,768);
 				PlotCanvas->cd();
 				PlotCanvas->SetBottomMargin(0.14);
@@ -551,18 +597,22 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 				PlotCanvas->SetRightMargin(0.03);				
 
 				TLegend* leg = new TLegend(0.62,0.52,0.72,0.85);
-
-				if (PlotNames[WhichPlot] == "DeltaPtyPlot") { 
-
-				  leg = new TLegend(0.2,0.58,0.5,0.85); 
-
-				}			
+				//TLegend* legChi2 = new TLegend(0.8,0.72,0.9,0.85);
+				if (
+				    (PlotNames[WhichPlot] == "ECal_ProtonCosThetaProtonMomentumPlot" && NDimSlice == 2) ||
+				    (PlotNames[WhichPlot] == "ECal_MuonCosThetaMuonMomentumPlot" && NDimSlice == 2)
+				    ) { 
+				  
+				  leg = new TLegend(0.22,0.52,0.32,0.85); 
+				  
+				}
 
 				leg->SetBorderSize(0);
 				leg->SetTextSize(0.05);
 				leg->SetTextFont(FontStyle);
 				leg->SetNColumns(1);
 				leg->SetMargin(0.15);
+				leg->SetFillStyle(0);
 
 				//------------------------------------//
 
@@ -573,27 +623,31 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 				
 				//------------------------------------//
 
-				// BeamOn Total Uncertainty																				
-				BeamOnStatShape[WhichPlot][NDimSlice] = tools.GetHistoBins(PlotsReco[0][WhichPlot],SerialVectorLowBin.at(NDimSlice),SerialVectorHighBin.at(NDimSlice), MultiDimScaleFactor[ MapUncorCor[ NameCopy ] ], SerialSliceBinning,"StatShape");										
-				PrettyPlot(BeamOnStatShape[WhichPlot][NDimSlice]);
+				// BeamOn Total Uncertainty																		
 
+				BeamOnStatShape[WhichPlot][NDimSlice] = tools.GetHistoBins(PlotsReco[0][WhichPlot],SerialVectorLowBin.at(NDimSlice),SerialVectorHighBin.at(NDimSlice), MultiDimScaleFactor[ MapUncorCor[ NameCopy ] ], SerialSliceBinning,"StatShape");	// includes scaling for 2D analysis									
+				PrettyPlot(BeamOnStatShape[WhichPlot][NDimSlice]);
+				
 				double MaxValue = BeamOnStatShape[WhichPlot][NDimSlice]->GetMaximum();
 				int MaxValueBin = LocateBinWithValue(BeamOnStatShape[WhichPlot][NDimSlice],MaxValue);
 				double MaxValueError = BeamOnStatShape[WhichPlot][NDimSlice]->GetBinError(MaxValueBin);
 
 				double MinValue = BeamOnStatShape[WhichPlot][NDimSlice]->GetMinimum();
-														
-				BeamOnStatShape[WhichPlot][NDimSlice]->GetYaxis()->SetRangeUser(XSecRange[ MapUncorCor[ NameCopy ] ].first,XSecRange[ MapUncorCor[ NameCopy ] ].second);
 
 				BeamOnStatShape[WhichPlot][NDimSlice]->SetLineColor(BeamOnColor);
 				BeamOnStatShape[WhichPlot][NDimSlice]->SetMarkerColor(BeamOnColor);
 				BeamOnStatShape[WhichPlot][NDimSlice]->SetMarkerSize(1.);
 				BeamOnStatShape[WhichPlot][NDimSlice]->SetMarkerStyle(20);
 				BeamOnStatShape[WhichPlot][NDimSlice]->SetLineWidth(1);	
-				BeamOnStatShape[WhichPlot][NDimSlice]->GetYaxis()->SetTitle(VarLabel[PlotNames[WhichPlot]]);							
 
-				BeamOnStatShape[WhichPlot][NDimSlice]->Draw("e1x0 same"); // Total Unc (Shape + Stat)
+				BeamOnStatShape[WhichPlot][NDimSlice]->GetXaxis()->CenterTitle();	
+
+				BeamOnStatShape[WhichPlot][NDimSlice]->GetYaxis()->SetRangeUser(XSecRange[ MapUncorCor[ NameCopy ] ].first,XSecRange[ MapUncorCor[ NameCopy ] ].second);
+				BeamOnStatShape[WhichPlot][NDimSlice]->GetYaxis()->SetTitle(VarLabel["Serial"+PlotNames[WhichPlot]]);							
+				BeamOnStatShape[WhichPlot][NDimSlice]->GetYaxis()->CenterTitle();	
 				
+				BeamOnStatShape[WhichPlot][NDimSlice]->Draw("e1x0 same"); // Total Unc (Shape + Stat)
+
 				//------------------------------//
 
 				// arrays for MC NSamples
@@ -625,8 +679,8 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 					TLegendEntry* lGenie = leg->AddEntry(MC[WhichPlot][NDimSlice][WhichSample],Labels[WhichSample] + Chi2NdofAlt,"l");
 					lGenie->SetTextColor(Colors[WhichSample]); 										
 					
-				}		
-				
+				}			
+
 				//------------------------------//
 
 				// Overlay
@@ -661,7 +715,7 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 
 				// Plot again on top
 				BeamOnStatShape[WhichPlot][NDimSlice]->Draw("e1x0 same"); // Total Unc (Shape + Stat)				
-				
+
 				//------------------------------//
 				
 				// Norm Unc Only
@@ -686,7 +740,6 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 				BeamOnXSec[WhichPlot][NDimSlice]->SetMarkerStyle(20);	
 				BeamOnXSec[WhichPlot][NDimSlice]->GetYaxis()->SetTitle(VarLabel[PlotNames[WhichPlot]]);		
 				BeamOnXSec[WhichPlot][NDimSlice]->GetYaxis()->SetRangeUser(XSecRange[ MapUncorCor[ NameCopy ] ].first,XSecRange[ MapUncorCor[ NameCopy ] ].second);		     									
-
 				//------------------------------//
 
 				// Full Unc
@@ -706,16 +759,16 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 				if (Runs[WhichRun] == "Run5") { tor860_wcut = Fulltor860_wcut_Run5; }
 				if (Runs[WhichRun] == "Combined") { tor860_wcut = Fulltor860_wcut_Combined; }
 				TString Label = ToString(tor860_wcut)+" POT";			
+
+				// ---------------------------------------------------------------------------------------------------------
+				// ---------------------------------------------------------------------------------------------------------
 				
-				// ---------------------------------------------------------------------------------------------------------
-				// ---------------------------------------------------------------------------------------------------------
-				/*
 				leg->AddEntry(BeamOnStatShape[WhichPlot][NDimSlice],"MicroBooNE Data","ep");
 				leg->AddEntry(BeamOnStatShape[WhichPlot][NDimSlice],"(Stat #oplus Shape Unc)","");
 				leg->AddEntry(BeamOnStatShape[WhichPlot][NDimSlice],Label,"");
 				leg->AddEntry(BeamOnNormOnly[WhichPlot][NDimSlice],"Norm Unc","f");
 				leg->Draw();			
-				*/				
+								
 				TLatex *textSlice = new TLatex();
 				textSlice->SetTextFont(FontStyle);
 				textSlice->SetTextSize(0.06);
@@ -724,13 +777,53 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 				textSlice->DrawLatexNDC(0.24, 0.92, LatexLabel[ MapUncorCor[ReducedPlotName] ]);	
 
 				//------------------------------------//
+
+				// Storing xsecs in file
+
+				fGenXSec->cd();
+
+				// Unfolded covariance matrix
+				SliceCovMatrix->Write("UnfCov_" + NameCopy);
+				SliceAc->Write("Ac_" + NameCopy);
+
+				// Data
+				BeamOnStatShape[WhichPlot][NDimSlice]->Write("StatShape_" + NameCopy);
+				BeamOnNormOnly[WhichPlot][NDimSlice]->Write("NormOnly_" + NameCopy);
+				BeamOnStatOnly[WhichPlot][NDimSlice]->Write("StatOnly_" + NameCopy);
+				BeamOnXSec[WhichPlot][NDimSlice]->Write("XSecOnly_" + NameCopy);
+				BeamOnFullUnc[WhichPlot][NDimSlice]->Write("FullUnc_" + NameCopy);
+
+				// Overlay GENIE
+				MC[WhichPlot][NDimSlice][0]->Write("OverlayGENIE_" + NameCopy);
+				QEMC[WhichPlot][NDimSlice][0]->Write("QEOverlayGENIE_" + NameCopy);
+				MECMC[WhichPlot][NDimSlice][0]->Write("MECOverlayGENIE_" + NameCopy);
+				RESMC[WhichPlot][NDimSlice][0]->Write("RESOverlayGENIE_" + NameCopy);
+				DISMC[WhichPlot][NDimSlice][0]->Write("DISOverlayGENIE_" + NameCopy);
+				COHMC[WhichPlot][NDimSlice][0]->Write("COHOverlayGENIE_" + NameCopy);
+
+				// Store the remaining generator xsecs
+				// Start from 1, the GENIE Overlay = 0 has been stored above
+
+				for (int igen = 1; igen < NSamples; igen++ ) {
+
+				  TString GenName = NameOfSamples[igen] + "_" + NameCopy;
+				  MC[WhichPlot][NDimSlice][igen]->Write(GenName);
+				  QEMC[WhichPlot][NDimSlice][igen]->Write("QE" + GenName);
+				  MECMC[WhichPlot][NDimSlice][igen]->Write("MEC" + GenName);
+				  RESMC[WhichPlot][NDimSlice][igen]->Write("RES" + GenName);
+				  DISMC[WhichPlot][NDimSlice][igen]->Write("DIS" + GenName);
+				  COHMC[WhichPlot][NDimSlice][igen]->Write("COH" + GenName);
+
+				}
+
+				//------------------------------------//
 				
 				// Saving the canvas with the data (total uncertainties) vs overlay & generator predictions
 
-				PlotCanvas->SaveAs("/uboone/data/users/apapadop/FlatTTreePlots/"+Extra+"TwoDXSections_"+CanvasName+"_"+Runs[WhichRun]+"_"+UBCodeVersion+".pdf");
+                                PlotCanvas->SaveAs("/uboone/data/users/apapadop/FlatTTreePlots/ThreeDXSec/ThreeDXSections_"+CanvasName+"_"+Runs[WhichRun]+"_"+UBCodeVersion+".pdf");
 
 				delete PlotCanvas;
-				
+
 				//------------------------------------//
 
 				// Update the starting index to move to the next slice

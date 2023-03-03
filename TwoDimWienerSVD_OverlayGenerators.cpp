@@ -106,30 +106,32 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 		vector<TString> NameOfSamples; NameOfSamples.clear();
 		vector<int> Colors; Colors.clear();		
 		vector<TString> Labels; Labels.clear();
+		vector<int> LineStyle; LineStyle.clear();
 
 		// CV
 
-		NameOfSamples.push_back("Overlay9"); Colors.push_back(OverlayColor); Labels.push_back("G18 ");                    
+		NameOfSamples.push_back("Overlay9"); Colors.push_back(OverlayColor); Labels.push_back("G18T ");LineStyle.push_back(kSolid);                    
 
 		//----------------------------------------//	
 
                 if (PlotGENIE) {
 
-		  NameOfSamples.push_back("GENIE_v2_12_10_MEC");  Colors.push_back(GENIEv2Color); Labels.push_back("Gv2 ");
-		  NameOfSamples.push_back("GENIE_v3_0_6"); Colors.push_back(Geniev3OutOfTheBoxColor); Labels.push_back("G18 NoTune ");
-		  NameOfSamples.push_back("GENIE_v3_0_6_G21_11b_00_000"); Colors.push_back(SuSav2Color); Labels.push_back("G21hN ");
+		  NameOfSamples.push_back("GENIE_v2_12_10_MEC");  Colors.push_back(kBlue); Labels.push_back("Gv2 ");LineStyle.push_back(Gv2LineStyle);
+		  NameOfSamples.push_back("GENIE_v3_0_6"); Colors.push_back(kMagenta); Labels.push_back("G18 "); LineStyle.push_back(G18LineStyle);
+		  NameOfSamples.push_back("GENIE_v3_0_6_G21_11b_00_000"); Colors.push_back(kOrange+6); Labels.push_back("G21 "); LineStyle.push_back(G21LineStyle);
 
                 }
 
-                //----------------------------------------//                                                                                                                                              
+                //----------------------------------------//                                                                                
 
                 if (PlotGen) {
 
-		  NameOfSamples.push_back("NuWro_19_02_1"); Colors.push_back(NuWroColor); Labels.push_back("NuWro ");
-		  NameOfSamples.push_back("GiBUU_2021"); Colors.push_back(GiBUUColor); Labels.push_back("GiBUU ");
-		  NameOfSamples.push_back("NEUT_5_4_0_1"); Colors.push_back(NEUTColor); Labels.push_back("NEUT ");
+                  NameOfSamples.push_back("NuWro_19_02_1"); Colors.push_back(NEUTColor); Labels.push_back("NuWro "); LineStyle.push_back(NuWroLineStyle);
+		  NameOfSamples.push_back("GiBUU_2021"); Colors.push_back(GiBUUColor); Labels.push_back("GiBUU "); LineStyle.push_back(GiBUULineStyle);
+		  NameOfSamples.push_back("NEUT_5_4_0_1"); Colors.push_back(kMagenta-9); Labels.push_back("NEUT "); LineStyle.push_back(NEUTLineStyle);
 
                 }
+
 
 		//----------------------------------------//
 
@@ -550,20 +552,19 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 				PlotCanvas->SetLeftMargin(0.19);
 				PlotCanvas->SetRightMargin(0.03);				
 
-				TLegend* leg = new TLegend(0.62,0.52,0.72,0.85);
-
+				TLegend* leg = new TLegend(0.38,0.69,0.72,0.85);
+				TLegend* legMC = new TLegend(0.7,0.69,0.93,0.85);
+			       
 				if (
-				    CanvasName == "SerialDeltaAlpha3Dq_DeltaPnPlot_Slice_0" ||
-				    CanvasName == "SerialDeltaAlpha3Dq_DeltaPnPlot_Slice_1" ||
-				    CanvasName == "SerialDeltaAlpha3Dq_DeltaPnPlot_Slice_2" ||
-				    CanvasName == "SerialDeltaAlpha3DMu_DeltaPnPlot_Slice_0" ||
-				    CanvasName == "SerialDeltaAlpha3DMu_DeltaPnPlot_Slice_1" ||
-				    CanvasName == "SerialDeltaAlpha3DMu_DeltaPnPlot_Slice_2" 
-				) { 
 
-				  leg = new TLegend(0.23,0.52,0.53,0.85); 
+				    CanvasName == "SerialDeltaAlpha3Dq_DeltaPnPlot_Slice_2"
 
-				}			
+				    ) {
+
+				  leg = new TLegend(0.22,0.69,0.55,0.85);
+				  legMC = new TLegend(0.22,0.53,0.55,0.69);
+
+				}
 
 				leg->SetBorderSize(0);
 				leg->SetTextSize(0.05);
@@ -571,6 +572,13 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 				leg->SetNColumns(1);
 				leg->SetMargin(0.15);
 				leg->SetFillStyle(0);
+
+				legMC->SetBorderSize(0);
+				legMC->SetTextSize(0.05);
+				legMC->SetTextFont(FontStyle);
+				legMC->SetNColumns(1);
+				legMC->SetMargin(0.15);
+				legMC->SetFillStyle(0);
 
 				//------------------------------------//
 
@@ -621,6 +629,7 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 				for (int WhichSample = 1; WhichSample < NSamples; WhichSample++) {
 
 				  MC[WhichPlot][NDimSlice][WhichSample] = tools.GetHistoBins(PlotsTrue[WhichSample][WhichPlot],SerialVectorLowBin.at(NDimSlice),SerialVectorHighBin.at(NDimSlice), MultiDimScaleFactor[ MapUncorCor[ NameCopy ] ], SerialSliceBinning, NameOfSamples[WhichSample]);
+				  MC[WhichPlot][NDimSlice][WhichSample]->SetLineStyle(LineStyle[WhichSample]);
 					MC[WhichPlot][NDimSlice][WhichSample]->SetLineColor(Colors[WhichSample]);
 					MC[WhichPlot][NDimSlice][WhichSample]->SetMarkerColor(Colors[WhichSample]);
 					MC[WhichPlot][NDimSlice][WhichSample]->Draw("hist same");
@@ -634,7 +643,7 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 					
 					CalcChiSquared(MC[WhichPlot][NDimSlice][WhichSample],BeamOnStatShape[WhichPlot][NDimSlice],SliceCovMatrix,Chi2[WhichSample],Ndof[WhichSample],pval[WhichSample]);
 					TString Chi2NdofAlt = "(" + to_string_with_precision(Chi2[WhichSample],1) + "/" + TString(std::to_string(Ndof[WhichSample])) +")";
-					TLegendEntry* lGenie = leg->AddEntry(MC[WhichPlot][NDimSlice][WhichSample],Labels[WhichSample] + Chi2NdofAlt,"l");
+					TLegendEntry* lGenie = legMC->AddEntry(MC[WhichPlot][NDimSlice][WhichSample],Labels[WhichSample] + Chi2NdofAlt,"l");
 					lGenie->SetTextColor(Colors[WhichSample]); 										
 					
 				}		
@@ -657,7 +666,7 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 
 				CalcChiSquared(MC[WhichPlot][NDimSlice][0],BeamOnStatShape[WhichPlot][NDimSlice],SliceCovMatrix,Chi2[0],Ndof[0],pval[0]);
 				TString Chi2NdofAlt = "(" + to_string_with_precision(Chi2[0],1) + "/" + TString(std::to_string(Ndof[0])) +")";
-				TLegendEntry* lGenie = leg->AddEntry(MC[WhichPlot][NDimSlice][0],Labels[0] + Chi2NdofAlt,"l");
+				TLegendEntry* lGenie = legMC->AddEntry(MC[WhichPlot][NDimSlice][0],Labels[0] + Chi2NdofAlt,"l");
 				lGenie->SetTextColor(Colors[0]); 										
 
 				//------------------------------//	
@@ -722,11 +731,13 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 				// ---------------------------------------------------------------------------------------------------------
 				// ---------------------------------------------------------------------------------------------------------
 				
-				leg->AddEntry(BeamOnStatShape[WhichPlot][NDimSlice],"MicroBooNE Data","ep");
-				leg->AddEntry(BeamOnStatShape[WhichPlot][NDimSlice],"(Stat #oplus Shape Unc)","");
+				leg->AddEntry(BeamOnStatShape[WhichPlot][NDimSlice],"MicroBooNE Data","");
 				leg->AddEntry(BeamOnStatShape[WhichPlot][NDimSlice],Label,"");
+				leg->AddEntry(BeamOnStatShape[WhichPlot][NDimSlice],"Stat #oplus Shape","ep");
 				leg->AddEntry(BeamOnNormOnly[WhichPlot][NDimSlice],"Norm Unc","f");
 				leg->Draw();			
+
+				legMC->Draw();
 								
 				TLatex *textSlice = new TLatex();
 				textSlice->SetTextFont(FontStyle);
@@ -734,7 +745,40 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 				TString PlotNameDuplicate = NameCopy;
 				TString ReducedPlotName = PlotNameDuplicate.ReplaceAll("Reco","") ;
 				textSlice->DrawLatexNDC(0.24, 0.92, LatexLabel[ MapUncorCor[ReducedPlotName] ]);	
+
+				//------------------------------------//
 				
+				TLatex *textPanel = new TLatex();
+				textPanel->SetTextFont(FontStyle);
+				textPanel->SetTextSize(TextSize);
+				TString Panel = "(a)";
+				if (Extra == "Genie") { Panel = "(b)"; }
+
+				if (
+				    CanvasName == "SerialDeltaPn_DeltaAlpha3DqPlot_Slice_0" ||
+				    CanvasName == "SerialDeltaPn_DeltaAlpha3DqPlot_Slice_1" ||
+				    CanvasName == "SerialDeltaPn_DeltaAlpha3DqPlot_Slice_2" ||
+				    CanvasName == "SerialDeltaPn_DeltaAlpha3DqPlot_Slice_3" ||
+				    CanvasName == "SerialDeltaAlpha3Dq_DeltaPnPlot_Slice_0" ||
+				    CanvasName == "SerialDeltaAlpha3Dq_DeltaPnPlot_Slice_1" ||
+				    CanvasName == "SerialDeltaPn_DeltaAlpha3DMuPlot_Slice_0" ||
+				    CanvasName == "SerialDeltaPn_DeltaAlpha3DMuPlot_Slice_1" ||
+				    CanvasName == "SerialDeltaPn_DeltaAlpha3DMuPlot_Slice_2" ||
+				    CanvasName == "SerialDeltaPn_DeltaAlpha3DMuPlot_Slice_3" ||
+				    CanvasName == "SerialDeltaAlpha3DMu_DeltaPnPlot_Slice_0" ||
+				    CanvasName == "SerialDeltaAlpha3DMu_DeltaPnPlot_Slice_1" ||
+				    CanvasName == "SerialDeltaAlpha3DMu_DeltaPnPlot_Slice_2"
+				    ) {
+
+				  textPanel->DrawLatexNDC(0.22, 0.8, Panel);
+
+				} else {
+
+				  textPanel->DrawLatexNDC(0.87, 0.8, Panel);
+
+				}
+
+
 				//------------------------------------//
 				
 				// Saving the canvas with the data (total uncertainties) vs overlay & generator predictions

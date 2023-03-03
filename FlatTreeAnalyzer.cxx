@@ -7,12 +7,14 @@
 #include <TMath.h>
 #include <TVector3.h>
 #include <TLorentzVector.h>
+#include <TGraph.h>
 
 #include <iomanip>
 #include <sstream>
 #include <iostream>
 #include <vector>
 #include <iterator>
+#include <fstream>
 
 #include "/uboone/app/users/apapadop/uboonecode_v08_00_00_52/srcs/ubana/ubana/myClasses/Constants.h"
 #include "/uboone/app/users/apapadop/uboonecode_v08_00_00_52/srcs/ubana/ubana/myClasses/STV_Tools.h"
@@ -46,7 +48,9 @@ void FlatTreeAnalyzer::Loop() {
 
 	//----------------------------------------//	
 
-        // Output file
+        // Output root & txt files
+
+	// Root
 
 	TString FileNameAndPath = "OutputFiles/FlatTreeAnalyzerOutput_"+fOutputFile+".root";
 	TFile* file = new TFile(FileNameAndPath,"recreate");
@@ -54,6 +58,11 @@ void FlatTreeAnalyzer::Loop() {
 	std::cout << std::endl << "------------------------------------------------" << std::endl << std::endl;
 	std::cout << "File " << FileNameAndPath << " to be created" << std::endl << std::endl;
 	
+	// Txt
+
+	ofstream OutputTxt;
+	OutputTxt.open("OutputFiles/EventDump_" + fOutputFile + ".txt");
+
 	//----------------------------------------//
 
 	// Plot declaration
@@ -121,6 +130,20 @@ void FlatTreeAnalyzer::Loop() {
 	TH1D* SerialTrueDeltaAlphaT_InDeltaPTPlot[NInte];
 	TH1D* SerialTrueDeltaAlpha3Dq_InDeltaPnPlot[NInte];
 	TH1D* SerialTrueDeltaAlpha3DMu_InDeltaPnPlot[NInte];
+
+	// 3D Nominal Binning Uncorrelated
+
+	TH1D* TrueECal_InDeltaPTDeltaAlphaTTwoDPlot[NInte][TwoDNBinsDeltaPT][TwoDNBinsDeltaAlphaT];
+	TH1D* TrueECal_InDeltaPtxDeltaPtyTwoDPlot[NInte][TwoDNBinsDeltaPT][TwoDNBinsDeltaAlphaT];
+	TH1D* TrueECal_InMuonCosThetaMuonMomentumTwoDPlot[NInte][TwoDNBinsMuonCosTheta][TwoDNBinsMuonMomentum];
+	TH1D* TrueECal_InProtonCosThetaProtonMomentumTwoDPlot[NInte][TwoDNBinsProtonCosTheta][TwoDNBinsProtonMomentum];
+
+	// 3D Nominal Binning Correlated
+	
+	TH1D* SerialTrueECal_InDeltaPTDeltaAlphaTPlot[NInte];
+	TH1D* SerialTrueECal_InDeltaPtxDeltaPtyPlot[NInte];
+	TH1D* SerialTrueECal_InMuonCosThetaMuonMomentumPlot[NInte];
+	TH1D* SerialTrueECal_InProtonCosThetaProtonMomentumPlot[NInte];
 
 	//----------------------------------------//
 
@@ -201,13 +224,13 @@ void FlatTreeAnalyzer::Loop() {
 	  // 1D Fine Binning
 
 	  TrueFineBinMuonCosThetaPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinMuonCosThetaPlot",";cos(#theta_{#mu})",20,-1.,1.);
-	  TrueFineBinDeltaPTPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaPTPlot",LabelXAxisDeltaPT,20,ArrayNBinsDeltaPT[0],ArrayNBinsDeltaPT[NBinsDeltaPT]);
-	  TrueFineBinDeltaPnPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaPnPlot",LabelXAxisDeltaPn,20,ArrayNBinsDeltaPn[0],ArrayNBinsDeltaPn[NBinsDeltaPn]);
-	  TrueFineBinDeltaAlpha3DMuPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaAlpha3DMuPlot",LabelXAxisDeltaAlpha3DMu,20,ArrayNBinsDeltaAlpha3DMu[0],ArrayNBinsDeltaAlpha3DMu[NBinsDeltaAlpha3DMu]);
-	  TrueFineBinDeltaAlpha3DqPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaAlpha3DqPlot",LabelXAxisDeltaAlpha3Dq,20,ArrayNBinsDeltaAlpha3Dq[0],ArrayNBinsDeltaAlpha3Dq[NBinsDeltaAlpha3Dq]);
-	  TrueFineBinDeltaAlphaTPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaAlphaTPlot",LabelXAxisDeltaAlphaT,20,ArrayNBinsDeltaAlphaT[0],ArrayNBinsDeltaAlphaT[NBinsDeltaAlphaT]);
-	  TrueFineBinDeltaPhiTPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaPhiTPlot",LabelXAxisDeltaPhiT,30,ArrayNBinsDeltaPhiT[0],ArrayNBinsDeltaPhiT[NBinsDeltaPhiT]);
-	  TrueFineBinDeltaPhi3DPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaPhi3DPlot",LabelXAxisDeltaPhi3D,30,ArrayNBinsDeltaPhi3D[0],ArrayNBinsDeltaPhi3D[NBinsDeltaPhi3D]);
+	  TrueFineBinDeltaPTPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaPTPlot",LabelXAxisDeltaPT,25,ArrayNBinsDeltaPT[0],ArrayNBinsDeltaPT[NBinsDeltaPT]);
+	  TrueFineBinDeltaPnPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaPnPlot",LabelXAxisDeltaPn,25,ArrayNBinsDeltaPn[0],ArrayNBinsDeltaPn[NBinsDeltaPn]);
+	  TrueFineBinDeltaAlpha3DMuPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaAlpha3DMuPlot",LabelXAxisDeltaAlpha3DMu,25,ArrayNBinsDeltaAlpha3DMu[0],ArrayNBinsDeltaAlpha3DMu[NBinsDeltaAlpha3DMu]);
+	  TrueFineBinDeltaAlpha3DqPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaAlpha3DqPlot",LabelXAxisDeltaAlpha3Dq,25,ArrayNBinsDeltaAlpha3Dq[0],ArrayNBinsDeltaAlpha3Dq[NBinsDeltaAlpha3Dq]);
+	  TrueFineBinDeltaAlphaTPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaAlphaTPlot",LabelXAxisDeltaAlphaT,25,ArrayNBinsDeltaAlphaT[0],ArrayNBinsDeltaAlphaT[NBinsDeltaAlphaT]);
+	  TrueFineBinDeltaPhiTPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaPhiTPlot",LabelXAxisDeltaPhiT,40,ArrayNBinsDeltaPhiT[0],ArrayNBinsDeltaPhiT[NBinsDeltaPhiT]);
+	  TrueFineBinDeltaPhi3DPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaPhi3DPlot",LabelXAxisDeltaPhi3D,40,ArrayNBinsDeltaPhi3D[0],ArrayNBinsDeltaPhi3D[NBinsDeltaPhi3D]);
 	  TrueFineBinDeltaPnPerpPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaPnPerpPlot",LabelXAxisDeltaPnPerp,30,ArrayNBinsDeltaPnPerp[0],ArrayNBinsDeltaPnPerp[NBinsDeltaPnPerp]);
 	  TrueFineBinDeltaPnParPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaPnParPlot",LabelXAxisDeltaPnPar,30,-0.7,0.5);
 
@@ -224,7 +247,7 @@ void FlatTreeAnalyzer::Loop() {
 	  TrueDeltaPnPerpPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueDeltaPnPerpPlot",LabelXAxisDeltaPnPerp,NBinsDeltaPnPerp,ArrayNBinsDeltaPnPerp);
 	  TrueDeltaPnParPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueDeltaPnParPlot",LabelXAxisDeltaPnPar,NBinsDeltaPnPar,ArrayNBinsDeltaPnPar);
 
-	  // 2D Fine & Nominal Binning Uncorrelated
+	  // 2D & 3D Fine & Nominal Binning Uncorrelated
 
 	  for (int WhichDeltaAlphaT = 0; WhichDeltaAlphaT < TwoDNBinsDeltaAlphaT; WhichDeltaAlphaT++) {
 
@@ -264,6 +287,13 @@ void FlatTreeAnalyzer::Loop() {
 
 	    TrueDeltaAlphaT_InDeltaPTTwoDPlot[inte][WhichDeltaPT] = new TH1D(InteractionLabels[inte]+"True"+DeltaAlphaTTwoDInDeltaPTLabel,LabelXAxisDeltaAlphaT,TwoDArrayNBinsDeltaAlphaTInDeltaPTSlices[WhichDeltaPT].size()-1,&TwoDArrayNBinsDeltaAlphaTInDeltaPTSlices[WhichDeltaPT][0]);
 
+	    for (int WhichDeltaAlphaT = 0; WhichDeltaAlphaT < TwoDNBinsDeltaAlphaT; WhichDeltaAlphaT++) {
+
+	      TString ECalTwoDInDeltaPTDeltaAlphaTLabel = "ECal_DeltaPT_"+tools.ConvertToString(TwoDArrayNBinsDeltaPT[WhichDeltaPT])+"To"+tools.ConvertToString(TwoDArrayNBinsDeltaPT[WhichDeltaPT+1])+"_DeltaAlphaT_"+tools.ConvertToString(TwoDArrayNBinsDeltaAlphaT[WhichDeltaAlphaT])+"To"+tools.ConvertToString(TwoDArrayNBinsDeltaAlphaT[WhichDeltaAlphaT+1])+"Plot";
+	      TrueECal_InDeltaPTDeltaAlphaTTwoDPlot[inte][WhichDeltaPT][WhichDeltaAlphaT] = new TH1D(InteractionLabels[inte]+"True"+ECalTwoDInDeltaPTDeltaAlphaTLabel,LabelXAxisECal,TwoDArrayNBinsECalInDeltaPTDeltaAlphaTSlices[WhichDeltaPT][WhichDeltaAlphaT].size()-1,&TwoDArrayNBinsECalInDeltaPTDeltaAlphaTSlices[WhichDeltaPT][WhichDeltaAlphaT][0]);
+
+	    }
+
 	  }
 
 	  for (int WhichDeltaPn = 0; WhichDeltaPn < TwoDNBinsDeltaPn; WhichDeltaPn++) {
@@ -279,6 +309,39 @@ void FlatTreeAnalyzer::Loop() {
 	    TrueFineBinDeltaAlpha3DMu_InDeltaPnTwoDPlot[inte][WhichDeltaPn] = new TH1D(InteractionLabels[inte]+"TrueFineBin"+DeltaAlpha3DMuTwoDInDeltaPnLabel,LabelXAxisDeltaAlpha3DMu,20,TwoDArrayNBinsDeltaAlpha3DMuInDeltaPnSlices[WhichDeltaPn][0],TwoDArrayNBinsDeltaAlpha3DMuInDeltaPnSlices[WhichDeltaPn][ TwoDArrayNBinsDeltaAlpha3DMuInDeltaPnSlices[WhichDeltaPn].size()-1  ]);
 
 	    TrueDeltaAlpha3DMu_InDeltaPnTwoDPlot[inte][WhichDeltaPn] = new TH1D(InteractionLabels[inte]+"True"+DeltaAlpha3DMuTwoDInDeltaPnLabel,LabelXAxisDeltaAlpha3DMu,TwoDArrayNBinsDeltaAlpha3DMuInDeltaPnSlices[WhichDeltaPn].size()-1,&TwoDArrayNBinsDeltaAlpha3DMuInDeltaPnSlices[WhichDeltaPn][0]);
+
+	  }
+
+	  for (int WhichMuonCosTheta = 0; WhichMuonCosTheta < TwoDNBinsMuonCosTheta; WhichMuonCosTheta++) {
+
+	    for (int WhichMuonMomentum = 0; WhichMuonMomentum < TwoDNBinsMuonMomentum; WhichMuonMomentum++) {
+
+	      TString ECalTwoDInMuonCosThetaMuonMomentumLabel = "ECal_MuonCosTheta_"+tools.ConvertToString(TwoDArrayNBinsMuonCosTheta[WhichMuonCosTheta])+"To"+tools.ConvertToString(TwoDArrayNBinsMuonCosTheta[WhichMuonCosTheta+1])+"_MuonMomentum_"+tools.ConvertToString(TwoDArrayNBinsMuonMomentum[WhichMuonMomentum])+"To"+tools.ConvertToString(TwoDArrayNBinsMuonMomentum[WhichMuonMomentum+1])+"Plot";
+	      TrueECal_InMuonCosThetaMuonMomentumTwoDPlot[inte][WhichMuonCosTheta][WhichMuonMomentum] = new TH1D(InteractionLabels[inte]+"True"+ECalTwoDInMuonCosThetaMuonMomentumLabel,LabelXAxisECal,TwoDArrayNBinsECalInMuonCosThetaMuonMomentumSlices[WhichMuonCosTheta][WhichMuonMomentum].size()-1,&TwoDArrayNBinsECalInMuonCosThetaMuonMomentumSlices[WhichMuonCosTheta][WhichMuonMomentum][0]);
+
+	    }
+
+	  }
+
+	  for (int WhichProtonCosTheta = 0; WhichProtonCosTheta < TwoDNBinsProtonCosTheta; WhichProtonCosTheta++) {
+
+	    for (int WhichProtonMomentum = 0; WhichProtonMomentum < TwoDNBinsProtonMomentum; WhichProtonMomentum++) {
+
+	      TString ECalTwoDInProtonCosThetaProtonMomentumLabel = "ECal_ProtonCosTheta_"+tools.ConvertToString(TwoDArrayNBinsProtonCosTheta[WhichProtonCosTheta])+"To"+tools.ConvertToString(TwoDArrayNBinsProtonCosTheta[WhichProtonCosTheta+1])+"_ProtonMomentum_"+tools.ConvertToString(TwoDArrayNBinsProtonMomentum[WhichProtonMomentum])+"To"+tools.ConvertToString(TwoDArrayNBinsProtonMomentum[WhichProtonMomentum+1])+"Plot";
+	      TrueECal_InProtonCosThetaProtonMomentumTwoDPlot[inte][WhichProtonCosTheta][WhichProtonMomentum] = new TH1D(InteractionLabels[inte]+"True"+ECalTwoDInProtonCosThetaProtonMomentumLabel,LabelXAxisECal,TwoDArrayNBinsECalInProtonCosThetaProtonMomentumSlices[WhichProtonCosTheta][WhichProtonMomentum].size()-1,&TwoDArrayNBinsECalInProtonCosThetaProtonMomentumSlices[WhichProtonCosTheta][WhichProtonMomentum][0]);
+
+	    }
+
+	  }
+
+	  for (int WhichDeltaPtx = 0; WhichDeltaPtx < TwoDNBinsDeltaPtx; WhichDeltaPtx++) {
+
+	    for (int WhichDeltaPty = 0; WhichDeltaPty < TwoDNBinsDeltaPty; WhichDeltaPty++) {
+
+	      TString ECalTwoDInDeltaPtxDeltaPtyLabel = "ECal_DeltaPtx_"+tools.ConvertToString(TwoDArrayNBinsDeltaPtx[WhichDeltaPtx])+"To"+tools.ConvertToString(TwoDArrayNBinsDeltaPtx[WhichDeltaPtx+1])+"_DeltaPty_"+tools.ConvertToString(TwoDArrayNBinsDeltaPty[WhichDeltaPty])+"To"+tools.ConvertToString(TwoDArrayNBinsDeltaPty[WhichDeltaPty+1])+"Plot";
+	      TrueECal_InDeltaPtxDeltaPtyTwoDPlot[inte][WhichDeltaPtx][WhichDeltaPty] = new TH1D(InteractionLabels[inte]+"True"+ECalTwoDInDeltaPtxDeltaPtyLabel,LabelXAxisECal,TwoDArrayNBinsECalInDeltaPtxDeltaPtySlices[WhichDeltaPtx][WhichDeltaPty].size()-1,&TwoDArrayNBinsECalInDeltaPtxDeltaPtySlices[WhichDeltaPtx][WhichDeltaPty][0]);
+
+	    }
 
 	  }
 
@@ -300,6 +363,14 @@ void FlatTreeAnalyzer::Loop() {
 	  SerialTrueDeltaAlpha3Dq_InDeltaPnPlot[inte] = new TH1D(InteractionLabels[inte]+"SerialTrueDeltaAlpha3Dq_DeltaPnPlot",LabelXAxisDeltaAlpha3Dq,tools.Return2DNBins(TwoDArrayNBinsDeltaAlpha3DqInDeltaPnSlices),&tools.Return2DBinIndices(TwoDArrayNBinsDeltaAlpha3DqInDeltaPnSlices)[0]);
 	  SerialTrueDeltaAlpha3DMu_InDeltaPnPlot[inte] = new TH1D(InteractionLabels[inte]+"SerialTrueDeltaAlpha3DMu_DeltaPnPlot",LabelXAxisDeltaAlpha3DMu,tools.Return2DNBins(TwoDArrayNBinsDeltaAlpha3DMuInDeltaPnSlices),&tools.Return2DBinIndices(TwoDArrayNBinsDeltaAlpha3DMuInDeltaPnSlices)[0]);
 
+	  // 3D Nominal Binning Correlated
+	  
+	  SerialTrueECal_InDeltaPTDeltaAlphaTPlot[inte] = new TH1D(InteractionLabels[inte]+"SerialTrueECal_DeltaPTDeltaAlphaTPlot",LabelXAxisECal,tools.Return3DNBins(TwoDArrayNBinsECalInDeltaPTDeltaAlphaTSlices),&tools.Return3DBinIndices(TwoDArrayNBinsECalInDeltaPTDeltaAlphaTSlices)[0]);
+	  SerialTrueECal_InDeltaPtxDeltaPtyPlot[inte] = new TH1D(InteractionLabels[inte]+"SerialTrueECal_DeltaPtxDeltaPtyPlot",LabelXAxisECal,tools.Return3DNBins(TwoDArrayNBinsECalInDeltaPtxDeltaPtySlices),&tools.Return3DBinIndices(TwoDArrayNBinsECalInDeltaPtxDeltaPtySlices)[0]);
+	  SerialTrueECal_InMuonCosThetaMuonMomentumPlot[inte] = new TH1D(InteractionLabels[inte]+"SerialTrueECal_MuonCosThetaMuonMomentumPlot",LabelXAxisECal,tools.Return3DNBins(TwoDArrayNBinsECalInMuonCosThetaMuonMomentumSlices),&tools.Return3DBinIndices(TwoDArrayNBinsECalInMuonCosThetaMuonMomentumSlices)[0]);
+	  SerialTrueECal_InProtonCosThetaProtonMomentumPlot[inte] = new TH1D(InteractionLabels[inte]+"SerialTrueECal_ProtonCosThetaProtonMomentumPlot",LabelXAxisECal,tools.Return3DNBins(TwoDArrayNBinsECalInProtonCosThetaProtonMomentumSlices),&tools.Return3DBinIndices(TwoDArrayNBinsECalInProtonCosThetaProtonMomentumSlices)[0]);
+
+
 	  //--------------------------------------------------//
 
 	  // Pre FSI
@@ -307,13 +378,13 @@ void FlatTreeAnalyzer::Loop() {
 	  // 1D Fine Binning
 
 	  NoFSITrueFineBinMuonCosThetaPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinMuonCosThetaPlot",";cos(#theta_{#mu})",20,-1.,1.);
-	  NoFSITrueFineBinDeltaPTPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaPTPlot",LabelXAxisDeltaPT,20,ArrayNBinsDeltaPT[0],ArrayNBinsDeltaPT[NBinsDeltaPT]);
-	  NoFSITrueFineBinDeltaPnPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaPnPlot",LabelXAxisDeltaPn,20,ArrayNBinsDeltaPn[0],ArrayNBinsDeltaPn[NBinsDeltaPn]);
-	  NoFSITrueFineBinDeltaAlpha3DMuPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaAlpha3DMuPlot",LabelXAxisDeltaAlpha3DMu,20,ArrayNBinsDeltaAlpha3DMu[0],ArrayNBinsDeltaAlpha3DMu[NBinsDeltaAlpha3DMu]);
-	  NoFSITrueFineBinDeltaAlpha3DqPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaAlpha3DqPlot",LabelXAxisDeltaAlpha3Dq,20,ArrayNBinsDeltaAlpha3Dq[0],ArrayNBinsDeltaAlpha3Dq[NBinsDeltaAlpha3Dq]);
-	  NoFSITrueFineBinDeltaAlphaTPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaAlphaTPlot",LabelXAxisDeltaAlphaT,20,ArrayNBinsDeltaAlphaT[0],ArrayNBinsDeltaAlphaT[NBinsDeltaAlphaT]);
-	  NoFSITrueFineBinDeltaPhiTPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaPhiTPlot",LabelXAxisDeltaPhiT,30,ArrayNBinsDeltaPhiT[0],ArrayNBinsDeltaPhiT[NBinsDeltaPhiT]);
-	  NoFSITrueFineBinDeltaPhi3DPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaPhi3DPlot",LabelXAxisDeltaPhi3D,30,ArrayNBinsDeltaPhi3D[0],ArrayNBinsDeltaPhi3D[NBinsDeltaPhi3D]);
+	  NoFSITrueFineBinDeltaPTPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaPTPlot",LabelXAxisDeltaPT,25,ArrayNBinsDeltaPT[0],ArrayNBinsDeltaPT[NBinsDeltaPT]);
+	  NoFSITrueFineBinDeltaPnPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaPnPlot",LabelXAxisDeltaPn,25,ArrayNBinsDeltaPn[0],ArrayNBinsDeltaPn[NBinsDeltaPn]);
+	  NoFSITrueFineBinDeltaAlpha3DMuPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaAlpha3DMuPlot",LabelXAxisDeltaAlpha3DMu,25,ArrayNBinsDeltaAlpha3DMu[0],ArrayNBinsDeltaAlpha3DMu[NBinsDeltaAlpha3DMu]);
+	  NoFSITrueFineBinDeltaAlpha3DqPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaAlpha3DqPlot",LabelXAxisDeltaAlpha3Dq,25,ArrayNBinsDeltaAlpha3Dq[0],ArrayNBinsDeltaAlpha3Dq[NBinsDeltaAlpha3Dq]);
+	  NoFSITrueFineBinDeltaAlphaTPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaAlphaTPlot",LabelXAxisDeltaAlphaT,25,ArrayNBinsDeltaAlphaT[0],ArrayNBinsDeltaAlphaT[NBinsDeltaAlphaT]);
+	  NoFSITrueFineBinDeltaPhiTPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaPhiTPlot",LabelXAxisDeltaPhiT,40,ArrayNBinsDeltaPhiT[0],ArrayNBinsDeltaPhiT[NBinsDeltaPhiT]);
+	  NoFSITrueFineBinDeltaPhi3DPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaPhi3DPlot",LabelXAxisDeltaPhi3D,40,ArrayNBinsDeltaPhi3D[0],ArrayNBinsDeltaPhi3D[NBinsDeltaPhi3D]);
 	  NoFSITrueFineBinDeltaPnPerpPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaPnPerpPlot",LabelXAxisDeltaPnPerp,30,ArrayNBinsDeltaPnPerp[0],ArrayNBinsDeltaPnPerp[NBinsDeltaPnPerp]);
 	  NoFSITrueFineBinDeltaPnParPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaPnParPlot",LabelXAxisDeltaPnPar,30,-0.7,0.5);
 
@@ -463,7 +534,7 @@ void FlatTreeAnalyzer::Loop() {
 
 	    }
 
-	    if (pdg[i] == 2212 && (pf > 0.3 || pf < 1.) ) {
+	    if (pdg[i] == 2212 && (pf > 0.3 && pf < 1.) ) {
 
 	      ProtonTagging ++;
 	      ProtonID.push_back(i);
@@ -502,7 +573,7 @@ void FlatTreeAnalyzer::Loop() {
 
 	    }
 
-	    if (pdg_vert[i] == 2212 && (pi > 0.3 || pi < 1.) ) {
+	    if (pdg_vert[i] == 2212 && (pi > 0.3 && pi < 1.) ) {
 
 	      NoFSIProtonTagging++;
 	      NoFSIProtonID.push_back(i);
@@ -564,8 +635,14 @@ void FlatTreeAnalyzer::Loop() {
 
 	    STV_Tools reco_stv_tool(Muon4Vector.Vect(),Proton4Vector.Vect(),Muon4Vector.E(),Proton4Vector.E());
 
+	    double MuonMomentum = Muon4Vector.Rho();
+	    double ProtonMomentum = Proton4Vector.Rho();
 	    double MuonCosTheta = Muon4Vector.CosTheta();
+	    double ProtonCosTheta = Proton4Vector.CosTheta();
 	    double DeltaPT = reco_stv_tool.ReturnPt();
+	    double DeltaPL = reco_stv_tool.ReturnPL();
+	    double DeltaPtx = reco_stv_tool.ReturnPtx();
+	    double DeltaPty = reco_stv_tool.ReturnPty();
 	    double DeltaAlphaT = reco_stv_tool.ReturnDeltaAlphaT();
 	    double DeltaAlpha3Dq = reco_stv_tool.ReturnDeltaAlpha3Dq();
 	    double DeltaAlpha3DMu = reco_stv_tool.ReturnDeltaAlpha3DMu();
@@ -574,6 +651,7 @@ void FlatTreeAnalyzer::Loop() {
 	    double DeltaPn = reco_stv_tool.ReturnPn();
 	    double DeltaPnPerp = reco_stv_tool.ReturnPnPerp();
 	    double DeltaPnPar = reco_stv_tool.ReturnPnPar();
+	    double ECal = reco_stv_tool.ReturnECalMB();
 
 	    double DefaultMuonCosTheta = Muon4Vector.CosTheta();
 	    double DefaultDeltaPT = reco_stv_tool.ReturnPt();
@@ -585,6 +663,16 @@ void FlatTreeAnalyzer::Loop() {
 	    double DefaultDeltaPn = reco_stv_tool.ReturnPn();
 	    double DefaultDeltaPnPerp = reco_stv_tool.ReturnPnPerp();
 	    double DefaultDeltaPnPar = reco_stv_tool.ReturnPnPar();
+
+	    //----------------------------------------//
+
+	    // Dumping values in txt file 
+
+	    OutputTxt << "Event = " << ientry << endl;
+	    OutputTxt << "DeltaAlpha3Dq = " << DeltaAlpha3Dq << ", DeltaPn = " << DeltaPn << ", DeltaPL = " << DeltaPL << endl;
+	    OutputTxt << "DeltaAlphaT = " << DeltaAlphaT << ", DeltaPT = " << DeltaPT << ", ECal = " << ECal << endl;
+	    OutputTxt << "Muon P = " << MuonMomentum << ", Px = " << Muon4Vector.X() << ", Py = " << Muon4Vector.Y() << ", Pz = " << Muon4Vector.Z() << endl;
+	    OutputTxt << "Proton P = " << ProtonMomentum << ", Px = " << Proton4Vector.X() << ", Py = " << Proton4Vector.Y() << ", Pz = " << Proton4Vector.Z() << endl << endl;
 
 	    //----------------------------------------//
 
@@ -772,6 +860,62 @@ void FlatTreeAnalyzer::Loop() {
 	    SerialTrueDeltaPT_InDeltaAlphaTPlot[genie_mode]->Fill(SerialDeltaPTInDeltaAlphaTIndex,weight);
 	    SerialTrueDeltaPn_InDeltaAlpha3DqPlot[genie_mode]->Fill(SerialDeltaPnInDeltaAlpha3DqIndex,weight);
 	    SerialTrueDeltaPn_InDeltaAlpha3DMuPlot[genie_mode]->Fill(SerialDeltaPnInDeltaAlpha3DMuIndex,weight);
+
+	    //----------------------------------------//
+
+	    // ECal overflow / underflow bins
+	    if (DeltaPtx > ArrayNBinsDeltaPtx[NBinsDeltaPtx]) { DeltaPtx = 0.5 * (ArrayNBinsDeltaPtx[NBinsDeltaPtx] + ArrayNBinsDeltaPtx[NBinsDeltaPtx-1]); }
+	    if (DeltaPtx < ArrayNBinsDeltaPtx[0]) { DeltaPtx = 0.5 * (ArrayNBinsDeltaPtx[0] + ArrayNBinsDeltaPtx[1]); }
+	    if (DeltaPty > ArrayNBinsDeltaPty[NBinsDeltaPty]) { DeltaPty = 0.5 * (ArrayNBinsDeltaPty[NBinsDeltaPty] + ArrayNBinsDeltaPty[NBinsDeltaPty-1]); }
+	    if (DeltaPty < ArrayNBinsDeltaPty[0]) { DeltaPty = 0.5 * (ArrayNBinsDeltaPty[0] + ArrayNBinsDeltaPty[1]); }
+	    if (ECal > ArrayNBinsECal[NBinsECal]) { ECal = 0.5 * (ArrayNBinsECal[NBinsECal] + ArrayNBinsECal[NBinsECal-1]); }
+	    if (ECal < ArrayNBinsECal[0]) { ECal = 0.5 * (ArrayNBinsECal[0] + ArrayNBinsECal[1]); }
+
+	    // 3D indices
+
+	    int MuonMomentumTwoDIndex = tools.ReturnIndex(MuonMomentum, TwoDArrayNBinsMuonMomentum);
+	    if (MuonMomentumTwoDIndex < 0) { cout << "MuonMomentumTwoDIndex = " << MuonMomentumTwoDIndex << endl; }
+	    int ProtonMomentumTwoDIndex = tools.ReturnIndex(ProtonMomentum, TwoDArrayNBinsProtonMomentum);
+	    if (ProtonMomentumTwoDIndex < 0) { cout << "ProtonMomentumTwoDIndex = " << ProtonMomentumTwoDIndex << endl; }
+	    int MuonCosThetaTwoDIndex = tools.ReturnIndex(MuonCosTheta, TwoDArrayNBinsMuonCosTheta);
+	    if (MuonMomentumTwoDIndex < 0) { cout << "MuonMomentumTwoDIndex = " << MuonMomentumTwoDIndex << endl; }
+	    int ProtonCosThetaTwoDIndex = tools.ReturnIndex(ProtonCosTheta, TwoDArrayNBinsProtonCosTheta);
+	    if (ProtonMomentumTwoDIndex < 0) { cout << "ProtonMomentumTwoDIndex = " << ProtonMomentumTwoDIndex << endl; }
+	    int DeltaPtxTwoDIndex = tools.ReturnIndex(DeltaPtx, TwoDArrayNBinsDeltaPtx);
+	    if (DeltaPtxTwoDIndex < 0) { cout << "DeltaPtxTwoDIndex = " << DeltaPtxTwoDIndex << endl; }
+	    int DeltaPtyTwoDIndex = tools.ReturnIndex(DeltaPty, TwoDArrayNBinsDeltaPty);
+	    if (DeltaPtyTwoDIndex < 0) { cout << "DeltaPtyTwoDIndex = " << DeltaPtyTwoDIndex << endl; }
+
+	    int SerialECalInDeltaPTDeltaAlphaTIndex = tools.ReturnIndexIn3DList(TwoDArrayNBinsECalInDeltaPTDeltaAlphaTSlices,DeltaPTTwoDIndex,DeltaAlphaTTwoDIndex,ECal);
+	    int SerialECalInDeltaPtxDeltaPtyIndex = tools.ReturnIndexIn3DList(TwoDArrayNBinsECalInDeltaPtxDeltaPtySlices,DeltaPtxTwoDIndex,DeltaPtyTwoDIndex,ECal);
+	    int SerialECalInMuonCosThetaMuonMomentumIndex = tools.ReturnIndexIn3DList(TwoDArrayNBinsECalInMuonCosThetaMuonMomentumSlices,MuonCosThetaTwoDIndex,MuonMomentumTwoDIndex,ECal);
+	    int SerialECalInProtonCosThetaProtonMomentumIndex = tools.ReturnIndexIn3DList(TwoDArrayNBinsECalInProtonCosThetaProtonMomentumSlices,ProtonCosThetaTwoDIndex,ProtonMomentumTwoDIndex,ECal);
+
+	    // 3D filling for all events
+
+	    TrueECal_InDeltaPTDeltaAlphaTTwoDPlot[0][DeltaPTTwoDIndex][DeltaAlphaTTwoDIndex]->Fill(ECal,weight);
+	    TrueECal_InDeltaPtxDeltaPtyTwoDPlot[0][DeltaPtxTwoDIndex][DeltaPtyTwoDIndex]->Fill(ECal,weight);
+	    TrueECal_InMuonCosThetaMuonMomentumTwoDPlot[0][MuonCosThetaTwoDIndex][MuonMomentumTwoDIndex]->Fill(ECal,weight);
+	    TrueECal_InProtonCosThetaProtonMomentumTwoDPlot[0][ProtonCosThetaTwoDIndex][ProtonMomentumTwoDIndex]->Fill(ECal,weight);
+
+	    SerialTrueECal_InDeltaPTDeltaAlphaTPlot[0]->Fill(SerialECalInDeltaPTDeltaAlphaTIndex,weight);
+	    SerialTrueECal_InDeltaPtxDeltaPtyPlot[0]->Fill(SerialECalInDeltaPtxDeltaPtyIndex,weight);
+	    SerialTrueECal_InMuonCosThetaMuonMomentumPlot[0]->Fill(SerialECalInMuonCosThetaMuonMomentumIndex,weight);
+	    SerialTrueECal_InProtonCosThetaProtonMomentumPlot[0]->Fill(SerialECalInProtonCosThetaProtonMomentumIndex,weight);
+
+	    // 3D filling based on interaction mode
+
+	    TrueECal_InDeltaPTDeltaAlphaTTwoDPlot[genie_mode][DeltaPTTwoDIndex][DeltaAlphaTTwoDIndex]->Fill(ECal,weight);
+	    TrueECal_InDeltaPtxDeltaPtyTwoDPlot[genie_mode][DeltaPtxTwoDIndex][DeltaPtyTwoDIndex]->Fill(ECal,weight);
+	    TrueECal_InMuonCosThetaMuonMomentumTwoDPlot[genie_mode][MuonCosThetaTwoDIndex][MuonMomentumTwoDIndex]->Fill(ECal,weight);
+	    TrueECal_InProtonCosThetaProtonMomentumTwoDPlot[genie_mode][ProtonCosThetaTwoDIndex][ProtonMomentumTwoDIndex]->Fill(ECal,weight);
+
+	    SerialTrueECal_InDeltaPTDeltaAlphaTPlot[genie_mode]->Fill(SerialECalInDeltaPTDeltaAlphaTIndex,weight);
+	    SerialTrueECal_InDeltaPtxDeltaPtyPlot[genie_mode]->Fill(SerialECalInDeltaPtxDeltaPtyIndex,weight);
+	    SerialTrueECal_InMuonCosThetaMuonMomentumPlot[genie_mode]->Fill(SerialECalInMuonCosThetaMuonMomentumIndex,weight);
+	    SerialTrueECal_InProtonCosThetaProtonMomentumPlot[genie_mode]->Fill(SerialECalInProtonCosThetaProtonMomentumIndex,weight);
+
+	    //----------------------------------------//
 
 	  } // End of the post-FSI selection
 
@@ -1108,16 +1252,80 @@ void FlatTreeAnalyzer::Loop() {
 	} // End of the loop over the interaction processes		
 
 	//----------------------------------------//		
+
+	// index 0 = all events
+	int NBins = TrueFineBinDeltaPTPlot[0]->GetXaxis()->GetNbins();
+
+	// Loop over all the non-QE processes and merge the plots
+	// Clone plot with index 2 = MEC
+	TH1D* DeltaPTBkg = (TH1D*)(TrueFineBinDeltaPTPlot[2]->Clone());
+	TH1D* DeltaPnBkg = (TH1D*)(TrueFineBinDeltaPnPlot[2]->Clone());
+
+	// Add RES, DIS, COH
+	for (int inte = 3; inte < NInte; inte++) {
+	  
+	  DeltaPTBkg->Add(TrueFineBinDeltaPTPlot[inte]);
+	  DeltaPnBkg->Add(TrueFineBinDeltaPnPlot[inte]);
+
+	}
+
+	double cutvalue[NBins + 1];
+
+	double signalEffPT[NBins + 1];
+	double bkgEffPT[NBins + 1];
+	double productPT[NBins + 1];
+
+	double signalEffPn[NBins + 1];
+	double bkgEffPn[NBins + 1];
+	double productPn[NBins + 1];
+
+	for (int ibin = 0; ibin < NBins; ibin++) {
+
+	  cutvalue[ibin] = TrueFineBinDeltaPTPlot[0]->GetBinLowEdge(ibin+1);
+
+	  signalEffPT[ibin] = TrueFineBinDeltaPTPlot[1]->Integral(0,ibin) / TrueFineBinDeltaPTPlot[1]->Integral() ; // QE 
+	  bkgEffPT[ibin] = 1. - DeltaPTBkg->Integral(0,ibin) / DeltaPTBkg->Integral() ; // bkg: MEC, RES, DIS, COH
+	  productPT[ibin] = signalEffPT[ibin] * bkgEffPT[ibin] ;
+
+	  signalEffPn[ibin] = TrueFineBinDeltaPnPlot[1]->Integral(0,ibin) / TrueFineBinDeltaPnPlot[1]->Integral() ; // QE 
+	  bkgEffPn[ibin] = 1. - DeltaPnBkg->Integral(0,ibin) / DeltaPnBkg->Integral() ; // bkg: MEC, RES, DIS, COH
+	  productPn[ibin] = signalEffPn[ibin] * bkgEffPn[ibin] ;
+
+	}
+
+	signalEffPT[NBins] = 1.;
+	bkgEffPT[NBins] = 0.;
+	productPT[NBins] = 0.;
+
+	signalEffPn[NBins] = 1.;
+	bkgEffPn[NBins] = 0.;
+	productPn[NBins] = 0.;
+
+	TGraph* gDeltaPT = new TGraph(NBins, signalEffPT, bkgEffPT);
+	TGraph* gDeltaPn = new TGraph(NBins, signalEffPn, bkgEffPn);
+
+	TGraph* gCutDeltaPT = new TGraph(NBins, cutvalue, productPT);
+	TGraph* gCutDeltaPn = new TGraph(NBins, cutvalue, productPn);
+
+	gDeltaPT->Write("gDeltaPT");
+	gDeltaPn->Write("gDeltaPn");
+
+	gCutDeltaPT->Write("gCutDeltaPT");
+	gCutDeltaPn->Write("gCutDeltaPn");
+
+	//----------------------------------------//		
 		
 	file->cd();
 	file->Write();
 	fFile->Close();
 
 	std::cout << std::endl;
-	std::cout << "File " << FileNameAndPath +" has been created created " << std::endl; 
+	std::cout << "File " << FileNameAndPath +" has been created" << std::endl; 
 	std::cout << std::endl;
 
 	std::cout << std::endl << "------------------------------------------------" << std::endl << std::endl;
+
+	OutputTxt.close();
 
 	//----------------------------------------//		
 
