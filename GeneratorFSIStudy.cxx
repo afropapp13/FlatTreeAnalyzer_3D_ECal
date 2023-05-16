@@ -40,12 +40,13 @@ void GeneratorFSIStudy() {
 
 	std::vector<TString> Names; std::vector<TString> Labels; 
 
-	Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"); Labels.push_back("GENIE v3.0.6");
+	Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"); Labels.push_back("G18");
 	//Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v2_12_10.root"); Labels.push_back("GENIE v2.12.10");
 	//Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v2_12_10_MEC.root"); Labels.push_back("GENIE v2.12.10.MEC");
-	//Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_NEUT_5_4_0_1.root"); Labels.push_back("NEUT 5.4.0.1");
-	//Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_NuWro_19_02_1.root"); Labels.push_back("NuWro 19.02.1");
-	//Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GiBUU_2021.root"); Labels.push_back("GiBUU 2021");
+	Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_NEUT_5_4_0_1.root"); Labels.push_back("NEUT");
+	Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_NuWro_19_02_1.root"); Labels.push_back("NuWro");
+	Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GiBUU_2021.root"); Labels.push_back("GiBUU");
+	//Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GiBUU_2021_NoFSI.root"); Labels.push_back("GiBUU 2021 NoFSI");
 	//Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6_hN2018.root"); Labels.push_back("v3.0.6 hN2018");
 	//Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6_NoRPA.root"); Labels.push_back("v3.0.6 NoRPA");
 	//Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6_NoCoulomb.root"); Labels.push_back("v3.0.6 NoCoulomb");
@@ -78,6 +79,8 @@ void GeneratorFSIStudy() {
 	PlotNames.push_back("TrueFineBinDeltaPhiTPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#delta#phi_{T}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
 	PlotNames.push_back("TrueFineBinDeltaPhi3DPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#phi_{3D}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
 	PlotNames.push_back("TrueFineBinDeltaPnPerpPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n#perp}} #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
+	PlotNames.push_back("TrueFineBinDeltaPnPerpxPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n#perp,x}} #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
+	PlotNames.push_back("TrueFineBinDeltaPnPerpyPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n#perp,y}} #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
 	PlotNames.push_back("TrueFineBinDeltaPnParPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n#parallel}} #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
 
 	//------------------------------//
@@ -182,7 +185,19 @@ void GeneratorFSIStudy() {
 
 		  //-------------------//
 
-		  TH1D* NoFSIHistos = (TH1D*)(Files[iSample]->Get("NoFSI"+PlotNames[iPlot]));
+		  // Special case, GiBUU needs a separate production with no fsi
+		  // otherwise the _vert branches make no sense
+
+		  TFile* file = Files[iSample];
+
+		  if (Labels[iSample] == "GiBUU 2021") {
+
+		    file = new TFile(OutFilePath+"FlatTreeAnalyzerOutput_GiBUU_2021_NoFSI.root","readonly");
+
+		  }
+
+		  TH1D* NoFSIHistos = (TH1D*)(file->Get("NoFSI"+PlotNames[iPlot]));
+
 		  NoFSIHistos->SetLineWidth(4);
 		  NoFSIHistos->SetLineColor(kBlack);	
 		  NoFSIHistos->SetLineStyle(kDashed);	
@@ -209,6 +224,11 @@ void GeneratorFSIStudy() {
 		  TString ReducedPlotName = PlotNameDuplicate.ReplaceAll("TrueFineBin","") ;
 		  textSlice->DrawLatexNDC(0.25, 0.82, LatexLabel[ReducedPlotName].ReplaceAll("All events",""));
 
+                  TLatex *textLabel = new TLatex();
+                  textLabel->SetTextFont(FontStyle);
+                  textLabel->SetTextSize(TextSize);
+                  textLabel->DrawLatexNDC(0.8, 0.91, Labels[iSample]);
+
                   if ( 
 		      PlotNames[iPlot] == "TrueFineBinDeltaAlpha3DqPlot" || PlotNames[iPlot] == "TrueFineBinDeltaAlphaTPlot" ||
                       PlotNames[iPlot] == "TrueFineBinDeltaPn_DeltaAlpha3Dq_0_00To45_00Plot" ||
@@ -224,14 +244,14 @@ void GeneratorFSIStudy() {
 			PlotNames[iPlot] == "TrueFineBinDeltaAlpha3DqPlot" || 
 			PlotNames[iPlot] == "TrueFineBinDeltaPn_DeltaAlpha3Dq_0_00To45_00Plot" ||
 			PlotNames[iPlot] == "TrueFineBinDeltaAlpha3Dq_DeltaPn_0_00To0_20Plot"
-			 ) { textPanel->DrawLatexNDC(0.87, 0.8, "(a)"); }
+			 ) { textPanel->DrawLatexNDC(0.87, 0.81, "(a)"); }
 
                     if ( 
 			PlotNames[iPlot] == "TrueFineBinDeltaAlphaTPlot" || 
 			PlotNames[iPlot] == "TrueFineBinDeltaPn_DeltaAlpha3Dq_135_00To180_00Plot" ||
 			PlotNames[iPlot] == "TrueFineBinDeltaAlpha3Dq_DeltaPn_0_40To1_00Plot"
 
-			 ) { textPanel->DrawLatexNDC(0.87, 0.8, "(b)"); }
+			 ) { textPanel->DrawLatexNDC(0.87, 0.81, "(b)"); }
 
                   }
 

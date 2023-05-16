@@ -12,6 +12,7 @@ private:
 	TFile* fFile;
 	TString fInputFile;
 	TString fOutputFile;
+	TString fweights;
 
 public :
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain
@@ -83,7 +84,7 @@ public :
    TBranch        *b_E_vert;   //!
    TBranch        *b_pdg_vert;   //!
 
-   FlatTreeAnalyzer(TString in, TString out, TTree *tree=0);
+   FlatTreeAnalyzer(TString in, TString out, TString weight = "", TTree *tree=0);
    virtual ~FlatTreeAnalyzer();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
@@ -97,9 +98,10 @@ public :
 #endif
 
 #ifdef FlatTreeAnalyzer_cxx
-FlatTreeAnalyzer::FlatTreeAnalyzer(TString InputFile, TString OutputFile, TTree *tree) : fChain(0) 
+FlatTreeAnalyzer::FlatTreeAnalyzer(TString InputFile, TString OutputFile, TString Weights, TTree *tree) : fChain(0) 
 {
 
+        fweights = Weights;
 	fInputFile = InputFile;
 	fOutputFile = OutputFile;
 	TString FullName = fInputFile;

@@ -31,7 +31,137 @@ using namespace Constants;
 
 //----------------------------------------//
 
-void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false) {
+  double
+  AxisToUser(const double x, const bool logx)
+  {
+    return logx ? std::pow(10.0, x) : x;
+  }
+
+//----------------------------------------//
+
+  double
+  AxisToY(const double ay)
+  {
+    return AxisToUser(ay, gPad->GetLogy());
+  }
+
+//----------------------------------------//
+
+  double
+  AxisToX(const double ax)
+  {
+    return AxisToUser(ax, gPad->GetLogx());
+  }
+
+//----------------------------------------//
+
+  double
+  GetUxmax()
+  {
+    gPad->Update();
+    return gPad->GetUxmax();
+  }
+
+//----------------------------------------//
+
+  double
+  GetUxmin()
+  {
+    gPad->Update();
+    return gPad->GetUxmin();
+  }
+
+//----------------------------------------//
+
+  double
+  GetFrameWidthAxis()
+  {
+    return GetUxmax() - GetUxmin();
+  }
+
+//----------------------------------------//
+
+  double
+  GetFrameWidthNDC()
+  {
+    return 1.0 - gPad->GetLeftMargin() - gPad->GetRightMargin();
+  }
+
+//----------------------------------------//
+
+  double
+  GetRatioWidthNDCAxis()
+  {
+    return GetFrameWidthNDC() / GetFrameWidthAxis();
+  }
+
+//----------------------------------------//
+
+  double
+  GetUymin()
+  {
+    gPad->Update();
+    return gPad->GetUymin();
+  }
+
+
+//----------------------------------------//
+
+  double
+  GetUymax()
+  {
+    gPad->Update();
+    return gPad->GetUymax();
+  }
+
+//----------------------------------------//
+
+  double
+  GetFrameHeightAxis()
+  {
+    return GetUymax() - GetUymin();
+  }
+
+
+//----------------------------------------//
+
+  double
+  GetFrameHeightNDC()
+  {
+    return 1.0 - gPad->GetTopMargin() - gPad->GetBottomMargin();
+  }
+
+//----------------------------------------//
+
+  double
+  GetRatioHeightNDCAxis()
+  {
+    return GetFrameHeightNDC() / GetFrameHeightAxis();
+  }
+
+//----------------------------------------//
+
+  double
+  NDCtoX(const double ndcx)
+  {
+    const double ax =
+      (ndcx - gPad->GetLeftMargin()) / GetRatioWidthNDCAxis() + GetUxmin();
+    return AxisToX(ax);
+  }
+
+//----------------------------------------//
+
+  double
+  NDCtoY(const double ndcy)
+  {
+    const double ay =
+      (ndcy - gPad->GetBottomMargin()) / GetRatioHeightNDCAxis() + GetUymin();
+    return AxisToY(ay);
+  }
+
+//----------------------------------------//
+
+void LogTwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false) {
 
 	//----------------------------------------//
 
@@ -61,9 +191,9 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 	// 2D analysis
 
 	PlotNames.push_back("DeltaPn_DeltaAlpha3DqPlot");
-        PlotNames.push_back("DeltaPn_DeltaAlpha3DMuPlot");		
+        //PlotNames.push_back("DeltaPn_DeltaAlpha3DMuPlot");		
 	PlotNames.push_back("DeltaAlpha3Dq_DeltaPnPlot");
-	PlotNames.push_back("DeltaAlpha3DMu_DeltaPnPlot");				
+	//PlotNames.push_back("DeltaAlpha3DMu_DeltaPnPlot");				
 	
 	//----------------------------------------//	
 
@@ -779,12 +909,120 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 
 				}
 
+				//------------------------------------//
+
+				// Insert // smaller pad
+
+                                if (
+                                    CanvasName == "SerialDeltaPn_DeltaAlpha3DqPlot_Slice_0" ||
+                                    CanvasName == "SerialDeltaAlpha3Dq_DeltaPnPlot_Slice_2"
+                                    ) {
+
+				  double PadNDCXmin = 0.54,PadNDCXmax = 0.95, PadNDCYmin = 0.26,PadNDCYmax = 0.56;
+				  double PadLeftMargin = 0.19, PadRightMargin = 0.05, PadBottomMargin = 0.1, PadTopMargin = 0.005;
+
+				  double Xmin = 0.4, Xmax = 0.85, Ymin = 0., Ymax = 0.0034;
+
+				  if (CanvasName == "SerialDeltaAlpha3Dq_DeltaPnPlot_Slice_2") {
+
+				    Xmin = 0., Xmax = 70., Ymin = 0., Ymax = 0.014;
+				    PadNDCXmin = 0.22,PadNDCXmax = 0.55, PadNDCYmin = 0.29,PadNDCYmax = 0.51;
+
+				  }
+
+				  // ---------------------------------------
+
+				  TH1D* DataPlotClone = (TH1D*)(BeamOnStatShape[WhichPlot][NDimSlice]->Clone("DataPlotClone"));
+				  TH1D* StatDataPlotClone = (TH1D*)(BeamOnStatOnly[WhichPlot][NDimSlice]->Clone("StatDataPlotClone"));
+				  TH1D* NormDataPlotClone = (TH1D*)(BeamOnNormOnly[WhichPlot][NDimSlice]->Clone("NormDataPlotClone"));
+
+				  // Truth level studies
+
+				  TH1D* MCClone[NSamples];
+
+				  for (int itrue = 0; itrue < NSamples; itrue++) {
+
+				    MCClone[itrue] = (TH1D*)(MC[WhichPlot][NDimSlice][itrue]->Clone("MC"+ToString(itrue)));
+				    MCClone[itrue]->SetLineWidth(1);
+
+
+				  }
+
+				  // ---------------------------------------
+
+				  double XminLeftLine = Xmin;
+				  double XminRightLine = Xmax;
+
+				  double XmaxLeftLine = NDCtoX(PadNDCXmin+0.7*PadLeftMargin*(PadNDCXmax-PadNDCXmin));
+				  double XmaxRightLine = NDCtoX(PadNDCXmax-0.7*PadRightMargin*(PadNDCXmax-PadNDCXmin));
+
+				  double YmaxLeftLine = NDCtoY(PadNDCYmin+0.7*PadBottomMargin*(PadNDCYmax-PadNDCYmin));
+
+				  double YminLeftLine = Ymin;
+				  double YminRightLine = Ymin;
+
+				  TLine* Leftline = new TLine(XminLeftLine,YminLeftLine,XmaxLeftLine,YmaxLeftLine);
+				  Leftline->SetLineWidth(1);
+				  Leftline->SetLineColor(kBlack);
+				  Leftline->SetLineStyle(9);
+				  Leftline->Draw();
+
+				  TLine* Rightline = new TLine(XminRightLine,YminRightLine,XmaxRightLine,YmaxLeftLine);
+				  Rightline->SetLineWidth(1);
+				  Rightline->SetLineColor(kBlack);
+				  Rightline->SetLineStyle(9);
+				  Rightline->Draw();
+				  
+				  // ---------------------------------------
+
+				  TString PadName = "ZoomInPad";
+				  TPad* padZoomIn = new TPad(PadName,PadName,PadNDCXmin,PadNDCYmin,PadNDCXmax,PadNDCYmax,21); 
+				  padZoomIn->SetFillColor(kWhite); 
+				  padZoomIn->SetFrameLineWidth(1);
+				  padZoomIn->Draw();
+				  padZoomIn->SetTopMargin(PadTopMargin);
+				  padZoomIn->SetBottomMargin(PadBottomMargin);
+				  padZoomIn->SetLeftMargin(PadLeftMargin);
+				  padZoomIn->SetRightMargin(PadRightMargin);
+				  padZoomIn->SetFillStyle(4000); // make pad trasnparent
+				  padZoomIn->cd();
+
+				  // ---------------------------------------------------------------
+
+				  auto frame = PlotCanvas->DrawFrame(Xmin,Ymin,Xmax,Ymax);
+
+				  frame->GetXaxis()->SetNdivisions(4);
+				  frame->GetXaxis()->SetLabelSize(0.);
+				  frame->GetXaxis()->SetLabelFont(FontStyle);
+				  frame->GetXaxis()->SetTickLength(0.08);
+
+				  frame->GetYaxis()->SetNdivisions(4);
+				  frame->GetYaxis()->SetLabelSize(0.15);
+				  frame->GetYaxis()->SetLabelFont(FontStyle);
+
+				  DataPlotClone->Draw("e1x0 same");
+				  StatDataPlotClone->Draw("e1x0 same");
+				  NormDataPlotClone->Draw("e2 same");
+
+                                  for (int itrue = 0; itrue < NSamples; itrue++) {
+
+                                    MCClone[itrue]->Draw("hist same");
+
+				  }
+
+				  DataPlotClone->Draw("e1x0 same");
+				  StatDataPlotClone->Draw("e1x0 same");
+
+				  gPad->RedrawAxis();
+
+                                }
+
 
 				//------------------------------------//
 				
 				// Saving the canvas with the data (total uncertainties) vs overlay & generator predictions
 
-				PlotCanvas->SaveAs("/uboone/data/users/apapadop/FlatTTreePlots/"+Extra+"TwoDXSections_"+CanvasName+"_"+Runs[WhichRun]+"_"+UBCodeVersion+".pdf");
+				PlotCanvas->SaveAs("/uboone/data/users/apapadop/FlatTTreePlots/"+Extra+"LogTwoDXSections_"+CanvasName+"_"+Runs[WhichRun]+"_"+UBCodeVersion+".pdf");
 
 				delete PlotCanvas;
 				

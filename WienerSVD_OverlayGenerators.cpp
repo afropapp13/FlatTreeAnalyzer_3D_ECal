@@ -31,7 +31,7 @@ using namespace Constants;
 
 //----------------------------------------//
 
-void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false) {
+void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bool PlotACHILLES = false) {
 
 	//----------------------------------------//
 
@@ -47,11 +47,14 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false) {
 	TString Extra = "";
 	if (PlotGen) { Extra = "Gene"; }
 	if (PlotGENIE) { Extra = "Genie"; }
+	if (PlotACHILLES) { Extra = "ACHILLES"; }
 
 	//----------------------------------------//
 
 	vector<TString> PlotNames;
 	PlotNames.push_back("DeltaPnPerpPlot");
+	PlotNames.push_back("DeltaPnPerpxPlot");
+	PlotNames.push_back("DeltaPnPerpyPlot");
 	PlotNames.push_back("DeltaPnParPlot");
 	PlotNames.push_back("DeltaPnPlot");
 	PlotNames.push_back("DeltaAlpha3DqPlot");
@@ -64,6 +67,7 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false) {
 	//----------------------------------------//
 
 	vector<TString> Runs;
+	//Runs.push_back("Run5");
 	Runs.push_back("Combined");
 
 	int NRuns = (int)(Runs.size());
@@ -115,6 +119,14 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false) {
 			NameOfSamples.push_back("GiBUU_2021"); Colors.push_back(GiBUUColor); Labels.push_back("GiBUU "); LineStyle.push_back(GiBUULineStyle);
 			NameOfSamples.push_back("NEUT_5_4_0_1"); Colors.push_back(kMagenta-9); Labels.push_back("NEUT "); LineStyle.push_back(NEUTLineStyle);
 
+		}	
+
+		//----------------------------------------//		
+
+		if (PlotACHILLES) {
+
+		  NameOfSamples.push_back("ACHILLES"); Colors.push_back(NEUTColor); Labels.push_back("ACHILLES "); LineStyle.push_back(NuWroLineStyle);
+			
 		}	
 
 		//----------------------------------------//
@@ -342,8 +354,10 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false) {
 			if (
 
 				PlotNames[WhichPlot] == "DeltaPnParPlot" ||
-				PlotNames[WhichPlot] == "DeltaAlpha3DqPlot" ||
-				PlotNames[WhichPlot] == "DeltaAlpha3DMuPlot" /*||				
+				PlotNames[WhichPlot] == "DeltaPnPerpxPlot" ||
+				PlotNames[WhichPlot] == "DeltaPnPerpyPlot" ||
+				PlotNames[WhichPlot] == "DeltaAlpha3DqPlot" /*||
+				PlotNames[WhichPlot] == "DeltaAlpha3DMuPlot" ||				
 				PlotNames[WhichPlot] == "DeltaAlphaT_ProtonCosTheta_0_75To1_00Plot" ||		
 				PlotNames[WhichPlot] == "ProtonCosTheta_MuonCosTheta_Minus1_00To0_00Plot" ||
 				PlotNames[WhichPlot] == "ProtonCosTheta_MuonCosTheta_0_00To0_50Plot" ||
@@ -354,6 +368,16 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false) {
 				
 			  leg = new TLegend(0.22,0.69,0.55,0.85);	
 			  legMC = new TLegend(0.53,0.69,0.63,0.85);
+
+			}
+
+			if (
+
+				PlotNames[WhichPlot] == "DeltaAlpha3DqPlot"
+			) { 
+
+			  leg = new TLegend(0.22,0.69,0.55,0.85);					
+			  legMC = new TLegend(0.22,0.53,0.38,0.69);
 
 			}
 

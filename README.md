@@ -1,9 +1,11 @@
-# To loop over the input files
+# Loop over the input files
 root -b script_LoopGenerators.cxx
+root -b script_LoopGenerators_Weights.cxx
 
 # To overlay the outputs of the loop w/o any Ac multiplication
 # Generators and GENIE variations
 root -b script_GeneratorOverlay.cxx
+root -b GeneratorOverlay2D3D.cxx
 
 # Interaction breakdown
 root -b GeneratorInteBreakDown.cxx

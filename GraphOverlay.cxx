@@ -37,15 +37,15 @@ void GraphOverlay(TString Tag = "G18") {
 
 	if (Tag == "G18") { Names = OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"; }
 
-	if (Tag == "Gv2") { Names = OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"; }
-	if (Tag == "NEUT") { Names = OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"; }
-	if (Tag == "NuWro") { Names = OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"; }
-	if (Tag == "GiBUU") { Names = OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"; }
-	if (Tag == "G18 hN2018") { Names = OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"; }
-	if (Tag == "G18 NoCoulomb") { Names = OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"; }
-	if (Tag == "G18 RFG") { Names = OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"; }
-	if (Tag == "G18 EffSF") { Names = OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"; }
-	if (Tag == "G18 NoRPA") { Names = OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"; }
+	//if (Tag == "Gv2") { Names = OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"; }
+	if (Tag == "NEUT") { Names = OutFilePath+"FlatTreeAnalyzerOutput_NEUT_5_4_0_1.root"; }
+	if (Tag == "NuWro") { Names = OutFilePath+"FlatTreeAnalyzerOutput_NuWro_19_02_1.root"; }
+	if (Tag == "GiBUU") { Names = OutFilePath+"FlatTreeAnalyzerOutput_GiBUU_2021.root"; }
+	//if (Tag == "G18 hN2018") { Names = OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"; }
+	//if (Tag == "G18 NoCoulomb") { Names = OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"; }
+	//if (Tag == "G18 RFG") { Names = OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"; }
+	//if (Tag == "G18 EffSF") { Names = OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"; }
+	//if (Tag == "G18 NoRPA") { Names = OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"; }
 
 	TFile* File = new TFile(Names,"readonly");
 
@@ -60,7 +60,7 @@ void GraphOverlay(TString Tag = "G18") {
 	PlotCanvas->SetBottomMargin(0.12);		
 	PlotCanvas->Draw();	
 
-	TLegend* leg = new TLegend(0.75,0.75,0.85,0.85);
+	TLegend* leg = new TLegend(0.7,0.7,0.8,0.85);
 	leg->SetBorderSize(0);
 	leg->SetNColumns(1);
 	leg->SetTextSize(TextSize);	
@@ -94,6 +94,7 @@ void GraphOverlay(TString Tag = "G18") {
 	gPT->GetYaxis()->CenterTitle();	
 	gPT->GetYaxis()->SetRangeUser(0.,1.15);	
 
+	leg->AddEntry(gPT,Tag,"");
 	TLegendEntry* legColorPT = leg->AddEntry(gPT,"#deltap_{T}","l");
 	legColorPT->SetTextColor( kAzure-4 ); 
 	
@@ -129,7 +130,7 @@ void GraphOverlay(TString Tag = "G18") {
 	CutPlotCanvas->SetBottomMargin(0.12);		
 	CutPlotCanvas->Draw();	
 
-	TLegend* Cutleg = new TLegend(0.75,0.75,0.85,0.85);
+	TLegend* Cutleg = new TLegend(0.7,0.7,0.8,0.85);
 	Cutleg->SetBorderSize(0);
 	Cutleg->SetNColumns(1);
 	Cutleg->SetTextSize(TextSize);	
@@ -161,8 +162,9 @@ void GraphOverlay(TString Tag = "G18") {
 	CutgPT->GetYaxis()->SetTitleSize(TextSize);
 	CutgPT->GetYaxis()->SetTitleOffset(1.);
 	CutgPT->GetYaxis()->CenterTitle();	
-	CutgPT->GetYaxis()->SetRangeUser(0.,0.64);	
+	CutgPT->GetYaxis()->SetRangeUser(0.,0.69);	
 
+	Cutleg->AddEntry(gPT,Tag,"");
 	TLegendEntry* CutlegColorPT = Cutleg->AddEntry(CutgPT,"#deltap_{T}","l");
 	CutlegColorPT->SetTextColor( kAzure-4 ); 
 	

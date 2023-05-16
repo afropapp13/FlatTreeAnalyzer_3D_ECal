@@ -52,7 +52,7 @@ void FlatTreeAnalyzer::Loop() {
 
 	// Root
 
-	TString FileNameAndPath = "OutputFiles/FlatTreeAnalyzerOutput_"+fOutputFile+".root";
+	TString FileNameAndPath = "OutputFiles/" + fweights + "FlatTreeAnalyzerOutput_"+fOutputFile+".root";
 	TFile* file = new TFile(FileNameAndPath,"recreate");
 
 	std::cout << std::endl << "------------------------------------------------" << std::endl << std::endl;
@@ -80,7 +80,14 @@ void FlatTreeAnalyzer::Loop() {
 	TH1D* TrueFineBinDeltaPhiTPlot[NInte];
 	TH1D* TrueFineBinDeltaPhi3DPlot[NInte];
 	TH1D* TrueFineBinDeltaPnPerpPlot[NInte];
+	TH1D* TrueFineBinDeltaPnPerpxPlot[NInte];
+	TH1D* TrueFineBinDeltaPnPerpyPlot[NInte];
+	TH1D* TrueFineBinDeltaPtxPlot[NInte];
+	TH1D* TrueFineBinDeltaPtyPlot[NInte];
 	TH1D* TrueFineBinDeltaPnParPlot[NInte];
+
+	TH2D* TrueFineBinECal2DPlot[NInte];
+	TH2D* TrueFineBinq2DPlot[NInte];
 
 	// 2D Fine Binning Uncorrelated
 
@@ -111,6 +118,10 @@ void FlatTreeAnalyzer::Loop() {
 	TH1D* TrueDeltaPhiTPlot[NInte];
 	TH1D* TrueDeltaPhi3DPlot[NInte];
 	TH1D* TrueDeltaPnPerpPlot[NInte];
+	TH1D* TrueDeltaPnPerpxPlot[NInte];
+	TH1D* TrueDeltaPnPerpyPlot[NInte];
+	TH1D* TrueDeltaPtxPlot[NInte];
+	TH1D* TrueDeltaPtyPlot[NInte];
 	TH1D* TrueDeltaPnParPlot[NInte];
 
 	// 2D Nominal Binning Uncorrelated
@@ -160,7 +171,14 @@ void FlatTreeAnalyzer::Loop() {
 	TH1D* NoFSITrueFineBinDeltaPhiTPlot[NInte];
 	TH1D* NoFSITrueFineBinDeltaPhi3DPlot[NInte];
 	TH1D* NoFSITrueFineBinDeltaPnPerpPlot[NInte];
+	TH1D* NoFSITrueFineBinDeltaPnPerpxPlot[NInte];
+	TH1D* NoFSITrueFineBinDeltaPnPerpyPlot[NInte];
+	TH1D* NoFSITrueFineBinDeltaPtxPlot[NInte];
+	TH1D* NoFSITrueFineBinDeltaPtyPlot[NInte];
 	TH1D* NoFSITrueFineBinDeltaPnParPlot[NInte];
+
+	TH2D* NoFSITrueFineBinECal2DPlot[NInte];
+	TH2D* NoFSITrueFineBinq2DPlot[NInte];
 
 	// 2D Fine Binning Uncorrelated
 
@@ -191,6 +209,10 @@ void FlatTreeAnalyzer::Loop() {
 	TH1D* NoFSITrueDeltaPhiTPlot[NInte];
 	TH1D* NoFSITrueDeltaPhi3DPlot[NInte];
 	TH1D* NoFSITrueDeltaPnPerpPlot[NInte];
+	TH1D* NoFSITrueDeltaPnPerpxPlot[NInte];
+	TH1D* NoFSITrueDeltaPnPerpyPlot[NInte];
+	TH1D* NoFSITrueDeltaPtxPlot[NInte];
+	TH1D* NoFSITrueDeltaPtyPlot[NInte];
 	TH1D* NoFSITrueDeltaPnParPlot[NInte];
 
 	// 2D Nominal Binning Uncorrelated
@@ -232,7 +254,14 @@ void FlatTreeAnalyzer::Loop() {
 	  TrueFineBinDeltaPhiTPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaPhiTPlot",LabelXAxisDeltaPhiT,40,ArrayNBinsDeltaPhiT[0],ArrayNBinsDeltaPhiT[NBinsDeltaPhiT]);
 	  TrueFineBinDeltaPhi3DPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaPhi3DPlot",LabelXAxisDeltaPhi3D,40,ArrayNBinsDeltaPhi3D[0],ArrayNBinsDeltaPhi3D[NBinsDeltaPhi3D]);
 	  TrueFineBinDeltaPnPerpPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaPnPerpPlot",LabelXAxisDeltaPnPerp,30,ArrayNBinsDeltaPnPerp[0],ArrayNBinsDeltaPnPerp[NBinsDeltaPnPerp]);
+	  TrueFineBinDeltaPnPerpxPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaPnPerpxPlot",LabelXAxisDeltaPnPerpx,30,ArrayNBinsDeltaPnPerpx[0],ArrayNBinsDeltaPnPerpx[NBinsDeltaPnPerpx]);
+	  TrueFineBinDeltaPnPerpyPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaPnPerpyPlot",LabelXAxisDeltaPnPerpy,30,ArrayNBinsDeltaPnPerpy[0],ArrayNBinsDeltaPnPerpy[NBinsDeltaPnPerpy]);
+	  TrueFineBinDeltaPtxPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaPtxPlot",LabelXAxisDeltaPtx,30,ArrayNBinsDeltaPtx[0],ArrayNBinsDeltaPtx[NBinsDeltaPtx]);
+	  TrueFineBinDeltaPtyPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaPtyPlot",LabelXAxisDeltaPty,30,ArrayNBinsDeltaPty[0],ArrayNBinsDeltaPty[NBinsDeltaPty]);
 	  TrueFineBinDeltaPnParPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinDeltaPnParPlot",LabelXAxisDeltaPnPar,30,-0.7,0.5);
+
+	  TrueFineBinECal2DPlot[inte] = new TH2D(InteractionLabels[inte]+"TrueFineBinECal2DPlot",";E_{#nu}^{true} [GeV];E_{Cal} [GeV]",25,0.,1.5,20,0.,1.5);
+	  TrueFineBinq2DPlot[inte] = new TH2D(InteractionLabels[inte]+"TrueFineBinq2DPlot",";q^{true} [GeV];q^{reco} [GeV/c]",25,0.,1.5,20,0.,1.5);
 
 	  // 1D Nominal Binning
 
@@ -245,6 +274,10 @@ void FlatTreeAnalyzer::Loop() {
 	  TrueDeltaPhiTPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueDeltaPhiTPlot",LabelXAxisDeltaPhiT,NBinsDeltaPhiT,ArrayNBinsDeltaPhiT);
 	  TrueDeltaPhi3DPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueDeltaPhi3DPlot",LabelXAxisDeltaPhi3D,NBinsDeltaPhi3D,ArrayNBinsDeltaPhi3D);
 	  TrueDeltaPnPerpPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueDeltaPnPerpPlot",LabelXAxisDeltaPnPerp,NBinsDeltaPnPerp,ArrayNBinsDeltaPnPerp);
+	  TrueDeltaPnPerpxPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueDeltaPnPerpxPlot",LabelXAxisDeltaPnPerpx,NBinsDeltaPnPerpx,ArrayNBinsDeltaPnPerpx);
+	  TrueDeltaPnPerpyPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueDeltaPnPerpyPlot",LabelXAxisDeltaPnPerpy,NBinsDeltaPnPerpy,ArrayNBinsDeltaPnPerpy);
+	  TrueDeltaPtxPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueDeltaPtxPlot",LabelXAxisDeltaPtx,NBinsDeltaPtx,ArrayNBinsDeltaPtx);
+	  TrueDeltaPtyPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueDeltaPtyPlot",LabelXAxisDeltaPty,NBinsDeltaPty,ArrayNBinsDeltaPty);
 	  TrueDeltaPnParPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueDeltaPnParPlot",LabelXAxisDeltaPnPar,NBinsDeltaPnPar,ArrayNBinsDeltaPnPar);
 
 	  // 2D & 3D Fine & Nominal Binning Uncorrelated
@@ -386,7 +419,14 @@ void FlatTreeAnalyzer::Loop() {
 	  NoFSITrueFineBinDeltaPhiTPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaPhiTPlot",LabelXAxisDeltaPhiT,40,ArrayNBinsDeltaPhiT[0],ArrayNBinsDeltaPhiT[NBinsDeltaPhiT]);
 	  NoFSITrueFineBinDeltaPhi3DPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaPhi3DPlot",LabelXAxisDeltaPhi3D,40,ArrayNBinsDeltaPhi3D[0],ArrayNBinsDeltaPhi3D[NBinsDeltaPhi3D]);
 	  NoFSITrueFineBinDeltaPnPerpPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaPnPerpPlot",LabelXAxisDeltaPnPerp,30,ArrayNBinsDeltaPnPerp[0],ArrayNBinsDeltaPnPerp[NBinsDeltaPnPerp]);
+	  NoFSITrueFineBinDeltaPnPerpxPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaPnPerpxPlot",LabelXAxisDeltaPnPerpx,30,ArrayNBinsDeltaPnPerpx[0],ArrayNBinsDeltaPnPerpx[NBinsDeltaPnPerpx]);
+	  NoFSITrueFineBinDeltaPnPerpyPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaPnPerpyPlot",LabelXAxisDeltaPnPerpy,30,ArrayNBinsDeltaPnPerpy[0],ArrayNBinsDeltaPnPerpy[NBinsDeltaPnPerpy]);
+	  NoFSITrueFineBinDeltaPtxPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaPtxPlot",LabelXAxisDeltaPtx,30,ArrayNBinsDeltaPtx[0],ArrayNBinsDeltaPtx[NBinsDeltaPtx]);
+	  NoFSITrueFineBinDeltaPtyPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaPtyPlot",LabelXAxisDeltaPty,30,ArrayNBinsDeltaPty[0],ArrayNBinsDeltaPty[NBinsDeltaPty]);
 	  NoFSITrueFineBinDeltaPnParPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueFineBinDeltaPnParPlot",LabelXAxisDeltaPnPar,30,-0.7,0.5);
+
+	  NoFSITrueFineBinECal2DPlot[inte] = new TH2D(InteractionLabels[inte]+"NoFSITrueFineBinECal2DPlot",";E_{#nu}^{true} [GeV];E_{Cal} [GeV]",25,0.,1.5,20,0.,1.5);
+	  NoFSITrueFineBinq2DPlot[inte] = new TH2D(InteractionLabels[inte]+"NoFSITrueFineBinq2DPlot",";q^{true} [GeV];q^{reco} [GeV/c]",25,0.,1.5,20,0.,1.5);
 
 	  // 1D Nominal Binning
 
@@ -399,6 +439,10 @@ void FlatTreeAnalyzer::Loop() {
 	  NoFSITrueDeltaPhiTPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueDeltaPhiTPlot",LabelXAxisDeltaPhiT,NBinsDeltaPhiT,ArrayNBinsDeltaPhiT[0],ArrayNBinsDeltaPhiT[NBinsDeltaPhiT]);
 	  NoFSITrueDeltaPhi3DPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueDeltaPhi3DPlot",LabelXAxisDeltaPhi3D,NBinsDeltaPhi3D,ArrayNBinsDeltaPhi3D[0],ArrayNBinsDeltaPhi3D[NBinsDeltaPhi3D]);
 	  NoFSITrueDeltaPnPerpPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueDeltaPnPerpPlot",LabelXAxisDeltaPnPerp,NBinsDeltaPnPerp,ArrayNBinsDeltaPnPerp[0],ArrayNBinsDeltaPnPerp[NBinsDeltaPnPerp]);
+	  NoFSITrueDeltaPnPerpxPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueDeltaPnPerpxPlot",LabelXAxisDeltaPnPerpx,NBinsDeltaPnPerpx,ArrayNBinsDeltaPnPerpx[0],ArrayNBinsDeltaPnPerpx[NBinsDeltaPnPerpx]);
+	  NoFSITrueDeltaPnPerpyPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueDeltaPnPerpyPlot",LabelXAxisDeltaPnPerpy,NBinsDeltaPnPerpy,ArrayNBinsDeltaPnPerpy[0],ArrayNBinsDeltaPnPerpy[NBinsDeltaPnPerpy]);
+	  NoFSITrueDeltaPtxPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueDeltaPtxPlot",LabelXAxisDeltaPtx,NBinsDeltaPtx,ArrayNBinsDeltaPtx[0],ArrayNBinsDeltaPtx[NBinsDeltaPtx]);
+	  NoFSITrueDeltaPtyPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueDeltaPtyPlot",LabelXAxisDeltaPty,NBinsDeltaPty,ArrayNBinsDeltaPty[0],ArrayNBinsDeltaPty[NBinsDeltaPty]);
 	  NoFSITrueDeltaPnParPlot[inte] = new TH1D(InteractionLabels[inte]+"NoFSITrueDeltaPnParPlot",LabelXAxisDeltaPnPar,NBinsDeltaPnPar,ArrayNBinsDeltaPnPar[0],ArrayNBinsDeltaPnPar[NBinsDeltaPnPar]);
 
 	  // 2D Fine & Nominal Binning Uncorrelated
@@ -488,9 +532,30 @@ void FlatTreeAnalyzer::Loop() {
 	int CounterEventsPassedSelection = 0;
 
 	//----------------------------------------//
+
+	TFile* fweights_file = nullptr;
+	TTree* tweights = nullptr;
+	float cv_weight = -99.;
+
+	if (fweights == "Weights") {
+
+	  if (fOutputFile == "GENIE_v3_0_6") { fweights_file = TFile::Open("/pnfs/uboone/persistent/users/apapadop/GENIETweakedSamples/myWeights_uB_Tune_Nominal.root"); }
+	  if (fOutputFile == "GENIE_v3_4_0_G18_10a_02_11a") { fweights_file = TFile::Open("/pnfs/uboone/persistent/users/apapadop/GENIETweakedSamples/myWeights_uB_Tune_v3_4_0_G18_10a_02_11a.root"); }
+	  if (fOutputFile == "GENIE_v3_4_0_G18_10a_02_11b") { fweights_file = TFile::Open("/pnfs/uboone/persistent/users/apapadop/GENIETweakedSamples/myWeights_uB_Tune_v3_4_0_G18_10a_02_11b.root"); }
+	  if (fOutputFile == "GENIE_v3_4_0_G18_10a_03_320") { fweights_file = TFile::Open("/pnfs/uboone/persistent/users/apapadop/GENIETweakedSamples/myWeights_uB_Tune_v3_4_0_G18_10a_03_320.root"); }
+	  if (fOutputFile == "GENIE_v3_4_0_G18_10a_03_330") { fweights_file = TFile::Open("/pnfs/uboone/persistent/users/apapadop/GENIETweakedSamples/myWeights_uB_Tune_v3_4_0_G18_10a_03_330.root"); }
+	  if (fOutputFile == "GENIE_v3_4_0_G18_10a_02_11a_RS") { fweights_file = TFile::Open("/pnfs/uboone/persistent/users/apapadop/GENIETweakedSamples/myWeights_uB_Tune_v3_4_0_G18_10a_02_11a_RS.root"); }
+	  if (fOutputFile == "GENIE_v3_4_0_G18_02a_02_11a") { fweights_file = TFile::Open("/pnfs/uboone/persistent/users/apapadop/GENIETweakedSamples/myWeights_uB_Tune_v3_4_0_G18_02a_02_11a.root"); }
+
+	  tweights = (TTree*)fweights_file->Get("GenericVectors__VARS");
+	  tweights->SetBranchAddress("Weight", &cv_weight);
+
+	}
+
+	//----------------------------------------//
 	
 	// Loop over the events
-
+	cout << "nentries = " << nentries << endl;
 	for (Long64_t jentry=0; jentry<nentries;jentry++) {
 
 	  //----------------------------------------//	
@@ -500,16 +565,36 @@ void FlatTreeAnalyzer::Loop() {
 	  if (jentry%1000 == 0) std::cout << jentry/1000 << " k " << std::setprecision(3) << double(jentry)/nentries*100. << " %"<< std::endl;
 
 	  //----------------------------------------//	
-		
-	  double weight = fScaleFactor*Units*A*Weight;	
-	  if (fOutputFile == "GiBUU_2021") { weight = weight/50.; } // To increase the stats, the GiBUU sample has been produced in 50 samples
+
+	  double t2kweight = 1.;
+
+	  if (fweights == "Weights") {
+
+	    tweights->GetEntry(jentry); t2kweight = cv_weight;
+
+	  }
+
+	  //----------------------------------------//			
+
+	  double weight = fScaleFactor*Units*A*Weight * t2kweight;	
+	  if (fOutputFile == "ACHILLES") { weight = fScaleFactor*Units*Weight; }
+
+	  //	  cout << "fScaleFactor = " << fScaleFactor << ", Weight = " << Weight << endl;
+
+	  //double weight = 1.;	
+	  if (fOutputFile == "GiBUU_2021") { weight = weight/100.; } // To increase the stats, the GiBUU sample has been produced in 50 samples
+	  if (fOutputFile == "GiBUU_2021_NoFSI") { weight = weight/100.; } // To increase the stats, Ben Bogart produced the no fsi GiBUU sample in 20 samples
+	  if (fOutputFile == "ACHILLES") { weight = weight*1000./(40./12.); } // ACHILLES scaling still under discussion
 
 	  //----------------------------------------//	
 
 	  // Signal definition
 
 	  if (PDGLep != 13) { continue; } // make sure that we have only a muon in the final state
-	  if (cc != 1) { continue; } // make sure that we have only CC interactions		
+	  // ACHILLES doesn't know how to handle the cc branch yet
+	  if (fOutputFile != "ACHILLES") {
+	    if (cc != 1) { continue; } // make sure that we have only CC interactions		
+	  }
 
 	  int ProtonTagging = 0, ChargedPionTagging = 0, NeutralPionTagging = 0, MuonTagging = 0, TrueHeavierMesonCounter = 0;
 	  vector <int> ProtonID; ProtonID.clear();
@@ -604,15 +689,24 @@ void FlatTreeAnalyzer::Loop() {
 	  // https://arxiv.org/pdf/2106.15809.pdf
 
 	  int genie_mode = -1.;
-	  if (TMath::Abs(Mode) == 1) { genie_mode = 1; } // QE
-	  else if (TMath::Abs(Mode) == 2) { genie_mode = 2; } // MEC
-	  else if (
+
+	  if (fOutputFile ==  "ACHILLES") {
+
+	    genie_mode = 1; // ACHILLES has only QE for now
+
+	  } else {
+
+	    if (TMath::Abs(Mode) == 1) { genie_mode = 1; } // QE
+	    else if (TMath::Abs(Mode) == 2) { genie_mode = 2; } // MEC
+	    else if (
 		   TMath::Abs(Mode) == 11 || TMath::Abs(Mode) == 12 || TMath::Abs(Mode) == 13 ||
 		   TMath::Abs(Mode) == 17 || TMath::Abs(Mode) == 22 || TMath::Abs(Mode) == 23
 		   ) { genie_mode = 3; } // RES
-	  else if (TMath::Abs(Mode) == 21 || TMath::Abs(Mode) == 26) { genie_mode = 4; } // DIS
-	  else if (TMath::Abs(Mode) == 16) { genie_mode = 5;} // COH
-	  else { continue; }  
+	    else if (TMath::Abs(Mode) == 21 || TMath::Abs(Mode) == 26) { genie_mode = 4; } // DIS
+	    else if (TMath::Abs(Mode) == 16) { genie_mode = 5;} // COH
+	    else { continue; }  
+
+	  }
 
 	  // Feb 8 2022: Only case that is not covered is 15 = diffractive
 
@@ -650,8 +744,13 @@ void FlatTreeAnalyzer::Loop() {
 	    double DeltaPhi3D = reco_stv_tool.ReturnDeltaPhi3D();
 	    double DeltaPn = reco_stv_tool.ReturnPn();
 	    double DeltaPnPerp = reco_stv_tool.ReturnPnPerp();
+	    double DeltaPnPerpx = reco_stv_tool.ReturnPnPerpx();
+	    double DeltaPnPerpy = reco_stv_tool.ReturnPnPerpy();
 	    double DeltaPnPar = reco_stv_tool.ReturnPnPar();
 	    double ECal = reco_stv_tool.ReturnECalMB();
+	    double qtrue = Enu_true - Muon4Vector.E();
+	    double qreco = ECal - Muon4Vector.E();
+
 
 	    double DefaultMuonCosTheta = Muon4Vector.CosTheta();
 	    double DefaultDeltaPT = reco_stv_tool.ReturnPt();
@@ -662,6 +761,10 @@ void FlatTreeAnalyzer::Loop() {
 	    double DefaultDeltaPhi3D = reco_stv_tool.ReturnDeltaPhi3D();
 	    double DefaultDeltaPn = reco_stv_tool.ReturnPn();
 	    double DefaultDeltaPnPerp = reco_stv_tool.ReturnPnPerp();
+	    double DefaultDeltaPnPerpx = reco_stv_tool.ReturnPnPerpx();
+	    double DefaultDeltaPnPerpy = reco_stv_tool.ReturnPnPerpy();
+	    double DefaultDeltaPtx = reco_stv_tool.ReturnPtx();
+	    double DefaultDeltaPty = reco_stv_tool.ReturnPty();
 	    double DefaultDeltaPnPar = reco_stv_tool.ReturnPnPar();
 
 	    //----------------------------------------//
@@ -689,7 +792,14 @@ void FlatTreeAnalyzer::Loop() {
 	    TrueFineBinDeltaPhiTPlot[0]->Fill(DeltaPhiT,weight);
 	    TrueFineBinDeltaPhi3DPlot[0]->Fill(DeltaPhi3D,weight);
 	    TrueFineBinDeltaPnPerpPlot[0]->Fill(DeltaPnPerp,weight);
+	    TrueFineBinDeltaPnPerpxPlot[0]->Fill(DeltaPnPerpx,weight);
+	    TrueFineBinDeltaPnPerpyPlot[0]->Fill(DeltaPnPerpy,weight);
+	    TrueFineBinDeltaPtxPlot[0]->Fill(DeltaPtx,weight);
+	    TrueFineBinDeltaPtyPlot[0]->Fill(DeltaPty,weight);
 	    TrueFineBinDeltaPnParPlot[0]->Fill(DeltaPnPar,weight);
+
+	    TrueFineBinECal2DPlot[0]->Fill(Enu_true,ECal,weight);
+	    TrueFineBinq2DPlot[0]->Fill(qtrue,qreco,weight);
 
 	    // filling in the histo based on the interaction mode
 
@@ -704,7 +814,14 @@ void FlatTreeAnalyzer::Loop() {
 	    TrueFineBinDeltaPhiTPlot[genie_mode]->Fill(DeltaPhiT,weight);
 	    TrueFineBinDeltaPhi3DPlot[genie_mode]->Fill(DeltaPhi3D,weight);
 	    TrueFineBinDeltaPnPerpPlot[genie_mode]->Fill(DeltaPnPerp,weight);
+	    TrueFineBinDeltaPnPerpxPlot[genie_mode]->Fill(DeltaPnPerpx,weight);
+	    TrueFineBinDeltaPnPerpyPlot[genie_mode]->Fill(DeltaPnPerpy,weight);
+	    TrueFineBinDeltaPtxPlot[genie_mode]->Fill(DeltaPtx,weight);
+	    TrueFineBinDeltaPtyPlot[genie_mode]->Fill(DeltaPty,weight);
 	    TrueFineBinDeltaPnParPlot[genie_mode]->Fill(DeltaPnPar,weight);
+
+	    TrueFineBinECal2DPlot[genie_mode]->Fill(Enu_true,ECal,weight);
+            TrueFineBinq2DPlot[genie_mode]->Fill(qtrue,qreco,weight);
 
 	    //----------------------------------------//
 
@@ -714,12 +831,20 @@ void FlatTreeAnalyzer::Loop() {
 	    // Affects
 
 	    // DeltaPT                                                                                                                                                                        
-	    // DeltaPn                                                                                                                                                                        
+	    // DeltaPn                                                                                                                                                             
 	    // DeltaPnPerp                                                                                                                                                                    
+	    // DeltaPnPerpx                                                                                                                                                                    
+	    // DeltaPnPerpy                                                                                                                                                                    
+	    // DeltaPtx                                                                                                                                                                    
+	    // DeltaPty                                                                                                                                                                    
 	    // DeltaPnPar                                                                                                                                                                     
 	    if (DeltaPT > ArrayNBinsDeltaPT[NBinsDeltaPT]) { DeltaPT = 0.9999 * ArrayNBinsDeltaPT[NBinsDeltaPT]; }
 	    if (DeltaPn > ArrayNBinsDeltaPn[NBinsDeltaPn]) { DeltaPn = 0.9999 * ArrayNBinsDeltaPn[NBinsDeltaPn]; }
 	    if (DeltaPnPerp > ArrayNBinsDeltaPnPerp[NBinsDeltaPnPerp]) { DeltaPnPerp = 0.9999 * ArrayNBinsDeltaPnPerp[NBinsDeltaPnPerp]; }
+	    if (DeltaPnPerpx > ArrayNBinsDeltaPnPerpx[NBinsDeltaPnPerpx]) { DeltaPnPerpx = 0.9999 * ArrayNBinsDeltaPnPerpx[NBinsDeltaPnPerpx]; }
+	    if (DeltaPnPerpy > ArrayNBinsDeltaPnPerpy[NBinsDeltaPnPerpy]) { DeltaPnPerpy = 0.9999 * ArrayNBinsDeltaPnPerpy[NBinsDeltaPnPerpy]; }
+	    if (DeltaPtx > ArrayNBinsDeltaPtx[NBinsDeltaPtx]) { DeltaPtx = 0.9999 * ArrayNBinsDeltaPtx[NBinsDeltaPtx]; }
+	    if (DeltaPty > ArrayNBinsDeltaPty[NBinsDeltaPty]) { DeltaPty = 0.9999 * ArrayNBinsDeltaPty[NBinsDeltaPty]; }
 	    if (DeltaPnPar > ArrayNBinsDeltaPnPar[NBinsDeltaPnPar]) { DeltaPnPar = 0.9999 * ArrayNBinsDeltaPnPar[NBinsDeltaPnPar]; } \
 
 	    //----------------------------------------//
@@ -728,9 +853,17 @@ void FlatTreeAnalyzer::Loop() {
 	    // Affects
 
 	    // DeltaPnPerp                                                                                                                                                                    
+	    // DeltaPnPerpx                                                                                                                                                                    
+	    // DeltaPnPerpy                                                                                                                                                                    
+	    // DeltaPtx                                                                                                                                                                    
+	    // DeltaPty                                                                                                                                                                    
 	    // DeltaPnPar                                                                                                                                                                     
 
 	    if (DeltaPnPerp < ArrayNBinsDeltaPnPerp[0]) { DeltaPnPerp = 1.0001 * ArrayNBinsDeltaPnPerp[0]; }
+	    if (DeltaPnPerpx < ArrayNBinsDeltaPnPerpx[0]) { DeltaPnPerpx = 1.0001 * ArrayNBinsDeltaPnPerpx[0]; }
+	    if (DeltaPnPerpy < ArrayNBinsDeltaPnPerpy[0]) { DeltaPnPerpy = 1.0001 * ArrayNBinsDeltaPnPerpy[0]; }
+	    if (DeltaPtx < ArrayNBinsDeltaPtx[0]) { DeltaPtx = 1.0001 * ArrayNBinsDeltaPtx[0]; }
+	    if (DeltaPty < ArrayNBinsDeltaPty[0]) { DeltaPty = 1.0001 * ArrayNBinsDeltaPty[0]; }
 	    if (DeltaPnPar < ArrayNBinsDeltaPnPar[0]) { DeltaPnPar = 1.0001 * ArrayNBinsDeltaPnPar[0]; }	\
 
 	    //----------------------------------------//
@@ -788,6 +921,10 @@ void FlatTreeAnalyzer::Loop() {
 	    TrueDeltaPhiTPlot[0]->Fill(DeltaPhiT,weight);
 	    TrueDeltaPhi3DPlot[0]->Fill(DeltaPhi3D,weight);
 	    TrueDeltaPnPerpPlot[0]->Fill(DeltaPnPerp,weight);
+	    TrueDeltaPnPerpxPlot[0]->Fill(DeltaPnPerpx,weight);
+	    TrueDeltaPnPerpyPlot[0]->Fill(DeltaPnPerpy,weight);
+	    TrueDeltaPtxPlot[0]->Fill(DeltaPtx,weight);
+	    TrueDeltaPtyPlot[0]->Fill(DeltaPty,weight);
 	    TrueDeltaPnParPlot[0]->Fill(DeltaPnPar,weight);
 
 	    // 2D Nominal Binning Uncorrelated
@@ -841,6 +978,10 @@ void FlatTreeAnalyzer::Loop() {
 	    TrueDeltaPhiTPlot[genie_mode]->Fill(DeltaPhiT,weight);
 	    TrueDeltaPhi3DPlot[genie_mode]->Fill(DeltaPhi3D,weight);
 	    TrueDeltaPnPerpPlot[genie_mode]->Fill(DeltaPnPerp,weight);
+	    TrueDeltaPnPerpxPlot[genie_mode]->Fill(DeltaPnPerpx,weight);
+	    TrueDeltaPnPerpyPlot[genie_mode]->Fill(DeltaPnPerpy,weight);
+	    TrueDeltaPtxPlot[genie_mode]->Fill(DeltaPtx,weight);
+	    TrueDeltaPtyPlot[genie_mode]->Fill(DeltaPty,weight);
 	    TrueDeltaPnParPlot[genie_mode]->Fill(DeltaPnPar,weight);
 
 	    // 2D Nominal Binning Uncorrelated
@@ -945,7 +1086,14 @@ void FlatTreeAnalyzer::Loop() {
 	    double DeltaPhi3D = reco_stv_tool.ReturnDeltaPhi3D();
 	    double DeltaPn = reco_stv_tool.ReturnPn();
 	    double DeltaPnPerp = reco_stv_tool.ReturnPnPerp();
+	    double DeltaPnPerpx = reco_stv_tool.ReturnPnPerpx();
+	    double DeltaPnPerpy = reco_stv_tool.ReturnPnPerpy();
+	    double DeltaPtx = reco_stv_tool.ReturnPtx();
+	    double DeltaPty = reco_stv_tool.ReturnPty();
 	    double DeltaPnPar = reco_stv_tool.ReturnPnPar();
+            double ECal = reco_stv_tool.ReturnECalMB();
+            double qtrue = Enu_true - Muon4Vector.E();
+            double qreco = ECal - Muon4Vector.E();
 
 	    double DefaultMuonCosTheta = Muon4Vector.CosTheta();
 	    double DefaultDeltaPT = reco_stv_tool.ReturnPt();
@@ -956,6 +1104,10 @@ void FlatTreeAnalyzer::Loop() {
 	    double DefaultDeltaPhi3D = reco_stv_tool.ReturnDeltaPhi3D();
 	    double DefaultDeltaPn = reco_stv_tool.ReturnPn();
 	    double DefaultDeltaPnPerp = reco_stv_tool.ReturnPnPerp();
+	    double DefaultDeltaPnPerpx = reco_stv_tool.ReturnPnPerpx();
+	    double DefaultDeltaPnPerpy = reco_stv_tool.ReturnPnPerpy();
+	    double DefaultDeltaPtx = reco_stv_tool.ReturnPtx();
+	    double DefaultDeltaPty = reco_stv_tool.ReturnPty();
 	    double DefaultDeltaPnPar = reco_stv_tool.ReturnPnPar();
 
 	    //----------------------------------------//
@@ -973,7 +1125,14 @@ void FlatTreeAnalyzer::Loop() {
 	    NoFSITrueFineBinDeltaPhiTPlot[0]->Fill(DeltaPhiT,weight);
 	    NoFSITrueFineBinDeltaPhi3DPlot[0]->Fill(DeltaPhi3D,weight);
 	    NoFSITrueFineBinDeltaPnPerpPlot[0]->Fill(DeltaPnPerp,weight);
+	    NoFSITrueFineBinDeltaPnPerpxPlot[0]->Fill(DeltaPnPerpx,weight);
+	    NoFSITrueFineBinDeltaPnPerpyPlot[0]->Fill(DeltaPnPerpy,weight);
+	    NoFSITrueFineBinDeltaPtxPlot[0]->Fill(DeltaPtx,weight);
+	    NoFSITrueFineBinDeltaPtyPlot[0]->Fill(DeltaPty,weight);
 	    NoFSITrueFineBinDeltaPnParPlot[0]->Fill(DeltaPnPar,weight);
+
+	    NoFSITrueFineBinECal2DPlot[0]->Fill(Enu_true,ECal,weight);
+	    NoFSITrueFineBinq2DPlot[0]->Fill(qtrue,qreco,weight);
 
 	    // filling in the histo based on the interaction mode
 
@@ -988,7 +1147,14 @@ void FlatTreeAnalyzer::Loop() {
 	    NoFSITrueFineBinDeltaPhiTPlot[genie_mode]->Fill(DeltaPhiT,weight);
 	    NoFSITrueFineBinDeltaPhi3DPlot[genie_mode]->Fill(DeltaPhi3D,weight);
 	    NoFSITrueFineBinDeltaPnPerpPlot[genie_mode]->Fill(DeltaPnPerp,weight);
+	    NoFSITrueFineBinDeltaPnPerpxPlot[genie_mode]->Fill(DeltaPnPerpx,weight);
+	    NoFSITrueFineBinDeltaPnPerpyPlot[genie_mode]->Fill(DeltaPnPerpy,weight);
+	    NoFSITrueFineBinDeltaPtxPlot[genie_mode]->Fill(DeltaPtx,weight);
+	    NoFSITrueFineBinDeltaPtyPlot[genie_mode]->Fill(DeltaPty,weight);
 	    NoFSITrueFineBinDeltaPnParPlot[genie_mode]->Fill(DeltaPnPar,weight);
+
+	    NoFSITrueFineBinECal2DPlot[genie_mode]->Fill(Enu_true,ECal,weight);
+	    NoFSITrueFineBinq2DPlot[genie_mode]->Fill(qtrue,qreco,weight);
 
 	    //----------------------------------------//
 
@@ -1000,11 +1166,19 @@ void FlatTreeAnalyzer::Loop() {
 	    // DeltaPT                                                                                                                                                                        
 	    // DeltaPn                                                                                                                                                                        
 	    // DeltaPnPerp                                                                                                                                                                    
+	    // DeltaPnPerpx                                                                                                                                                                    
+	    // DeltaPnPerpy                                                                                                                                                                    
+	    // DeltaPtx                                                                                                                                                                    
+	    // DeltaPty                                                                                                                                                                    
 	    // DeltaPnPar                                                                                                                                                                     
 
 	    if (DeltaPT > ArrayNBinsDeltaPT[NBinsDeltaPT]) { DeltaPT = 0.9999 * ArrayNBinsDeltaPT[NBinsDeltaPT]; }
 	    if (DeltaPn > ArrayNBinsDeltaPn[NBinsDeltaPn]) { DeltaPn = 0.9999 * ArrayNBinsDeltaPn[NBinsDeltaPn]; }
 	    if (DeltaPnPerp > ArrayNBinsDeltaPnPerp[NBinsDeltaPnPerp]) { DeltaPnPerp = 0.9999 * ArrayNBinsDeltaPnPerp[NBinsDeltaPnPerp]; }
+	    if (DeltaPnPerpx > ArrayNBinsDeltaPnPerpx[NBinsDeltaPnPerpx]) { DeltaPnPerpx = 0.9999 * ArrayNBinsDeltaPnPerpx[NBinsDeltaPnPerpx]; }
+	    if (DeltaPnPerpy > ArrayNBinsDeltaPnPerpy[NBinsDeltaPnPerpy]) { DeltaPnPerpy = 0.9999 * ArrayNBinsDeltaPnPerpy[NBinsDeltaPnPerpy]; }
+	    if (DeltaPtx > ArrayNBinsDeltaPtx[NBinsDeltaPtx]) { DeltaPtx = 0.9999 * ArrayNBinsDeltaPtx[NBinsDeltaPtx]; }
+	    if (DeltaPty > ArrayNBinsDeltaPty[NBinsDeltaPty]) { DeltaPty = 0.9999 * ArrayNBinsDeltaPty[NBinsDeltaPty]; }
 	    if (DeltaPnPar > ArrayNBinsDeltaPnPar[NBinsDeltaPnPar]) { DeltaPnPar = 0.9999 * ArrayNBinsDeltaPnPar[NBinsDeltaPnPar]; } \
 
 	    //----------------------------------------//
@@ -1013,9 +1187,17 @@ void FlatTreeAnalyzer::Loop() {
 	    // Affects
 
 	    // DeltaPnPerp                                                                                                                                                                    
+	    // DeltaPnPerpx                                                                                                                                                                    
+	    // DeltaPnPerpy                                                                                                                                                                    
+	    // DeltaPtx                                                                                                                                                                    
+	    // DeltaPty                                                                                                                                                                    
 	    // DeltaPnPar                                                                                                                                                                     
 
 	    if (DeltaPnPerp < ArrayNBinsDeltaPnPerp[0]) { DeltaPnPerp = 1.0001 * ArrayNBinsDeltaPnPerp[0]; }
+	    if (DeltaPnPerpx < ArrayNBinsDeltaPnPerpx[0]) { DeltaPnPerpx = 1.0001 * ArrayNBinsDeltaPnPerpx[0]; }
+	    if (DeltaPnPerpy < ArrayNBinsDeltaPnPerpy[0]) { DeltaPnPerpx = 1.0001 * ArrayNBinsDeltaPnPerpy[0]; }
+	    if (DeltaPtx < ArrayNBinsDeltaPtx[0]) { DeltaPtx = 1.0001 * ArrayNBinsDeltaPtx[0]; }
+	    if (DeltaPty < ArrayNBinsDeltaPty[0]) { DeltaPtx = 1.0001 * ArrayNBinsDeltaPty[0]; }
 	    if (DeltaPnPar < ArrayNBinsDeltaPnPar[0]) { DeltaPnPar = 1.0001 * ArrayNBinsDeltaPnPar[0]; }	
 
 	    //----------------------------------------//
@@ -1073,6 +1255,10 @@ void FlatTreeAnalyzer::Loop() {
 	    NoFSITrueDeltaPhiTPlot[0]->Fill(DeltaPhiT,weight);
 	    NoFSITrueDeltaPhi3DPlot[0]->Fill(DeltaPhi3D,weight);
 	    NoFSITrueDeltaPnPerpPlot[0]->Fill(DeltaPnPerp,weight);
+	    NoFSITrueDeltaPnPerpxPlot[0]->Fill(DeltaPnPerpx,weight);
+	    NoFSITrueDeltaPnPerpyPlot[0]->Fill(DeltaPnPerpy,weight);
+	    NoFSITrueDeltaPtxPlot[0]->Fill(DeltaPtx,weight);
+	    NoFSITrueDeltaPtyPlot[0]->Fill(DeltaPty,weight);
 	    NoFSITrueDeltaPnParPlot[0]->Fill(DeltaPnPar,weight);
 
 	    // 2D Nominal Binning Uncorrelated
@@ -1126,6 +1312,10 @@ void FlatTreeAnalyzer::Loop() {
 	    NoFSITrueDeltaPhiTPlot[genie_mode]->Fill(DeltaPhiT,weight);
 	    NoFSITrueDeltaPhi3DPlot[genie_mode]->Fill(DeltaPhi3D,weight);
 	    NoFSITrueDeltaPnPerpPlot[genie_mode]->Fill(DeltaPnPerp,weight);
+	    NoFSITrueDeltaPnPerpxPlot[genie_mode]->Fill(DeltaPnPerpx,weight);
+	    NoFSITrueDeltaPnPerpyPlot[genie_mode]->Fill(DeltaPnPerpy,weight);
+	    NoFSITrueDeltaPtxPlot[genie_mode]->Fill(DeltaPtx,weight);
+	    NoFSITrueDeltaPtyPlot[genie_mode]->Fill(DeltaPty,weight);
 	    NoFSITrueDeltaPnParPlot[genie_mode]->Fill(DeltaPnPar,weight);
 
 	    // 2D Nominal Binning Uncorrelated
@@ -1178,6 +1368,10 @@ void FlatTreeAnalyzer::Loop() {
 		Reweight(TrueFineBinDeltaPTPlot[inte]);
 		Reweight(TrueFineBinDeltaPnPlot[inte]);
 		Reweight(TrueFineBinDeltaPnPerpPlot[inte]);
+		Reweight(TrueFineBinDeltaPnPerpxPlot[inte]);
+		Reweight(TrueFineBinDeltaPnPerpyPlot[inte]);
+		Reweight(TrueFineBinDeltaPtxPlot[inte]);
+		Reweight(TrueFineBinDeltaPtyPlot[inte]);
 		Reweight(TrueFineBinDeltaPnParPlot[inte]);
 		Reweight(TrueFineBinDeltaAlphaTPlot[inte]);
 		Reweight(TrueFineBinDeltaAlpha3DqPlot[inte]);
@@ -1193,6 +1387,10 @@ void FlatTreeAnalyzer::Loop() {
 		Reweight(NoFSITrueFineBinDeltaPTPlot[inte]);
 		Reweight(NoFSITrueFineBinDeltaPnPlot[inte]);
 		Reweight(NoFSITrueFineBinDeltaPnPerpPlot[inte]);
+		Reweight(NoFSITrueFineBinDeltaPnPerpxPlot[inte]);
+		Reweight(NoFSITrueFineBinDeltaPnPerpyPlot[inte]);
+		Reweight(NoFSITrueFineBinDeltaPtxPlot[inte]);
+		Reweight(NoFSITrueFineBinDeltaPtyPlot[inte]);
 		Reweight(NoFSITrueFineBinDeltaPnParPlot[inte]);
 		Reweight(NoFSITrueFineBinDeltaAlphaTPlot[inte]);
 		Reweight(NoFSITrueFineBinDeltaAlpha3DqPlot[inte]);
@@ -1291,6 +1489,9 @@ void FlatTreeAnalyzer::Loop() {
 	  bkgEffPn[ibin] = 1. - DeltaPnBkg->Integral(0,ibin) / DeltaPnBkg->Integral() ; // bkg: MEC, RES, DIS, COH
 	  productPn[ibin] = signalEffPn[ibin] * bkgEffPn[ibin] ;
 
+	  if ( TMath::Abs(cutvalue[ibin] - 0.3) < 0.019 ) { cout << cutvalue[ibin] << " / 0.3 GeV/c DeltaPn cut event fractional loss = " << 1 - (TrueFineBinDeltaPnPlot[1]->Integral(0,ibin) / TrueFineBinDeltaPnPlot[1]->Integral() )  << endl; }
+	  if ( TMath::Abs(cutvalue[ibin] - 0.2) < 0.019 ) { cout << cutvalue[ibin] << " / 0.2 GeV/c DeltaPT cut event fractional loss = " << 1 - (TrueFineBinDeltaPTPlot[1]->Integral(0,ibin) / TrueFineBinDeltaPTPlot[1]->Integral() )  << endl; }
+
 	}
 
 	signalEffPT[NBins] = 1.;
@@ -1307,6 +1508,7 @@ void FlatTreeAnalyzer::Loop() {
 	TGraph* gCutDeltaPT = new TGraph(NBins, cutvalue, productPT);
 	TGraph* gCutDeltaPn = new TGraph(NBins, cutvalue, productPn);
 
+	file->cd();
 	gDeltaPT->Write("gDeltaPT");
 	gDeltaPn->Write("gDeltaPn");
 
