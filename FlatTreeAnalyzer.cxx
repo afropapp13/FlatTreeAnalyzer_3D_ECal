@@ -1472,10 +1472,12 @@ void FlatTreeAnalyzer::Loop() {
 	double signalEffPT[NBins + 1];
 	double bkgEffPT[NBins + 1];
 	double productPT[NBins + 1];
+	double purityPT[NBins + 1];
 
 	double signalEffPn[NBins + 1];
 	double bkgEffPn[NBins + 1];
 	double productPn[NBins + 1];
+	double purityPn[NBins + 1];
 
 	for (int ibin = 0; ibin < NBins; ibin++) {
 
@@ -1484,13 +1486,31 @@ void FlatTreeAnalyzer::Loop() {
 	  signalEffPT[ibin] = TrueFineBinDeltaPTPlot[1]->Integral(0,ibin) / TrueFineBinDeltaPTPlot[1]->Integral() ; // QE 
 	  bkgEffPT[ibin] = 1. - DeltaPTBkg->Integral(0,ibin) / DeltaPTBkg->Integral() ; // bkg: MEC, RES, DIS, COH
 	  productPT[ibin] = signalEffPT[ibin] * bkgEffPT[ibin] ;
+	  purityPT[ibin] = TrueFineBinDeltaPTPlot[1]->Integral(0,ibin) / TrueFineBinDeltaPTPlot[0]->Integral(0,ibin) * 100.; // QE purity (%)
 
 	  signalEffPn[ibin] = TrueFineBinDeltaPnPlot[1]->Integral(0,ibin) / TrueFineBinDeltaPnPlot[1]->Integral() ; // QE 
 	  bkgEffPn[ibin] = 1. - DeltaPnBkg->Integral(0,ibin) / DeltaPnBkg->Integral() ; // bkg: MEC, RES, DIS, COH
 	  productPn[ibin] = signalEffPn[ibin] * bkgEffPn[ibin] ;
+	  purityPn[ibin] = TrueFineBinDeltaPnPlot[1]->Integral(0,ibin) / TrueFineBinDeltaPnPlot[0]->Integral(0,ibin) * 100.; // QE purity (%)
 
-	  if ( TMath::Abs(cutvalue[ibin] - 0.3) < 0.019 ) { cout << cutvalue[ibin] << " / 0.3 GeV/c DeltaPn cut event fractional loss = " << 1 - (TrueFineBinDeltaPnPlot[1]->Integral(0,ibin) / TrueFineBinDeltaPnPlot[1]->Integral() )  << endl; }
-	  if ( TMath::Abs(cutvalue[ibin] - 0.2) < 0.019 ) { cout << cutvalue[ibin] << " / 0.2 GeV/c DeltaPT cut event fractional loss = " << 1 - (TrueFineBinDeltaPTPlot[1]->Integral(0,ibin) / TrueFineBinDeltaPTPlot[1]->Integral() )  << endl; }
+	  // DeltaPn
+	  if ( TMath::Abs(cutvalue[ibin] - 0.3) < 0.019 ) { 
+
+	    cout << cutvalue[ibin] << " / 0.3 GeV/c DeltaPn cut event fractional loss = " << 1 - (TrueFineBinDeltaPnPlot[1]->Integral(0,ibin) / TrueFineBinDeltaPnPlot[1]->Integral() )  << endl; 
+
+	    cout << cutvalue[ibin] << " / 0.3 GeV/c DeltaPn cut purity = " << purityPn[ibin] << " %" << endl; 
+
+	  }
+
+	  
+	  // DeltaPT
+	  if ( TMath::Abs(cutvalue[ibin] - 0.2) < 0.019 ) { 
+
+	    cout << cutvalue[ibin] << " / 0.2 GeV/c DeltaPT cut event fractional loss = " << 1 - (TrueFineBinDeltaPTPlot[1]->Integral(0,ibin) / TrueFineBinDeltaPTPlot[1]->Integral() )  << endl; 
+
+	    cout << cutvalue[ibin] << " / 0.3 GeV/c DeltaPT cut purity = " << purityPT[ibin] << " %" << endl; 
+
+	  }
 
 	}
 

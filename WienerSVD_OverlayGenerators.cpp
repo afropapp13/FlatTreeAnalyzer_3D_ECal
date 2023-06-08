@@ -59,7 +59,9 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 	PlotNames.push_back("DeltaPnPlot");
 	PlotNames.push_back("DeltaAlpha3DqPlot");
 	PlotNames.push_back("DeltaAlpha3DMuPlot");
-	PlotNames.push_back("DeltaPhi3DPlot");		 
+	PlotNames.push_back("DeltaPhi3DPlot");	
+	PlotNames.push_back("SerialDeltaAlpha3Dq_DeltaPnPlot");	 
+	PlotNames.push_back("SerialDeltaPn_DeltaAlpha3DqPlot");	 
 
 	const int N1DPlots = PlotNames.size();
 	cout << "Number of 1D Plots = " << N1DPlots << endl;
@@ -106,7 +108,7 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 		if (PlotGENIE) {
 
 			NameOfSamples.push_back("GENIE_v2_12_10_MEC");	Colors.push_back(kBlue); Labels.push_back("Gv2 ");LineStyle.push_back(Gv2LineStyle);
-			NameOfSamples.push_back("GENIE_v3_0_6"); Colors.push_back(kMagenta); Labels.push_back("G18 "); LineStyle.push_back(G18LineStyle);
+			NameOfSamples.push_back("GENIE_v3_0_6"); Colors.push_back(kBlack); Labels.push_back("G18 "); LineStyle.push_back(G18LineStyle);
 			NameOfSamples.push_back("GENIE_v3_0_6_G21_11b_00_000"); Colors.push_back(kOrange+6); Labels.push_back("G21 "); LineStyle.push_back(G21LineStyle);
 
 		}
@@ -178,18 +180,20 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 					if (PlotNames[WhichPlot] == "MuonCosThetaSingleBinPlot") { histReco = (TH1D*)(FileSample[WhichSample]->Get("RecoFullUnc"+PlotNames[WhichPlot])); }
 					CurrentPlotsReco.push_back(histReco);
 
-					TH1D* histTrue = (TH1D*)(FileSample[WhichSample]->Get("True"+PlotNames[WhichPlot]));
+					TString TrueString = "True";
+
+					TH1D* histTrue = (TH1D*)(FileSample[WhichSample]->Get(TrueString+PlotNames[WhichPlot]));
 					CurrentPlotsTrue.push_back(histTrue);
 
-					TH1D* QEhistTrue = (TH1D*)(FileSample[WhichSample]->Get("QETrue"+PlotNames[WhichPlot]));
+					TH1D* QEhistTrue = (TH1D*)(FileSample[WhichSample]->Get("QE"+TrueString+PlotNames[WhichPlot]));
 					QECurrentPlotsTrue.push_back(QEhistTrue);
-					TH1D* MEChistTrue = (TH1D*)(FileSample[WhichSample]->Get("MECTrue"+PlotNames[WhichPlot]));
+					TH1D* MEChistTrue = (TH1D*)(FileSample[WhichSample]->Get("MEC"+TrueString+PlotNames[WhichPlot]));
 					MECCurrentPlotsTrue.push_back(MEChistTrue);
-					TH1D* REShistTrue = (TH1D*)(FileSample[WhichSample]->Get("RESTrue"+PlotNames[WhichPlot]));
+					TH1D* REShistTrue = (TH1D*)(FileSample[WhichSample]->Get("RES"+TrueString+PlotNames[WhichPlot]));
 					RESCurrentPlotsTrue.push_back(REShistTrue);
-					TH1D* DIShistTrue = (TH1D*)(FileSample[WhichSample]->Get("DISTrue"+PlotNames[WhichPlot]));
+					TH1D* DIShistTrue = (TH1D*)(FileSample[WhichSample]->Get("DIS"+TrueString+PlotNames[WhichPlot]));
 					DISCurrentPlotsTrue.push_back(DIShistTrue);
-					TH1D* COHhistTrue = (TH1D*)(FileSample[WhichSample]->Get("COHTrue"+PlotNames[WhichPlot]));
+					TH1D* COHhistTrue = (TH1D*)(FileSample[WhichSample]->Get("COH"+TrueString+PlotNames[WhichPlot]));
 					COHCurrentPlotsTrue.push_back(COHhistTrue);																								     
 		
 				}
@@ -220,18 +224,23 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 					TH1D* histCC1pReco = nullptr;
 					CurrentPlotsCC1pReco.push_back(histCC1pReco);
 
-					TH1D* histTrue = (TH1D*)(FileSample[WhichSample]->Get("True"+PlotNames[WhichPlot]));
+					TString TrueString = "True";
+					if (string(PlotNames[WhichPlot]).find("Serial") != std::string::npos) { TrueString = "SerialTrue"; }
+				        TString CloneString = PlotNames[WhichPlot];
+					CloneString.ReplaceAll("Serial","");
+
+					TH1D* histTrue = (TH1D*)(FileSample[WhichSample]->Get(TrueString+CloneString));
 					CurrentPlotsTrue.push_back(histTrue);
 
-					TH1D* QEhistTrue = (TH1D*)(FileSample[WhichSample]->Get("QETrue"+PlotNames[WhichPlot]));
+					TH1D* QEhistTrue = (TH1D*)(FileSample[WhichSample]->Get("QE"+TrueString+CloneString));
 					QECurrentPlotsTrue.push_back(QEhistTrue);
-					TH1D* MEChistTrue = (TH1D*)(FileSample[WhichSample]->Get("MECTrue"+PlotNames[WhichPlot]));
+					TH1D* MEChistTrue = (TH1D*)(FileSample[WhichSample]->Get("MEC"+TrueString+CloneString));
 					MECCurrentPlotsTrue.push_back(MEChistTrue);
-					TH1D* REShistTrue = (TH1D*)(FileSample[WhichSample]->Get("RESTrue"+PlotNames[WhichPlot]));
+					TH1D* REShistTrue = (TH1D*)(FileSample[WhichSample]->Get("RES"+TrueString+CloneString));
 					RESCurrentPlotsTrue.push_back(REShistTrue);
-					TH1D* DIShistTrue = (TH1D*)(FileSample[WhichSample]->Get("DISTrue"+PlotNames[WhichPlot]));
+					TH1D* DIShistTrue = (TH1D*)(FileSample[WhichSample]->Get("DIS"+TrueString+CloneString));
 					DISCurrentPlotsTrue.push_back(DIShistTrue);
-					TH1D* COHhistTrue = (TH1D*)(FileSample[WhichSample]->Get("COHTrue"+PlotNames[WhichPlot]));
+					TH1D* COHhistTrue = (TH1D*)(FileSample[WhichSample]->Get("COH"+TrueString+CloneString));
 					COHCurrentPlotsTrue.push_back(COHhistTrue);					
 		
 				}
@@ -264,7 +273,9 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 
 			TH2D* Ac = (TH2D*)FileSample[0]->Get("Ac"+PlotNames[WhichPlot]);
 
-			TH2D* Cov = (TH2D*)FileSample[0]->Get("UnfCov"+PlotNames[WhichPlot]);	
+			TString CovString = "UnfCov"+PlotNames[WhichPlot];
+			//cout << CovString << endl;
+			TH2D* Cov = (TH2D*)FileSample[0]->Get(CovString);	
 			Cov->Scale(1./TMath::Power(MultiDimScaleFactor[PlotNames[WhichPlot]],2.)); // includes scaling factor for multi dimensional analysis
 
 			TH2D* NormCov = (TH2D*)FileSample[0]->Get("NormUnfCov"+PlotNames[WhichPlot]);	
@@ -356,6 +367,8 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 				PlotNames[WhichPlot] == "DeltaPnParPlot" ||
 				PlotNames[WhichPlot] == "DeltaPnPerpxPlot" ||
 				PlotNames[WhichPlot] == "DeltaPnPerpyPlot" ||
+				PlotNames[WhichPlot] == "SerialDeltaAlpha3Dq_DeltaPnPlot" ||
+				PlotNames[WhichPlot] == "SerialDeltaPn_DeltaAlpha3DqPlot" ||
 				PlotNames[WhichPlot] == "DeltaAlpha3DqPlot" /*||
 				PlotNames[WhichPlot] == "DeltaAlpha3DMuPlot" ||				
 				PlotNames[WhichPlot] == "DeltaAlphaT_ProtonCosTheta_0_75To1_00Plot" ||		

@@ -51,12 +51,12 @@ void GeneratorOverlay2D3D(TString Tag = "") {
 
 	if (Tag == "") {
 
-	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"); Labels.push_back("G18"); Colors.push_back(kMagenta);
+	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"); Labels.push_back("G18"); Colors.push_back(kBlack);
 	  //Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v2_12_10.root"); Labels.push_back("Gv2"); Colors.push_back(kBlue);
 	  //Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v2_12_10_MEC.root"); Labels.push_back("Gv2"); Colors.push_back(kBlue);
 	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_NEUT_5_4_0_1.root"); Labels.push_back("NEUT"); Colors.push_back(kMagenta-9);
 	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_NuWro_19_02_1.root"); Labels.push_back("NuWro"); Colors.push_back(NEUTColor);
-	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GiBUU_2021.root"); Labels.push_back("GiBUU"); Colors.push_back(GiBUUColor);
+	  //  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GiBUU_2021.root"); Labels.push_back("GiBUU"); Colors.push_back(GiBUUColor);
 
 	}
 
@@ -83,9 +83,9 @@ void GeneratorOverlay2D3D(TString Tag = "") {
 
 	// 1D
 
-	PlotNames.push_back("TrueFineBinDeltaPTPlot"); PanelLabel.push_back("(a)"); XaxisLabel.push_back("Missing Momentum [GeV/c]");
-	PlotNames.push_back("TrueFineBinDeltaAlphaTPlot"); PanelLabel.push_back("(b)"); XaxisLabel.push_back("Proton - Missing Momentum Angle [deg]");
-	PlotNames.push_back("TrueFineBinDeltaPhiTPlot"); PanelLabel.push_back("(c)"); XaxisLabel.push_back("Struck nucleon - Missing Momentum [deg]");
+	//PlotNames.push_back("TrueFineBinDeltaPTPlot"); PanelLabel.push_back("(a)"); XaxisLabel.push_back("Missing Momentum [GeV/c]");
+	PlotNames.push_back("TrueFineBinDeltaAlphaTPlot"); PanelLabel.push_back("(a)"); XaxisLabel.push_back("Struck Nucleon - Missing Momentum Angle [deg]");
+	PlotNames.push_back("TrueFineBinDeltaPhiTPlot"); PanelLabel.push_back("(b)"); XaxisLabel.push_back("Proton - Missing Momentum Angle [deg]");
 
 	//------------------------------//
 
@@ -116,12 +116,21 @@ void GeneratorOverlay2D3D(TString Tag = "") {
 		PlotCanvas->SetBottomMargin(0.16);		
 		PlotCanvas->Draw();	
 
-		TLegend* leg = new TLegend(0.,0.855,0.99,0.99);
+		TLegend* leg = new TLegend(0.15,0.925,0.99,0.99);
 		leg->SetBorderSize(0);
-		leg->SetNColumns(4);
+		leg->SetNColumns(3);
 		leg->SetTextSize(TextSize);	
 		leg->SetTextFont(FontStyle);						
 		leg->SetMargin(0.1);						
+		leg->SetFillStyle(0);
+
+		TLegend* legTKI = new TLegend(0.15,0.855,0.99,0.925);
+		legTKI->SetBorderSize(0);
+		legTKI->SetNColumns(3);
+		legTKI->SetTextSize(TextSize);	
+		legTKI->SetTextFont(FontStyle);						
+		legTKI->SetMargin(0.1);	
+		legTKI->SetFillStyle(0);
 
 		// Loop over the samples to open the files and to get the corresponding plot
 
@@ -196,7 +205,7 @@ void GeneratorOverlay2D3D(TString Tag = "") {
 			GKIHistos[iSample]->Draw("hist same");
 			Histos[0]->Draw("hist same");	
 
-			TLegendEntry* legColor = leg->AddEntry(Histos[iSample],Labels[iSample] + " TKI","l");
+			TLegendEntry* legColor = legTKI->AddEntry(Histos[iSample],Labels[iSample] + " TKI","l");
 			legColor->SetTextColor( Colors.at(iSample) ); 
 
 			TLegendEntry* legColorGKI = leg->AddEntry(GKIHistos[iSample],Labels[iSample] + " GKI","l");
@@ -215,13 +224,13 @@ void GeneratorOverlay2D3D(TString Tag = "") {
 
 			textPanel->DrawLatexNDC(0.87, 0.8, PanelLabel[iPlot]);
 			
-
 			//----------------------------------------//					
 
 		} // End of the loop over the samples grabing the plots	
 
 		PlotCanvas->cd();
-		leg->Draw();
+		leg->Draw("same");
+		legTKI->Draw("same");
 
 		PlotCanvas->SaveAs("/uboone/data/users/apapadop/FlatTTreePlots/"+Tag+CanvasName+".pdf");
 		delete PlotCanvas;

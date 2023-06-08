@@ -117,7 +117,7 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
                 if (PlotGENIE) {
 
 		  NameOfSamples.push_back("GENIE_v2_12_10_MEC");  Colors.push_back(kBlue); Labels.push_back("Gv2 ");LineStyle.push_back(Gv2LineStyle);
-		  NameOfSamples.push_back("GENIE_v3_0_6"); Colors.push_back(kMagenta); Labels.push_back("G18 "); LineStyle.push_back(G18LineStyle);
+		  NameOfSamples.push_back("GENIE_v3_0_6"); Colors.push_back(kBlack); Labels.push_back("G18 "); LineStyle.push_back(G18LineStyle);
 		  NameOfSamples.push_back("GENIE_v3_0_6_G21_11b_00_000"); Colors.push_back(kOrange+6); Labels.push_back("G21 "); LineStyle.push_back(G21LineStyle);
 
                 }
