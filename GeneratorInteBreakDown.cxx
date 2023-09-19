@@ -225,7 +225,7 @@ void GeneratorInteBreakDown() {
 			Histos[iprocess]->GetYaxis()->SetLabelSize(TextSize);
 			Histos[iprocess]->GetYaxis()->SetTitle(YAxisLabel.at(iPlot));
 			Histos[iprocess]->GetYaxis()->SetTitleSize(TextSize);
-			Histos[iprocess]->GetYaxis()->SetTitleOffset(1.3);
+			Histos[iprocess]->GetYaxis()->SetTitleOffset(1.25);
 			//Histos[iprocess]->GetYaxis()->SetTickSize(0);
 			Histos[iprocess]->GetYaxis()->CenterTitle();	
 			Histos[iprocess]->GetYaxis()->SetRangeUser(0.,1.15*Histos[0]->GetMaximum());
@@ -283,7 +283,7 @@ void GeneratorInteBreakDown() {
 			PlotNames[iPlot] == "NoFSITrueFineBinDeltaPnPlot" || 
 			PlotNames[iPlot] == "NoFSITrueFineBinDeltaAlpha3DqPlot" || 
 			PlotNames[iPlot] == "NoFSITrueFineBinDeltaPhi3DPlot" ||
-			PlotNames[iPlot] == "NoFSITrueFineBinDeltaPnParPlot" ||
+			//PlotNames[iPlot] == "NoFSITrueFineBinDeltaPnParPlot" ||
 			PlotNames[iPlot] == "NoFSITrueFineBinDeltaPnPerpPlot" ||
 			PlotNames[iPlot] == "TrueFineBinDeltaPn_DeltaAlpha3Dq_0_00To45_00Plot" ||
 			PlotNames[iPlot] == "TrueFineBinDeltaAlpha3Dq_DeltaPn_0_00To0_20Plot"

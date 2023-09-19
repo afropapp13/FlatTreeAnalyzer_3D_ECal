@@ -21,7 +21,7 @@
 using namespace std;
 using namespace Constants;
 
-void GeneratorOverlay(TString Tag = "") {
+void PdfOverlay(TString Tag = "") {
 
 	//------------------------------//
 
@@ -52,16 +52,6 @@ void GeneratorOverlay(TString Tag = "") {
 	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GiBUU_2021.root"); Labels.push_back("GiBUU"); Colors.push_back(GiBUUColor); LineStyle.push_back(GiBUULineStyle);
 
 	}
-
-	if (Tag == "GiBUU") {
-	  
-		Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GiBUU_2021.root"); Labels.push_back("2021 false"); Colors.push_back(GiBUUColor); LineStyle.push_back(GiBUULineStyle);
-        	Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GiBUU_2021_Inclusive.root"); Labels.push_back("2021 true"); Colors.push_back(kBlue); LineStyle.push_back(kSolid);
-		Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GiBUU_2023.root"); Labels.push_back("2023"); Colors.push_back(kOrange+7); LineStyle.push_back(NEUTLineStyle);
-
-
-	}
-
 
 	if (Tag == "GENIE") {
 
@@ -231,7 +221,7 @@ void GeneratorOverlay(TString Tag = "") {
 
 	for (int iPlot = 0; iPlot < NPlots; iPlot++) {
 
-		TString CanvasName = "ThreeDKI_GeneratorOverlay_" + PlotNames[iPlot];
+		TString CanvasName = "ThreeDKI_PdfOverlay_" + PlotNames[iPlot];
 		TCanvas* PlotCanvas = new TCanvas(CanvasName,CanvasName,205,34,1024,768);
 		PlotCanvas->cd();
 		PlotCanvas->SetTopMargin(0.15);
@@ -271,11 +261,13 @@ void GeneratorOverlay(TString Tag = "") {
 			Histos[iSample]->GetYaxis()->SetLabelFont(FontStyle);
 			Histos[iSample]->GetYaxis()->SetNdivisions(6);
 			Histos[iSample]->GetYaxis()->SetLabelSize(TextSize);
-			Histos[iSample]->GetYaxis()->SetTitle(YAxisLabel.at(iPlot));
+			//Histos[iSample]->GetYaxis()->SetTitle(YAxisLabel.at(iPlot));
+			Histos[iSample]->GetYaxis()->SetTitle("PDF");
 			Histos[iSample]->GetYaxis()->SetTitleSize(TextSize);
 			Histos[iSample]->GetYaxis()->SetTitleOffset(1.2);
 			//Histos[iSample]->GetYaxis()->SetTickSize(0);
 			Histos[iSample]->GetYaxis()->CenterTitle();	
+			Histos[iSample]->Scale(1./Histos[iSample]->Integral());	
 
 			double imax = TMath::Max(Histos[iSample]->GetMaximum(),Histos[0]->GetMaximum());
 			double MaxScale = 1.05;
@@ -297,19 +289,18 @@ void GeneratorOverlay(TString Tag = "") {
 			textSlice->DrawLatexNDC(0.2, 0.8, LatexLabel[ReducedPlotName].ReplaceAll("All events",""));
 
 			if ( 
-			    PlotNames[iPlot] == "TrueFineBinDeltaPnParPlot" || PlotNames[iPlot] == "TrueFineBinDeltaPnPerpPlot" || 
-			    PlotNames[iPlot] == "TrueFineBinDeltaPnPerpxPlot"  || PlotNames[iPlot] == "TrueFineBinDeltaPnPerpyPlot" ||
-			    PlotNames[iPlot] == "TrueFineBinDeltaAlpha3DqPlot" || PlotNames[iPlot] == "TrueFineBinDeltaAlphaTPlot"
+			    PlotNames[iPlot] == "TrueFineBinDeltaPnPlot" ||
+			    PlotNames[iPlot] == "TrueFineBinDeltaAlpha3DqPlot" || 
+			    PlotNames[iPlot] == "TrueFineBinDeltaPhi3DPlot"
 			     ) {
 
 			  TLatex *textPanel = new TLatex();
 			  textPanel->SetTextFont(FontStyle);
 			  textPanel->SetTextSize(TextSize);
 
-			  if ( PlotNames[iPlot] == "TrueFineBinDeltaPnParPlot" || PlotNames[iPlot] == "TrueFineBinDeltaPnPerpxPlot" || PlotNames[iPlot] == "TrueFineBinDeltaAlpha3DqPlot" ) 
-			    { textPanel->DrawLatexNDC(0.87, 0.8, "(a)"); }
-			  if ( PlotNames[iPlot] == "TrueFineBinDeltaPnPerpPlot" || PlotNames[iPlot] == "TrueFineBinDeltaPnPerpyPlot" || PlotNames[iPlot] == "TrueFineBinDeltaAlphaTPlot") 
-			    { textPanel->DrawLatexNDC(0.87, 0.8, "(b)"); }
+			  if ( PlotNames[iPlot] == "TrueFineBinDeltaPnPlot") { textPanel->DrawLatexNDC(0.87, 0.8, "(a)"); }
+			  if ( PlotNames[iPlot] == "TrueFineBinDeltaAlpha3DqPlot") { textPanel->DrawLatexNDC(0.87, 0.8, "(b)"); }
+			  if ( PlotNames[iPlot] == "TrueFineBinDeltaPhi3DPlot") { textPanel->DrawLatexNDC(0.87, 0.8, "(c)"); }
 			
 			}
 

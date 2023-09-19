@@ -119,7 +119,7 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 
 		  NameOfSamples.push_back("NuWro_19_02_1"); Colors.push_back(NEUTColor); Labels.push_back("NuWro "); LineStyle.push_back(NuWroLineStyle);
 			NameOfSamples.push_back("GiBUU_2021"); Colors.push_back(GiBUUColor); Labels.push_back("GiBUU "); LineStyle.push_back(GiBUULineStyle);
-			NameOfSamples.push_back("NEUT_5_4_0_1"); Colors.push_back(kMagenta-9); Labels.push_back("NEUT "); LineStyle.push_back(NEUTLineStyle);
+			NameOfSamples.push_back("NEUT_5_4_0_1"); Colors.push_back(kMagenta); Labels.push_back("NEUT "); LineStyle.push_back(NEUTLineStyle);// kMagenta - 9
 
 		}	
 
@@ -522,6 +522,7 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 				Clone[WhichSample-1]->SetMarkerColor(Colors[WhichSample]);
 
 				PrettyPlot(Clone[WhichSample-1]); // includes scaling factor for multi dimensional analysis
+				Clone[WhichSample-1]->SetLineWidth(3);		
 				Clone[WhichSample-1]->Draw("hist same");		
 
 //				CalcChiSquared(PlotsTrue[WhichSample][WhichPlot],PlotsReco[0][WhichPlot],CovClone,Chi2[WhichSample],Ndof[WhichSample],pval[WhichSample]);
@@ -560,7 +561,9 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 			if (PlotNames[WhichPlot] == "MuonCosThetaSingleBinPlot") { ShapeChi2NdofNom = ""; }			
 
 			TLegendEntry* lGenie_GenieOverlay = legMC->AddEntry(PlotsTrue[0][WhichPlot],Labels[0]+Chi2NdofNom,"l");
-			PlotsTrue[0][WhichPlot]->Draw("hist same"); lGenie_GenieOverlay->SetTextColor(Colors[0]); 
+			PlotsTrue[0][WhichPlot]->SetLineWidth(3); 
+			PlotsTrue[0][WhichPlot]->Draw("hist same"); 
+			lGenie_GenieOverlay->SetTextColor(Colors[0]); 
 
 			// ---------------------------------------------------------------------------------------------------------
 			// ---------------------------------------------------------------------------------------------------------

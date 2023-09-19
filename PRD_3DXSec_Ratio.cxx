@@ -67,11 +67,11 @@ void PRD_3DXSec_Ratio() {
 
 //	MCSample.push_back("GiBUUNoFSI"); Label.push_back("GiB No FSI"); MCColors.push_back(NuWroColor); LineStyle.push_back(kDashed);
 //	MCSample.push_back("Genie_v3_0_6_NoFSI"); Label.push_back("G18 No FSI"); MCColors.push_back(OverlayColor); LineStyle.push_back(kDashed);	
-	MCSample.push_back("OverlayGENIE"); Label.push_back("G18    "); MCColors.push_back(OverlayColor); LineStyle.push_back(kSolid);
-	MCSample.push_back("GiBUU_2021"); Label.push_back("GiBUU"); MCColors.push_back(GiBUUColor); LineStyle.push_back(kSolid);	
+	MCSample.push_back("OverlayGENIE"); Label.push_back("G18  "); MCColors.push_back(OverlayColor); LineStyle.push_back(kSolid);
+	MCSample.push_back("GiBUU_2021"); Label.push_back("GiBUU "); MCColors.push_back(GiBUUColor); LineStyle.push_back(kSolid);	
 //	MCSample.push_back("GiBUUTscaling"); Label.push_back("GiBUUTscaling");	
-	MCSample.push_back("NEUT_5_4_0_1");  Label.push_back("NEUT"); MCColors.push_back(NEUTColor); LineStyle.push_back(kSolid);
-	MCSample.push_back("NuWro_19_02_1");  Label.push_back("NuWro"); MCColors.push_back(NuWroColor); LineStyle.push_back(kSolid);	
+	MCSample.push_back("NEUT_5_4_0_1");  Label.push_back("NEUT "); MCColors.push_back(NEUTColor); LineStyle.push_back(kSolid);
+	MCSample.push_back("NuWro_19_02_1");  Label.push_back("NuWro "); MCColors.push_back(NuWroColor); LineStyle.push_back(kSolid);	
 //	MCSample.push_back("NEUTv5401_RFG");  Label.push_back("NEUTv5401_RFG");	
 //	MCSample.push_back("Overlay9NuWro"); Label.push_back("NuWro");
 //	MCSample.push_back("GENIEv2"); Label.push_back("Gv2");
@@ -244,7 +244,11 @@ void PRD_3DXSec_Ratio() {
 
 				double Chi2[NMC];				
 				int Ndof[NMC];
-				double pval[NMC];				
+				double pval[NMC];			
+
+				// Data ratio to itself with uncertainty band
+				TH1D* DataCloneRatio = (TH1D*)(Data->Clone());
+				DataCloneRatio->Divide(Data);
 
 				//--------------------------------------------//												
 
@@ -260,11 +264,12 @@ void PRD_3DXSec_Ratio() {
 
 					pad[ipad][iplot]->cd();
 					DataClone[imc]->GetYaxis()->SetRangeUser(YaxisRangeMin,YaxisRangeMax);
-					DataClone[imc]->Draw("e same");
+					DataClone[imc]->SetMarkerStyle(20 + imc);
+					DataClone[imc]->Draw("p hist same");
 
 					tools.CalcChiSquared(Data,MCPlot[imc],Cov,Chi2[imc],Ndof[imc],pval[imc]);
 					TString Chi2NdofAlt = "(" + tools.to_string_with_precision(Chi2[imc],1) + "/" + TString(std::to_string(Ndof[imc])) +")";
-					TLegendEntry* lGenie = leg->AddEntry(DataClone[imc],Label[imc] + Chi2NdofAlt,"l");
+					TLegendEntry* lGenie = leg->AddEntry(DataClone[imc],Label[imc] + Chi2NdofAlt,"p");
 					lGenie->SetTextColor(MCColors[imc]); 										
 
 					// ---------------------------------------- //		
@@ -313,13 +318,19 @@ void PRD_3DXSec_Ratio() {
 				// and then draw the ratio plots again so that they can be on top
 
 				pad[ipad][iplot]->cd();
+				DataCloneRatio->SetFillColor(kGray+1);
+				DataCloneRatio->Draw("e2 same");
 				line->Draw("same");
 
 				for (int imc = 0; imc < NMC; imc++) {
 
-					DataClone[imc]->Draw("e same");
+					DataClone[imc]->Draw("p hist same");
 
 				}
+
+				// Redraw the pad frame
+
+				gPad->RedrawAxis();
 
 				// Legend
 

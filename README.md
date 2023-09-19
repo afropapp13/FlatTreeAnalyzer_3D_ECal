@@ -1,6 +1,6 @@
 # Loop over the input files
-root -b script_LoopGenerators.cxx
-root -b script_LoopGenerators_Weights.cxx
+root -b script_LoopGenerators.C
+root -b script_LoopGenerators_Weights.C
 
 # To overlay the outputs of the loop w/o any Ac multiplication
 # Generators and GENIE variations

@@ -112,7 +112,8 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 
                 if (PlotGENIE) {
 
-		  NameOfSamples.push_back("GENIE_v2_12_10_MEC");  Colors.push_back(GENIEv2Color); Labels.push_back("Gv2 ");
+		  NameOfSamples.push_back("GENIE_v3_4_0_AR23_20i_00_000");  Colors.push_back(GENIEv2Color); Labels.push_back("AR23 ");
+		  //NameOfSamples.push_back("GENIE_v2_12_10_MEC");  Colors.push_back(GENIEv2Color); Labels.push_back("Gv2 ");
 		  NameOfSamples.push_back("GENIE_v3_0_6"); Colors.push_back(Geniev3OutOfTheBoxColor); Labels.push_back("G18 NoTune ");
 		  NameOfSamples.push_back("GENIE_v3_0_6_G21_11b_00_000"); Colors.push_back(SuSav2Color); Labels.push_back("G21hN ");
 		  
@@ -124,7 +125,7 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 
 		  NameOfSamples.push_back("NuWro_19_02_1"); Colors.push_back(NuWroColor); Labels.push_back("NuWro ");
 		  NameOfSamples.push_back("GiBUU_2021"); Colors.push_back(GiBUUColor); Labels.push_back("GiBUU ");
-		  NameOfSamples.push_back("NEUT_5_4_0_1"); Colors.push_back(NEUTColor); Labels.push_back("NEUT ");
+		  NameOfSamples.push_back("NEUT_5_4_0_1"); Colors.push_back(kMagenta); Labels.push_back("NEUT ");
 		  
                 }
 

@@ -578,12 +578,16 @@ void FlatTreeAnalyzer::Loop() {
 
 	  double weight = fScaleFactor*Units*A*Weight * t2kweight;	
 	  if (fOutputFile == "ACHILLES") { weight = fScaleFactor*Units*Weight; }
+	  //if (jentry%1000 == 0) { std::cout << "fScaleFactor = " << fScaleFactor << ", weight = " << weight << std::endl; }
 
 	  //	  cout << "fScaleFactor = " << fScaleFactor << ", Weight = " << Weight << endl;
 
 	  //double weight = 1.;	
-	  if (fOutputFile == "GiBUU_2021") { weight = weight/100.; } // To increase the stats, the GiBUU sample has been produced in 50 samples
-	  if (fOutputFile == "GiBUU_2021_NoFSI") { weight = weight/100.; } // To increase the stats, Ben Bogart produced the no fsi GiBUU sample in 20 samples
+	  if (fOutputFile == "GiBUU_2021") { weight = weight/100.; } // To increase the stats, the GiBUU sample has been produced in 100 sample
+	  if (fOutputFile == "GiBUU_2021_Inclusive") { weight = weight/10.; } // To increase the stats, the GiBUU sample has been produced in 100 sample
+	  if (fOutputFile == "GiBUU_2023_ME_DOW") { weight = weight/5.; } // To increase the stats, the GiBUU sample has been produced in 100 sample
+	  if (fOutputFile == "GiBUU_2023") { weight = weight/50.; } // To increase the stats, the GiBUU sample has been produced in 50 samples	
+	  if (fOutputFile == "GiBUU_2021_NoFSI") { weight = weight/100.; } // To increase the stats, Ben Bogart produced the no fsi GiBUU sample in 100 samples
 	  if (fOutputFile == "ACHILLES") { weight = weight*1000./(40./12.); } // ACHILLES scaling still under discussion
 
 	  //----------------------------------------//	
@@ -611,8 +615,8 @@ void FlatTreeAnalyzer::Loop() {
 	  for (int i = 0; i < nfsp; i++) {
 		
 	    double pf = TMath::Sqrt( px[i]*px[i] + py[i]*py[i] + pz[i]*pz[i]);
-
-	    if (pdg[i] == 13 && (pf > 0.1 && pf < 1.2) ) {
+	    
+              if (pdg[i] == 13 && (pf > 0.1 && pf < 1.2) ) {
 
 	      MuonTagging ++;
 	      MuonID.push_back(i);
@@ -699,6 +703,7 @@ void FlatTreeAnalyzer::Loop() {
 	    if (TMath::Abs(Mode) == 1) { genie_mode = 1; } // QE
 	    else if (TMath::Abs(Mode) == 2) { genie_mode = 2; } // MEC
 	    else if (
+		   TMath::Abs(Mode) == 10 ||
 		   TMath::Abs(Mode) == 11 || TMath::Abs(Mode) == 12 || TMath::Abs(Mode) == 13 ||
 		   TMath::Abs(Mode) == 17 || TMath::Abs(Mode) == 22 || TMath::Abs(Mode) == 23
 		   ) { genie_mode = 3; } // RES
@@ -727,7 +732,8 @@ void FlatTreeAnalyzer::Loop() {
 	    // Variables of interest
 	    // Assign twice to keep tracl of the old values as well
 
-	    STV_Tools reco_stv_tool(Muon4Vector.Vect(),Proton4Vector.Vect(),Muon4Vector.E(),Proton4Vector.E());
+	    //	    STV_Tools reco_stv_tool(Muon4Vector.Vect(),Proton4Vector.Vect(),Muon4Vector.E(),Proton4Vector.E());
+	    STV_Tools reco_stv_tool(Muon4Vector.Vect(),Proton4Vector.Vect(),Muon4Vector.E(),TMath::Sqrt( TMath::Power(Proton4Vector.Rho(),2.) + TMath::Power(ProtonMass_GeV,2.) ) );
 
 	    double MuonMomentum = Muon4Vector.Rho();
 	    double ProtonMomentum = Proton4Vector.Rho();

@@ -21,7 +21,7 @@
 using namespace std;
 using namespace Constants;
 
-void GeneratorOverlay(TString Tag = "") {
+void RatioGeneratorOverlay(TString Tag = "") {
 
 	//------------------------------//
 
@@ -47,21 +47,11 @@ void GeneratorOverlay(TString Tag = "") {
 	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_0_6.root"); Labels.push_back("G18"); Colors.push_back(kBlack); LineStyle.push_back(kSolid);
 	  //Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v2_12_10.root"); Labels.push_back("Gv2"); Colors.push_back(kBlue); LineStyle.push_back(Gv2LineStyle);
 	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v2_12_10_MEC.root"); Labels.push_back("Gv2"); Colors.push_back(kBlue); LineStyle.push_back(Gv2LineStyle);
-	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_NEUT_5_4_0_1.root"); Labels.push_back("NEUT"); Colors.push_back(kMagenta); LineStyle.push_back(NEUTLineStyle); // kMagenta - 9
+	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_NEUT_5_4_0_1.root"); Labels.push_back("NEUT"); Colors.push_back(kMagenta-9); LineStyle.push_back(NEUTLineStyle);
 	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_NuWro_19_02_1.root"); Labels.push_back("NuWro"); Colors.push_back(NEUTColor); LineStyle.push_back(NuWroLineStyle);
 	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GiBUU_2021.root"); Labels.push_back("GiBUU"); Colors.push_back(GiBUUColor); LineStyle.push_back(GiBUULineStyle);
 
 	}
-
-	if (Tag == "GiBUU") {
-	  
-		Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GiBUU_2021.root"); Labels.push_back("2021 false"); Colors.push_back(GiBUUColor); LineStyle.push_back(GiBUULineStyle);
-        	Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GiBUU_2021_Inclusive.root"); Labels.push_back("2021 true"); Colors.push_back(kBlue); LineStyle.push_back(kSolid);
-		Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GiBUU_2023.root"); Labels.push_back("2023"); Colors.push_back(kOrange+7); LineStyle.push_back(NEUTLineStyle);
-
-
-	}
-
 
 	if (Tag == "GENIE") {
 
@@ -106,18 +96,6 @@ void GeneratorOverlay(TString Tag = "") {
 
 	}
 
-	if (Tag == "EnergyIndependence") {
-
-	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_4_0_G18_10a_02_11a.root"); Labels.push_back("uB Flux");Colors.push_back(kAzure-4); LineStyle.push_back(kSolid);
-	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_4_0_G18_10a_02_11a_0_3GeV.root"); Labels.push_back("0.3 GeV");Colors.push_back(kBlue); LineStyle.push_back(kSolid);
-	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_4_0_G18_10a_02_11a_0_5GeV.root"); Labels.push_back("0.5 GeV");Colors.push_back(kOrange+7); LineStyle.push_back(kSolid);
-	  Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_4_0_G18_10a_02_11a_0_8GeV.root"); Labels.push_back("0.8 GeV");Colors.push_back(kGreen+1); LineStyle.push_back(kSolid);
-
-	  //Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_4_0_G18_10a_02_11a_1GeV.root"); Labels.push_back("G18 1 GeV");Colors.push_back(kOrange+7); LineStyle.push_back(kSolid);
-	  //Names.push_back(OutFilePath+"FlatTreeAnalyzerOutput_GENIE_v3_4_0_G18_10a_02_11a_3GeV.root"); Labels.push_back("G18 3 GeV");Colors.push_back(kGreen+1); LineStyle.push_back(kSolid);
-
-	}
-
 
 	const int NSamples = Names.size();
 	const int NColors = Colors.size();
@@ -140,23 +118,23 @@ void GeneratorOverlay(TString Tag = "") {
 
 	// 1D
 
-	PlotNames.push_back("DISTrueFineBinMuonCosThetaPlot"); YAxisLabel.push_back("#frac{d#sigma}{dcos#theta_{#mu}} #left[10^{-38} #frac{cm^{2}}{Ar}#right]");
-	PlotNames.push_back("RESTrueFineBinMuonCosThetaPlot"); YAxisLabel.push_back("#frac{d#sigma}{dcos#theta_{#mu}} #left[10^{-38} #frac{cm^{2}}{Ar}#right]");
-	PlotNames.push_back("MECTrueFineBinMuonCosThetaPlot"); YAxisLabel.push_back("#frac{d#sigma}{dcos#theta_{#mu}} #left[10^{-38} #frac{cm^{2}}{Ar}#right]");
-	PlotNames.push_back("QETrueFineBinMuonCosThetaPlot"); YAxisLabel.push_back("#frac{d#sigma}{dcos#theta_{#mu}} #left[10^{-38} #frac{cm^{2}}{Ar}#right]");
-	PlotNames.push_back("TrueFineBinMuonCosThetaPlot"); YAxisLabel.push_back("#frac{d#sigma}{dcos#theta_{#mu}} #left[10^{-38} #frac{cm^{2}}{Ar}#right]");
-	PlotNames.push_back("TrueFineBinDeltaPTPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#deltap_{T}} #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
-	PlotNames.push_back("TrueFineBinDeltaPnPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n}} #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
-	PlotNames.push_back("TrueFineBinDeltaAlpha3DMuPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#alpha_{3D,#mu}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
-	PlotNames.push_back("TrueFineBinDeltaAlpha3DqPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#alpha_{3D}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
+	//PlotNames.push_back("DISTrueFineBinMuonCosThetaPlot"); YAxisLabel.push_back("#frac{d#sigma}{dcos#theta_{#mu}} #left[10^{-38} #frac{cm^{2}}{Ar}#right]");
+	//PlotNames.push_back("RESTrueFineBinMuonCosThetaPlot"); YAxisLabel.push_back("#frac{d#sigma}{dcos#theta_{#mu}} #left[10^{-38} #frac{cm^{2}}{Ar}#right]");
+	//PlotNames.push_back("MECTrueFineBinMuonCosThetaPlot"); YAxisLabel.push_back("#frac{d#sigma}{dcos#theta_{#mu}} #left[10^{-38} #frac{cm^{2}}{Ar}#right]");
+	//PlotNames.push_back("QETrueFineBinMuonCosThetaPlot"); YAxisLabel.push_back("#frac{d#sigma}{dcos#theta_{#mu}} #left[10^{-38} #frac{cm^{2}}{Ar}#right]");
+	//PlotNames.push_back("TrueFineBinMuonCosThetaPlot"); YAxisLabel.push_back("#frac{d#sigma}{dcos#theta_{#mu}} #left[10^{-38} #frac{cm^{2}}{Ar}#right]");
+	//PlotNames.push_back("TrueFineBinDeltaPTPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#deltap_{T}} #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
+	//PlotNames.push_back("TrueFineBinDeltaPnPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n}} #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
+	//PlotNames.push_back("TrueFineBinDeltaAlpha3DMuPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#alpha_{3D,#mu}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
+	//PlotNames.push_back("TrueFineBinDeltaAlpha3DqPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#alpha_{3D}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
+	//PlotNames.push_back("TrueFineBinDeltaAlphaTPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#delta#alpha_{T}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
 	PlotNames.push_back("TrueFineBinDeltaAlphaTPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#delta#alpha_{T}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
-	PlotNames.push_back("RESTrueFineBinDeltaAlphaTPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#delta#alpha_{T}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
-	PlotNames.push_back("TrueFineBinDeltaPhiTPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#delta#phi_{T}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
-	PlotNames.push_back("TrueFineBinDeltaPhi3DPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#phi_{3D}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
-	PlotNames.push_back("TrueFineBinDeltaPnPerpPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n#perp}}  #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
-	PlotNames.push_back("TrueFineBinDeltaPnPerpxPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n#perp ,x}}  #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
-	PlotNames.push_back("TrueFineBinDeltaPnPerpyPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n#perp ,y}}  #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
-	PlotNames.push_back("TrueFineBinDeltaPnParPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n#parallel}}  #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
+	//PlotNames.push_back("TrueFineBinDeltaPhiTPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#delta#phi_{T}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
+	//PlotNames.push_back("TrueFineBinDeltaPhi3DPlot"); YAxisLabel.push_back("#frac{d#sigma}{d#phi_{3D}} #left[10^{-38} #frac{cm^{2}}{deg Ar}#right]");
+	//PlotNames.push_back("TrueFineBinDeltaPnPerpPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n#perp}} #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
+	//PlotNames.push_back("TrueFineBinDeltaPnPerpxPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n#perp,x}} #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
+	//PlotNames.push_back("TrueFineBinDeltaPnPerpyPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n#perp,y}} #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
+	//PlotNames.push_back("TrueFineBinDeltaPnParPlot"); YAxisLabel.push_back("#frac{d#sigma}{dp_{n#parallel}} #left[10^{-38} #frac{cm^{2}}{(GeV/c) Ar}#right]");
 
 	//------------------------------//
 
@@ -179,7 +157,7 @@ void GeneratorOverlay(TString Tag = "") {
 	*/
 
 	// 2D Post FSI
-
+	/*
 	PlotNames.push_back("TrueFineBinDeltaAlphaT_DeltaPT_0_00To0_20Plot"); YAxisLabel.push_back("#frac{d^{2}#sigma}{d#delta#alpha_{T}d#deltap_{T}} #left[10^{-38} #frac{cm^{2}}{deg GeV/c Ar}#right]");
 	PlotNames.push_back("TrueFineBinDeltaAlphaT_DeltaPT_0_20To0_40Plot"); YAxisLabel.push_back("#frac{d^{2}#sigma}{d#delta#alpha_{T}d#deltap_{T}} #left[10^{-38} #frac{cm^{2}}{deg GeV/c Ar}#right]");
 	PlotNames.push_back("TrueFineBinDeltaAlphaT_DeltaPT_0_40To1_00Plot"); YAxisLabel.push_back("#frac{d^{2}#sigma}{d#delta#alpha_{T}d#deltap_{T}} #left[10^{-38} #frac{cm^{2}}{deg GeV/c Ar}#right]");
@@ -206,7 +184,7 @@ void GeneratorOverlay(TString Tag = "") {
 	PlotNames.push_back("TrueFineBinDeltaPn_DeltaAlpha3DMu_45_00To90_00Plot"); YAxisLabel.push_back("#frac{d^{2}#sigma}{d#alpha_{3D,#mu}dp_{n}} #left[10^{-38} #frac{cm^{2}}{deg GeV/c Ar}#right]");
 	PlotNames.push_back("TrueFineBinDeltaPn_DeltaAlpha3DMu_90_00To135_00Plot"); YAxisLabel.push_back("#frac{d^{2}#sigma}{d#alpha_{3D,#mu}dp_{n}} #left[10^{-38} #frac{cm^{2}}{deg GeV/c Ar}#right]");
 	PlotNames.push_back("TrueFineBinDeltaPn_DeltaAlpha3DMu_135_00To180_00Plot"); YAxisLabel.push_back("#frac{d^{2}#sigma}{d#alpha_{3D,#mu}dp_{n}} #left[10^{-38} #frac{cm^{2}}{deg GeV/c Ar}#right]");
-
+	*/
 	//------------------------------//
 
 	const int NPlots = PlotNames.size();
@@ -231,11 +209,12 @@ void GeneratorOverlay(TString Tag = "") {
 
 	for (int iPlot = 0; iPlot < NPlots; iPlot++) {
 
-		TString CanvasName = "ThreeDKI_GeneratorOverlay_" + PlotNames[iPlot];
+	        TString CanvasName = "GeneratorOverlay_" + PlotNames[iPlot];
 		TCanvas* PlotCanvas = new TCanvas(CanvasName,CanvasName,205,34,1024,768);
 		PlotCanvas->cd();
+
 		PlotCanvas->SetTopMargin(0.15);
-		PlotCanvas->SetLeftMargin(0.17);
+		PlotCanvas->SetLeftMargin(0.19);
 		PlotCanvas->SetRightMargin(0.05);
 		PlotCanvas->SetBottomMargin(0.16);		
 		PlotCanvas->Draw();	
@@ -273,7 +252,7 @@ void GeneratorOverlay(TString Tag = "") {
 			Histos[iSample]->GetYaxis()->SetLabelSize(TextSize);
 			Histos[iSample]->GetYaxis()->SetTitle(YAxisLabel.at(iPlot));
 			Histos[iSample]->GetYaxis()->SetTitleSize(TextSize);
-			Histos[iSample]->GetYaxis()->SetTitleOffset(1.2);
+			Histos[iSample]->GetYaxis()->SetTitleOffset(1.3);
 			//Histos[iSample]->GetYaxis()->SetTickSize(0);
 			Histos[iSample]->GetYaxis()->CenterTitle();	
 
@@ -289,39 +268,70 @@ void GeneratorOverlay(TString Tag = "") {
 			TLegendEntry* legColor = leg->AddEntry(Histos[iSample],Labels[iSample],"l");
 			legColor->SetTextColor( Colors.at(iSample) ); 
 
-			TLatex *textSlice = new TLatex();
-			textSlice->SetTextFont(FontStyle);
-			textSlice->SetTextSize(TextSize);
-			TString PlotNameDuplicate = PlotNames[iPlot];
-			TString ReducedPlotName = PlotNameDuplicate.ReplaceAll("TrueFineBin","") ;
-			textSlice->DrawLatexNDC(0.2, 0.8, LatexLabel[ReducedPlotName].ReplaceAll("All events",""));
-
-			if ( 
-			    PlotNames[iPlot] == "TrueFineBinDeltaPnParPlot" || PlotNames[iPlot] == "TrueFineBinDeltaPnPerpPlot" || 
-			    PlotNames[iPlot] == "TrueFineBinDeltaPnPerpxPlot"  || PlotNames[iPlot] == "TrueFineBinDeltaPnPerpyPlot" ||
-			    PlotNames[iPlot] == "TrueFineBinDeltaAlpha3DqPlot" || PlotNames[iPlot] == "TrueFineBinDeltaAlphaTPlot"
-			     ) {
-
-			  TLatex *textPanel = new TLatex();
-			  textPanel->SetTextFont(FontStyle);
-			  textPanel->SetTextSize(TextSize);
-
-			  if ( PlotNames[iPlot] == "TrueFineBinDeltaPnParPlot" || PlotNames[iPlot] == "TrueFineBinDeltaPnPerpxPlot" || PlotNames[iPlot] == "TrueFineBinDeltaAlpha3DqPlot" ) 
-			    { textPanel->DrawLatexNDC(0.87, 0.8, "(a)"); }
-			  if ( PlotNames[iPlot] == "TrueFineBinDeltaPnPerpPlot" || PlotNames[iPlot] == "TrueFineBinDeltaPnPerpyPlot" || PlotNames[iPlot] == "TrueFineBinDeltaAlphaTPlot") 
-			    { textPanel->DrawLatexNDC(0.87, 0.8, "(b)"); }
-			
-			}
-
 			//----------------------------------------//					
 
 		} // End of the loop over the samples grabing the plots	
+
+		TLatex *textSlice = new TLatex();
+		textSlice->SetTextFont(FontStyle);
+		textSlice->SetTextSize(TextSize);
+		TString PlotNameDuplicate = PlotNames[iPlot];
+		TString ReducedPlotName = PlotNameDuplicate.ReplaceAll("TrueFineBin","") ;
+		textSlice->DrawLatexNDC(0.2, 0.8, LatexLabel[ReducedPlotName].ReplaceAll("All events",""));
 
 		PlotCanvas->cd();
 		leg->Draw();
 
 		PlotCanvas->SaveAs("/uboone/data/users/apapadop/FlatTTreePlots/"+Tag+CanvasName+".pdf");
 		delete PlotCanvas;
+
+		//----------------------------------------//					
+
+	        TString RatioCanvasName = "RatioGeneratorOverlay_" + PlotNames[iPlot];
+		TCanvas* RatioPlotCanvas = new TCanvas(RatioCanvasName,RatioCanvasName,205,34,1024,768);
+		RatioPlotCanvas->cd();
+
+		RatioPlotCanvas->SetTopMargin(0.15);
+		RatioPlotCanvas->SetLeftMargin(0.19);
+		RatioPlotCanvas->SetRightMargin(0.05);
+		RatioPlotCanvas->SetBottomMargin(0.16);		
+		RatioPlotCanvas->Draw();	
+
+		TLegend* ratioleg = new TLegend(0.18,0.855,0.99,0.985);
+		ratioleg->SetBorderSize(0);
+		ratioleg->SetNColumns(6);
+		ratioleg->SetTextSize(TextSize);	
+		ratioleg->SetTextFont(FontStyle);						
+		ratioleg->SetMargin(0.3);						
+
+		// Loop over the samples to open the files and to get the corresponding plot
+
+		std::vector<TH1D*> RatioHistos; RatioHistos.resize(NSamples);
+
+		for (int iSample = 0; iSample < NSamples; iSample++) {	
+
+		  RatioHistos[iSample] = (TH1D*)(Histos[iSample]->Clone());
+		  RatioHistos[iSample]->Divide(Histos[0]);
+
+		  RatioHistos[iSample]->GetYaxis()->SetRangeUser(0.94,1.06);
+
+		  if (iSample != 0) { RatioHistos[iSample]->Draw("hist same"); }
+		  else { RatioHistos[iSample]->Draw("hist same"); }
+
+
+		  TLegendEntry* ratiolegColor = ratioleg->AddEntry(RatioHistos[iSample],Labels[iSample],"l");
+		  ratiolegColor->SetTextColor( Colors.at(iSample) );
+
+		} // End of the loop over the samples
+
+
+		textSlice->DrawLatexNDC(0.2, 0.8, LatexLabel[ReducedPlotName].ReplaceAll("All events",""));
+
+		RatioPlotCanvas->cd();
+		ratioleg->Draw();
+
+		RatioPlotCanvas->SaveAs("/uboone/data/users/apapadop/FlatTTreePlots/"+Tag+RatioCanvasName+".pdf");
+		delete RatioPlotCanvas;
 
 	} // End of the loop over the plots
 

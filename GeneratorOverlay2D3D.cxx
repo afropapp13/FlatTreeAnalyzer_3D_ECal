@@ -41,6 +41,22 @@ void GeneratorOverlay2D3D(TString Tag = "") {
 	  { "TrueFineBinDeltaPhiTPlot", "TrueFineBinDeltaPhi3DPlot" }
 	};
 
+	static std::map<TString,TString> TKILabels = {
+
+	  { "TrueFineBinDeltaPTPlot", "#delta p_{T}" },
+	  { "TrueFineBinDeltaAlphaTPlot", "#delta#alpha_{T}" },
+	  { "TrueFineBinDeltaPhiTPlot", "#delta#phi_{T}" }
+	};
+
+	static std::map<TString,TString> GKILabels = {
+
+	  { "TrueFineBinDeltaPnPlot","p_{n}" },
+	  { "TrueFineBinDeltaAlpha3DqPlot", "#alpha_{3D}" },
+	  { "TrueFineBinDeltaPhi3DPlot", "#phi_{3D}" }
+	};
+
+
+
 	//------------------------------//
 
 	// Event generators
@@ -110,7 +126,7 @@ void GeneratorOverlay2D3D(TString Tag = "") {
 		TString CanvasName = "GeneratorOverlay2D3D_" + PlotNames[iPlot];
 		TCanvas* PlotCanvas = new TCanvas(CanvasName,CanvasName,205,34,1024,768);
 		PlotCanvas->cd();
-		PlotCanvas->SetTopMargin(0.15);
+		PlotCanvas->SetTopMargin(0.16);
 		PlotCanvas->SetLeftMargin(0.1);
 		PlotCanvas->SetRightMargin(0.05);
 		PlotCanvas->SetBottomMargin(0.16);		
@@ -205,10 +221,10 @@ void GeneratorOverlay2D3D(TString Tag = "") {
 			GKIHistos[iSample]->Draw("hist same");
 			Histos[0]->Draw("hist same");	
 
-			TLegendEntry* legColor = legTKI->AddEntry(Histos[iSample],Labels[iSample] + " TKI","l");
+			TLegendEntry* legColor = legTKI->AddEntry(Histos[iSample],Labels[iSample] + " " + TKILabels[PlotNames[iPlot]],"l");
 			legColor->SetTextColor( Colors.at(iSample) ); 
 
-			TLegendEntry* legColorGKI = leg->AddEntry(GKIHistos[iSample],Labels[iSample] + " GKI","l");
+			TLegendEntry* legColorGKI = leg->AddEntry(GKIHistos[iSample],Labels[iSample] + " " + GKILabels[Mapping[PlotNames[iPlot]]],"l");
 			legColorGKI->SetTextColor( Colors.at(iSample) ); 
 
 			TLatex *textSlice = new TLatex();
@@ -222,7 +238,7 @@ void GeneratorOverlay2D3D(TString Tag = "") {
 			textPanel->SetTextFont(FontStyle);
 			textPanel->SetTextSize(TextSize);
 
-			textPanel->DrawLatexNDC(0.87, 0.8, PanelLabel[iPlot]);
+			textPanel->DrawLatexNDC(0.87, 0.78, PanelLabel[iPlot]);
 			
 			//----------------------------------------//					
 

@@ -128,7 +128,7 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 
                   NameOfSamples.push_back("NuWro_19_02_1"); Colors.push_back(NEUTColor); Labels.push_back("NuWro "); LineStyle.push_back(NuWroLineStyle);
 		  NameOfSamples.push_back("GiBUU_2021"); Colors.push_back(GiBUUColor); Labels.push_back("GiBUU "); LineStyle.push_back(GiBUULineStyle);
-		  NameOfSamples.push_back("NEUT_5_4_0_1"); Colors.push_back(kMagenta-9); Labels.push_back("NEUT "); LineStyle.push_back(NEUTLineStyle);
+		  NameOfSamples.push_back("NEUT_5_4_0_1"); Colors.push_back(kMagenta); Labels.push_back("NEUT "); LineStyle.push_back(NEUTLineStyle);// kMagenta - 9
 
                 }
 
@@ -633,6 +633,7 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 				  MC[WhichPlot][NDimSlice][WhichSample]->SetLineStyle(LineStyle[WhichSample]);
 					MC[WhichPlot][NDimSlice][WhichSample]->SetLineColor(Colors[WhichSample]);
 					MC[WhichPlot][NDimSlice][WhichSample]->SetMarkerColor(Colors[WhichSample]);
+					MC[WhichPlot][NDimSlice][WhichSample]->SetLineWidth(3);
 					MC[WhichPlot][NDimSlice][WhichSample]->Draw("hist same");
 				  				
 	
@@ -657,6 +658,7 @@ void TwoDimWienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = fal
 				PrettyPlot(MC[WhichPlot][NDimSlice][0]);
 				MC[WhichPlot][NDimSlice][0]->SetLineColor(Colors[0]);
 				MC[WhichPlot][NDimSlice][0]->SetMarkerColor(Colors[0]);	
+				MC[WhichPlot][NDimSlice][0]->SetLineWidth(3);	
 				MC[WhichPlot][NDimSlice][0]->Draw("hist same");	
 				
 				QEMC[WhichPlot][NDimSlice][0] = tools.GetHistoBins(QEPlotsTrue[0][WhichPlot],SerialVectorLowBin.at(NDimSlice),SerialVectorHighBin.at(NDimSlice), MultiDimScaleFactor[ MapUncorCor[ NameCopy ] ], SerialSliceBinning,"Overlay");

@@ -25,7 +25,8 @@ void GraphOverlay(TString Tag = "G18") {
 	gStyle->SetOptStat(0);
 
 	int FontStyle = 132;
-	double TextSize = 0.06;			
+	double TextSize = 0.07;			
+	int LineWidth = 5;
 
 	TString OutFilePath = "OutputFiles/";
 
@@ -55,12 +56,12 @@ void GraphOverlay(TString Tag = "G18") {
 	TCanvas* PlotCanvas = new TCanvas(CanvasName,CanvasName,205,34,1024,768);
 	PlotCanvas->cd();
 	PlotCanvas->SetTopMargin(0.12);
-	PlotCanvas->SetLeftMargin(0.12);
+	PlotCanvas->SetLeftMargin(0.14);
 	PlotCanvas->SetRightMargin(0.12);
-	PlotCanvas->SetBottomMargin(0.12);		
+	PlotCanvas->SetBottomMargin(0.15);		
 	PlotCanvas->Draw();	
 
-	TLegend* leg = new TLegend(0.7,0.7,0.8,0.85);
+	TLegend* leg = new TLegend(0.7,0.65,0.8,0.85);
 	leg->SetBorderSize(0);
 	leg->SetNColumns(1);
 	leg->SetTextSize(TextSize);	
@@ -71,7 +72,7 @@ void GraphOverlay(TString Tag = "G18") {
         TGraph* gPn = (TGraph*)(File->Get("gDeltaPn"));
 
 	gPT->SetTitle("");
-	gPT->SetLineWidth(3);
+	gPT->SetLineWidth(LineWidth);
 	gPT->SetLineColor( kAzure-4 );	
 	gPT->SetLineStyle( kSolid );	
 
@@ -100,7 +101,7 @@ void GraphOverlay(TString Tag = "G18") {
 	
 	gPT->Draw("AC");
 
-	gPn->SetLineWidth(3);
+	gPn->SetLineWidth(LineWidth);
 	gPn->SetLineColor( kOrange+7 );	
 	gPn->SetLineStyle( kSolid );	
 
@@ -125,12 +126,12 @@ void GraphOverlay(TString Tag = "G18") {
 	TCanvas* CutPlotCanvas = new TCanvas(CutCanvasName,CutCanvasName,205,34,1024,768);
 	CutPlotCanvas->cd();
 	CutPlotCanvas->SetTopMargin(0.12);
-	CutPlotCanvas->SetLeftMargin(0.12);
+	CutPlotCanvas->SetLeftMargin(0.14);
 	CutPlotCanvas->SetRightMargin(0.12);
-	CutPlotCanvas->SetBottomMargin(0.12);		
+	CutPlotCanvas->SetBottomMargin(0.15);		
 	CutPlotCanvas->Draw();	
 
-	TLegend* Cutleg = new TLegend(0.7,0.7,0.8,0.85);
+	TLegend* Cutleg = new TLegend(0.7,0.65,0.8,0.85);
 	Cutleg->SetBorderSize(0);
 	Cutleg->SetNColumns(1);
 	Cutleg->SetTextSize(TextSize);	
@@ -141,7 +142,7 @@ void GraphOverlay(TString Tag = "G18") {
         TGraph* CutgPn = (TGraph*)(File->Get("gCutDeltaPn"));
 
 	CutgPT->SetTitle("");
-	CutgPT->SetLineWidth(3);
+	CutgPT->SetLineWidth(LineWidth);
 	CutgPT->SetLineColor( kAzure-4 );	
 	CutgPT->SetLineStyle( kSolid );	
 
@@ -152,7 +153,7 @@ void GraphOverlay(TString Tag = "G18") {
 	CutgPT->GetXaxis()->SetTitleSize(TextSize);	
 	CutgPT->GetXaxis()->SetTitleOffset(0.99);					
 	CutgPT->GetXaxis()->CenterTitle();						
-	CutgPT->GetXaxis()->SetTitle("cut value [GeV/c]");					
+	CutgPT->GetXaxis()->SetTitle("minimum requirement [GeV/c]");					
 
 	CutgPT->GetYaxis()->SetTitleFont(FontStyle);
 	CutgPT->GetYaxis()->SetLabelFont(FontStyle);
@@ -170,7 +171,7 @@ void GraphOverlay(TString Tag = "G18") {
 	
 	CutgPT->Draw("AC");
 
-	CutgPn->SetLineWidth(3);
+	CutgPn->SetLineWidth(LineWidth);
 	CutgPn->SetLineColor( kOrange+7 );	
 	CutgPn->SetLineStyle( kSolid );	
 
