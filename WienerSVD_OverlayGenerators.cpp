@@ -31,7 +31,7 @@ using namespace Constants;
 
 //----------------------------------------//
 
-void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bool PlotACHILLES = false) {
+void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bool PlotACHILLES = false, bool PlotANL_SF = false) {
 
 	//----------------------------------------//
 
@@ -48,10 +48,12 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 	if (PlotGen) { Extra = "Gene"; }
 	if (PlotGENIE) { Extra = "Genie"; }
 	if (PlotACHILLES) { Extra = "ACHILLES"; }
+	if (PlotANL_SF) { Extra = "ANL_SF"; }
 
 	//----------------------------------------//
 
 	vector<TString> PlotNames;
+	PlotNames.push_back("DeltaPTPlot");
 	PlotNames.push_back("DeltaPnPerpPlot");
 	PlotNames.push_back("DeltaPnPerpxPlot");
 	PlotNames.push_back("DeltaPnPerpyPlot");
@@ -112,6 +114,16 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 			NameOfSamples.push_back("GENIE_v3_0_6_G21_11b_00_000"); Colors.push_back(kOrange+6); Labels.push_back("G21 "); LineStyle.push_back(G21LineStyle);
 
 		}
+
+		//----------------------------------------//	
+
+		if (PlotANL_SF) {
+
+			NameOfSamples.push_back("GENIE_v3_0_6"); Colors.push_back(kGreen+2); Labels.push_back("G18 "); LineStyle.push_back(G18LineStyle);
+			NameOfSamples.push_back("ANL_SF"); Colors.push_back(kOrange+7); Labels.push_back("ANL SF "); LineStyle.push_back(G21LineStyle);
+
+		}
+
 
 		//----------------------------------------//		
 
@@ -589,8 +601,13 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 			TLatex *textPanel = new TLatex();
 			textPanel->SetTextFont(FontStyle);
 			textPanel->SetTextSize(TextSize);
-			TString Panel = "(a)";
-			if (Extra == "Genie") { Panel = "(b)"; }
+
+			//TString Panel = "(a)";
+			//if (Extra == "Genie") { Panel = "(b)"; }
+			
+			TString Panel = "";
+			if (Extra == "Genie") { Panel = ""; }
+
 
 			if (
 			    PlotNames[WhichPlot] == "DeltaPnPerpPlot" ||
