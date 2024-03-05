@@ -16,15 +16,13 @@
 #include <iterator>
 #include <fstream>
 
+#include "../myClasses/myFunctions.cpp"
 #include "../myClasses/Constants.h"
 #include "../myClasses/STV_Tools.h"
 #include "../myClasses/Tools.h"
 
 using namespace std;
 using namespace Constants;
-
-//Function to divide by the bin width and to get xsecs
-void Reweight(TH1D* h, double SF = 1.);
 
 //----------------------------------------//
 
@@ -208,7 +206,7 @@ void FlatTreeAnalyzer::Loop() {
 	  //----------------------------------------//			
 
 	  double weight = fScaleFactor*Units*A*Weight;	
-	  if (fOutputFile == "GiBUU_2023") { weight = weight/300.; } // To increase the stats, the GiBUU sample has been produced in 50 samples	
+	  if (fOutputFile == "GiBUU_2023") { weight = weight/500.; } // To increase the stats, the GiBUU sample has been produced in 500 samples	
 
 	  //----------------------------------------//	
 
@@ -494,27 +492,5 @@ void FlatTreeAnalyzer::Loop() {
 	//----------------------------------------//		
 
 } // End of the program
-
-//----------------------------------------//		
-
-void Reweight(TH1D* h, double SF) {
-
-  int NBins = h->GetXaxis()->GetNbins();
-
-  for (int i = 0; i < NBins; i++) {
-
-    double CurrentEntry = h->GetBinContent(i+1);
-    double NewEntry = SF * CurrentEntry / h->GetBinWidth(i+1);
-
-    double CurrentError = h->GetBinError(i+1);
-    double NewError = SF * CurrentError / h->GetBinWidth(i+1);
-
-    h->SetBinContent(i+1,NewEntry); 
-    h->SetBinError(i+1,NewError); 
-    //h->SetBinError(i+1,0.000001); 
-
-  }
-
-}
 
 //----------------------------------------//		

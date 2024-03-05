@@ -76,63 +76,28 @@ void GeneratorInteBreakDown() {
 
 	// 3D
 
-        PlotNames.push_back("TrueFineBinECal_DeltaPT_0_00To0_20_DeltaAlphaT_0_00To45_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{T}dp_{T}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_DeltaPT_0_00To0_20_DeltaAlphaT_45_00To90_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{T}dp_{T}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_DeltaPT_0_00To0_20_DeltaAlphaT_90_00To135_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{T}dp_{T}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_DeltaPT_0_00To0_20_DeltaAlphaT_135_00To180_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{T}dp_{T}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
+	PlotNames.push_back("TrueFineBinECal_DeltaPT_0_00To0_30_DeltaAlphaT_0_00To90_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{T}dp_{T}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
+	PlotNames.push_back("TrueFineBinECal_DeltaPT_0_00To0_30_DeltaAlphaT_90_00To180_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{T}dp_{T}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
 
-        PlotNames.push_back("TrueFineBinECal_DeltaPT_0_20To0_40_DeltaAlphaT_0_00To45_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{T}dp_{T}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_DeltaPT_0_20To0_40_DeltaAlphaT_45_00To90_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{T}dp_{T}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_DeltaPT_0_20To0_40_DeltaAlphaT_90_00To135_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{T}dp_{T}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_DeltaPT_0_20To0_40_DeltaAlphaT_135_00To180_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{T}dp_{T}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
-
-        PlotNames.push_back("TrueFineBinECal_DeltaPT_0_40To1_00_DeltaAlphaT_0_00To45_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{T}dp_{T}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_DeltaPT_0_40To1_00_DeltaAlphaT_45_00To90_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{T}dp_{T}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_DeltaPT_0_40To1_00_DeltaAlphaT_90_00To135_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{T}dp_{T}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_DeltaPT_0_40To1_00_DeltaAlphaT_135_00To180_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{T}dp_{T}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
+	PlotNames.push_back("TrueFineBinECal_DeltaPT_0_30To1_00_DeltaAlphaT_0_00To90_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{T}dp_{T}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
+	PlotNames.push_back("TrueFineBinECal_DeltaPT_0_30To1_00_DeltaAlphaT_90_00To180_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{T}dp_{T}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
 
 
-        PlotNames.push_back("TrueFineBinECal_DeltaPn_0_00To0_20_DeltaAlpha3Dq_0_00To45_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{3D}dp_{n}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_DeltaPn_0_00To0_20_DeltaAlpha3Dq_45_00To90_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{3D}dp_{n}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_DeltaPn_0_00To0_20_DeltaAlpha3Dq_90_00To135_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{3D}dp_{n}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_DeltaPn_0_00To0_20_DeltaAlpha3Dq_135_00To180_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{3D}dp_{n}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
+	PlotNames.push_back("TrueFineBinECal_DeltaPn_0_00To0_30_DeltaAlpha3Dq_0_00To90_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{3D}dp_{n}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
+	PlotNames.push_back("TrueFineBinECal_DeltaPn_0_00To0_30_DeltaAlpha3Dq_90_00To180_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{3D}dp_{n}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
 
-        PlotNames.push_back("TrueFineBinECal_DeltaPn_0_20To0_40_DeltaAlpha3Dq_0_00To45_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{3D}dp_{n}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_DeltaPn_0_20To0_40_DeltaAlpha3Dq_45_00To90_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{3D}dp_{n}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_DeltaPn_0_20To0_40_DeltaAlpha3Dq_90_00To135_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{3D}dp_{n}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_DeltaPn_0_20To0_40_DeltaAlpha3Dq_135_00To180_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{3D}dp_{n}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
+	PlotNames.push_back("TrueFineBinECal_DeltaPn_0_30To1_00_DeltaAlpha3Dq_0_00To90_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{3D}dp_{n}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
+	PlotNames.push_back("TrueFineBinECal_DeltaPn_0_30To1_00_DeltaAlpha3Dq_90_00To180_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{3D}dp_{n}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
 
-        PlotNames.push_back("TrueFineBinECal_DeltaPn_0_40To1_00_DeltaAlpha3Dq_0_00To45_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{3D}dp_{n}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_DeltaPn_0_40To1_00_DeltaAlpha3Dq_45_00To90_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{3D}dp_{n}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_DeltaPn_0_40To1_00_DeltaAlpha3Dq_90_00To135_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{3D}dp_{n}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_DeltaPn_0_40To1_00_DeltaAlpha3Dq_135_00To180_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}d#alpha_{3D}dp_{n}} #left[10^{-38} #frac{cm^{2}}{deg (GeV^{2}/c) Ar}#right]");
+	PlotNames.push_back("TrueFineBinECal_MuonCosTheta_Minus1_00To0_60_MuonMomentum_0_10To0_50Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{#mu}dp_{#mu}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
+	PlotNames.push_back("TrueFineBinECal_MuonCosTheta_0_60To1_00_MuonMomentum_0_10To0_50Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{#mu}dp_{#mu}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
+	PlotNames.push_back("TrueFineBinECal_MuonCosTheta_Minus1_00To0_60_MuonMomentum_0_50To1_20Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{#mu}dp_{#mu}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
+	PlotNames.push_back("TrueFineBinECal_MuonCosTheta_0_60To1_00_MuonMomentum_0_50To1_20Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{#mu}dp_{#mu}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
 
-        PlotNames.push_back("TrueFineBinECal_MuonCosTheta_Minus1_00To0_00_MuonMomentum_0_10To0_40Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{#mu}dp_{#mu}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_MuonCosTheta_0_00To0_50_MuonMomentum_0_10To0_40Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{#mu}dp_{#mu}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_MuonCosTheta_0_50To0_75_MuonMomentum_0_10To0_40Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{#mu}dp_{#mu}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_MuonCosTheta_0_75To1_00_MuonMomentum_0_10To0_40Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{#mu}dp_{#mu}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_MuonCosTheta_Minus1_00To0_00_MuonMomentum_0_40To0_60Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{#mu}dp_{#mu}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_MuonCosTheta_0_00To0_50_MuonMomentum_0_40To0_60Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{#mu}dp_{#mu}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_MuonCosTheta_0_50To0_75_MuonMomentum_0_40To0_60Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{#mu}dp_{#mu}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_MuonCosTheta_0_75To1_00_MuonMomentum_0_40To0_60Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{#mu}dp_{#mu}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_MuonCosTheta_Minus1_00To0_00_MuonMomentum_0_60To1_20Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{#mu}dp_{#mu}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_MuonCosTheta_0_00To0_50_MuonMomentum_0_60To1_20Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{#mu}dp_{#mu}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_MuonCosTheta_0_50To0_75_MuonMomentum_0_60To1_20Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{#mu}dp_{#mu}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_MuonCosTheta_0_75To1_00_MuonMomentum_0_60To1_20Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{#mu}dp_{#mu}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-
-
-	PlotNames.push_back("TrueFineBinECal_ProtonCosTheta_Minus1_00To0_00_ProtonMomentum_0_30To0_50Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{p}dp_{p}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_ProtonCosTheta_0_00To0_50_ProtonMomentum_0_30To0_50Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{p}dp_{p}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_ProtonCosTheta_0_50To0_75_ProtonMomentum_0_30To0_50Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{p}dp_{p}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_ProtonCosTheta_0_75To1_00_ProtonMomentum_0_30To0_50Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{p}dp_{p}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_ProtonCosTheta_Minus1_00To0_00_ProtonMomentum_0_50To0_70Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{p}dp_{p}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_ProtonCosTheta_0_00To0_50_ProtonMomentum_0_50To0_70Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{p}dp_{p}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_ProtonCosTheta_0_50To0_75_ProtonMomentum_0_50To0_70Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{p}dp_{p}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_ProtonCosTheta_0_75To1_00_ProtonMomentum_0_50To0_70Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{p}dp_{p}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_ProtonCosTheta_Minus1_00To0_00_ProtonMomentum_0_70To1_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{p}dp_{p}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_ProtonCosTheta_0_00To0_50_ProtonMomentum_0_70To1_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{p}dp_{p}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_ProtonCosTheta_0_50To0_75_ProtonMomentum_0_70To1_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{p}dp_{p}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
-        PlotNames.push_back("TrueFineBinECal_ProtonCosTheta_0_75To1_00_ProtonMomentum_0_70To1_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{p}dp_{p}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
+	PlotNames.push_back("TrueFineBinECal_ProtonCosTheta_Minus1_00To0_60_ProtonMomentum_0_30To0_60Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{p}dp_{p}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
+	PlotNames.push_back("TrueFineBinECal_ProtonCosTheta_0_60To1_00_ProtonMomentum_0_30To0_60Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{p}dp_{p}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
+	PlotNames.push_back("TrueFineBinECal_ProtonCosTheta_Minus1_00To0_60_ProtonMomentum_0_60To1_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{p}dp_{p}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
+	PlotNames.push_back("TrueFineBinECal_ProtonCosTheta_0_60To1_00_ProtonMomentum_0_60To1_00Plot"); YAxisLabel.push_back("#frac{d^{3}#sigma}{dE^{Cal}dcos#theta_{p}dp_{p}} #left[10^{-38} #frac{cm^{2}}{(GeV^{2}/c) Ar}#right]");
 
 	//------------------------------//
 
@@ -244,7 +209,7 @@ void GeneratorInteBreakDown() {
 		  le1->SetTextAlign(22);
 		  leggen->Draw();
 
-		  PlotCanvas->SaveAs("/uboone/data/users/apapadop/ThreeDXSec_FlatTTreePlots/"+CanvasName+".pdf");
+		  PlotCanvas->SaveAs("/exp/uboone/data/users/apapadop/ThreeDXSec_FlatTTreePlots/"+CanvasName+".pdf");
 		  delete PlotCanvas;
 
 		} // End of the loop over the samples grabing the plots	

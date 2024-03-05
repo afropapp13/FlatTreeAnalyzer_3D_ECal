@@ -9,7 +9,7 @@
 #include <sstream>
 #include <cmath>
 
-#include "/uboone/app/users/apapadop/uboonecode_v08_00_00_52/srcs/ubana/ubana/myClasses/Constants.h"
+#include "../myClasses/Constants.h"
 
 using namespace std;
 using namespace Constants;
