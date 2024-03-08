@@ -216,6 +216,7 @@ void FlatTreeAnalyzer::Loop() {
 	  if (cc != 1) { continue; } // make sure that we have only CC interactions		
 
 	  int ProtonTagging = 0, ChargedPionTagging = 0, NeutralPionTagging = 0, MuonTagging = 0, TrueHeavierMesonCounter = 0;
+          int ElectronTagging = 0, PhotonTagging = 0;	
 	  vector <int> ProtonID; ProtonID.clear();
 	  vector <int> MuonID; MuonID.clear();		
 
@@ -253,6 +254,19 @@ void FlatTreeAnalyzer::Loop() {
 
 	    }
 
+	    if (fabs(pdg[i]) == 11)  {
+
+	      ElectronTagging++;
+
+	    }
+
+	    if (fabs(pdg[i]) == 22)  {
+
+	      PhotonTagging++;
+
+	    }
+
+
 	    if ( pdg[i] != NeutralPionPdg && fabs(pdg[i]) != AbsChargedPionPdg && tools.is_meson_or_antimeson(pdg[i]) ) { TrueHeavierMesonCounter++; }
 
 
@@ -282,7 +296,7 @@ void FlatTreeAnalyzer::Loop() {
 	  //----------------------------------------//	
 
 	  // If the signal definition post-FSI  is satisfied
-	  if ( ProtonTagging == 1 && ChargedPionTagging == 0 && NeutralPionTagging == 0 && MuonTagging == 1 && TrueHeavierMesonCounter == 0) { 
+	  if ( ProtonTagging == 1 && ChargedPionTagging == 0 && NeutralPionTagging == 0 && MuonTagging == 1 && TrueHeavierMesonCounter == 0 && ElectronTagging == 0 && PhotonTagging == 0) { 
 
 	    CounterEventsPassedSelection++;
 
