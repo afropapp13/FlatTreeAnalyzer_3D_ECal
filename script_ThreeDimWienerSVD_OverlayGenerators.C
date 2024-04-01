@@ -6,10 +6,10 @@
 
 	std::vector<TString> PlotNames; std::vector<int> NumberFirstDiscrSlices;  std::vector<int> NumberSecondDiscrSlices; 
 
-	PlotNames.push_back("ECal_DeltaPTDeltaAlphaTPlot"); NumberFirstDiscrSlices.push_back(3); NumberSecondDiscrSlices.push_back(4);
-	PlotNames.push_back("ECal_DeltaPtxDeltaPtyPlot"); NumberFirstDiscrSlices.push_back(3); NumberSecondDiscrSlices.push_back(3);
-	PlotNames.push_back("ECal_MuonCosThetaMuonMomentumPlot"); NumberFirstDiscrSlices.push_back(4); NumberSecondDiscrSlices.push_back(3);
-	PlotNames.push_back("ECal_ProtonCosThetaProtonMomentumPlot"); NumberFirstDiscrSlices.push_back(4); NumberSecondDiscrSlices.push_back(3);
+	PlotNames.push_back("ECal_DeltaPTDeltaAlphaTPlot"); NumberFirstDiscrSlices.push_back(2); NumberSecondDiscrSlices.push_back(2);
+	PlotNames.push_back("ECal_DeltaPnDeltaAlpha3DPlot"); NumberFirstDiscrSlices.push_back(2); NumberSecondDiscrSlices.push_back(2);
+	PlotNames.push_back("ECal_MuonCosThetaMuonMomentumPlot"); NumberFirstDiscrSlices.push_back(2); NumberSecondDiscrSlices.push_back(2);
+	PlotNames.push_back("ECal_ProtonCosThetaProtonMomentumPlot"); NumberFirstDiscrSlices.push_back(2); NumberSecondDiscrSlices.push_back(2);
 
 	for (int i = 0; i < (int)(PlotNames.size()); i++) {
 

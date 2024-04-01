@@ -62,6 +62,7 @@ void FlatTreeAnalyzer::Loop() {
 
 	// 1D Fine Binning
 
+	TH1D* TrueFineBinMuonCosThetaPlot[NInte];
 	TH1D* TrueFineBinECalPlot[NInte];
 
 	TH2D* TrueFineBinECal2DPlot[NInte];
@@ -70,6 +71,8 @@ void FlatTreeAnalyzer::Loop() {
 	// 1D Nominal Binning
 
 	TH1D* TrueECalPlot[NInte];
+	TH1D* TrueMuonCosThetaPlot[NInte];
+	TH1D* TrueFineBinMuonCosThetaSingleBinPlot[NInte];
 
 	// 3D Fine Bin Nominal Binning Uncorrelated
 	
@@ -106,6 +109,7 @@ void FlatTreeAnalyzer::Loop() {
 
 	  // 1D Fine Binning
 
+	  TrueFineBinMuonCosThetaPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinMuonCosThetaPlot",";cos#theta_{#mu}",20,-1,1);
 	  TrueFineBinECalPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinECalPlot",";E^{Cal} [GeV]",NFineBinECal,ArrayNBinsECal[0],ArrayNBinsECal[NBinsECal]);
 
 	  TrueFineBinECal2DPlot[inte] = new TH2D(InteractionLabels[inte]+"TrueFineBinECal2DPlot",";E_{#nu}^{true} [GeV];E_{Cal} [GeV]",NFineBinECal,ArrayNBinsECal[0],ArrayNBinsECal[NBinsECal],NFineBinECal,ArrayNBinsECal[0],ArrayNBinsECal[NBinsECal]);
@@ -114,6 +118,9 @@ void FlatTreeAnalyzer::Loop() {
 	  // 1D Nominal Binning
 
 	  TrueECalPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueECalPlot",";E^{Cal} [GeV]",NBinsECal,ArrayNBinsECal);
+	  TrueMuonCosThetaPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueMuonCosThetaPlot",";cos#theta_{#mu}",NBinsMuonCosTheta,ArrayNBinsMuonCosTheta);
+	  TrueFineBinMuonCosThetaSingleBinPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinMuonCosThetaSingleBinPlot",";",1,0,1);
+
 
 	  // 3D Fine & Nominal Binning Uncorrelated
 
@@ -296,7 +303,7 @@ void FlatTreeAnalyzer::Loop() {
 	  //----------------------------------------//	
 
 	  // If the signal definition post-FSI  is satisfied
-	  if ( ProtonTagging == 1 && ChargedPionTagging == 0 && NeutralPionTagging == 0 && MuonTagging == 1 && TrueHeavierMesonCounter == 0 && ElectronTagging == 0 && PhotonTagging == 0) { 
+	  if ( ProtonTagging == 1 && ChargedPionTagging == 0 && NeutralPionTagging == 0 && MuonTagging == 1 && TrueHeavierMesonCounter == 0) { 
 
 	    CounterEventsPassedSelection++;
 
@@ -330,8 +337,13 @@ void FlatTreeAnalyzer::Loop() {
 
 	    // 1D Fine Binning
 
+	    TrueFineBinMuonCosThetaPlot[0]->Fill(MuonCosTheta,weight);
 	    TrueFineBinECalPlot[0]->Fill(ECal,weight);
+	    
+	    // Nominal binning
 	    TrueECalPlot[0]->Fill(ECal,weight);
+	    TrueMuonCosThetaPlot[0]->Fill(MuonCosTheta,weight);
+	    TrueFineBinMuonCosThetaSingleBinPlot[0]->Fill(0.5,weight);
 
 	    TrueFineBinECal2DPlot[0]->Fill(Enu_true,ECal,weight);
 	    TrueFineBinq2DPlot[0]->Fill(qtrue,qreco,weight);
@@ -340,8 +352,13 @@ void FlatTreeAnalyzer::Loop() {
 
 	    // 1D Fine Binning
 
+	    TrueFineBinMuonCosThetaPlot[genie_mode]->Fill(MuonCosTheta,weight);
 	    TrueFineBinECalPlot[genie_mode]->Fill(ECal,weight);
+	  
+	    // Nominal binning
 	    TrueECalPlot[genie_mode]->Fill(ECal,weight);
+	    TrueMuonCosThetaPlot[genie_mode]->Fill(MuonCosTheta,weight);
+	    TrueFineBinMuonCosThetaSingleBinPlot[genie_mode]->Fill(0.5,weight);
 
 	    TrueFineBinECal2DPlot[genie_mode]->Fill(Enu_true,ECal,weight);
             TrueFineBinq2DPlot[genie_mode]->Fill(qtrue,qreco,weight);
@@ -442,6 +459,7 @@ void FlatTreeAnalyzer::Loop() {
 	
 	        // 1D Fine Binning Post FSI
 
+		Reweight(TrueFineBinMuonCosThetaPlot[inte]);
 		Reweight(TrueFineBinECalPlot[inte]);
 
 		// 3D Fine Binning Post FSI
