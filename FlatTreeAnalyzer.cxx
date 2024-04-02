@@ -64,6 +64,7 @@ void FlatTreeAnalyzer::Loop() {
 
 	TH1D* TrueFineBinMuonCosThetaPlot[NInte];
 	TH1D* TrueFineBinECalPlot[NInte];
+	TH1D* TrueFineBinMuonCosThetaSingleBinPlot[NInte];
 
 	TH2D* TrueFineBinECal2DPlot[NInte];
 	TH2D* TrueFineBinq2DPlot[NInte];
@@ -72,7 +73,7 @@ void FlatTreeAnalyzer::Loop() {
 
 	TH1D* TrueECalPlot[NInte];
 	TH1D* TrueMuonCosThetaPlot[NInte];
-	TH1D* TrueFineBinMuonCosThetaSingleBinPlot[NInte];
+	TH1D* TrueMuonCosThetaSingleBinPlot[NInte];
 
 	// 3D Fine Bin Nominal Binning Uncorrelated
 	
@@ -114,13 +115,13 @@ void FlatTreeAnalyzer::Loop() {
 
 	  TrueFineBinECal2DPlot[inte] = new TH2D(InteractionLabels[inte]+"TrueFineBinECal2DPlot",";E_{#nu}^{true} [GeV];E_{Cal} [GeV]",NFineBinECal,ArrayNBinsECal[0],ArrayNBinsECal[NBinsECal],NFineBinECal,ArrayNBinsECal[0],ArrayNBinsECal[NBinsECal]);
 	  TrueFineBinq2DPlot[inte] = new TH2D(InteractionLabels[inte]+"TrueFineBinq2DPlot",";q^{true} [GeV];q^{reco} [GeV/c]",NFineBinECal,ArrayNBinsECal[0],ArrayNBinsECal[NBinsECal],NFineBinECal,ArrayNBinsECal[0],ArrayNBinsECal[NBinsECal]);
+	  TrueFineBinMuonCosThetaSingleBinPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinMuonCosThetaSingleBinPlot",";",1,0,1);
 
 	  // 1D Nominal Binning
 
 	  TrueECalPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueECalPlot",";E^{Cal} [GeV]",NBinsECal,ArrayNBinsECal);
 	  TrueMuonCosThetaPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueMuonCosThetaPlot",";cos#theta_{#mu}",NBinsMuonCosTheta,ArrayNBinsMuonCosTheta);
-	  TrueFineBinMuonCosThetaSingleBinPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueFineBinMuonCosThetaSingleBinPlot",";",1,0,1);
-
+	  TrueMuonCosThetaSingleBinPlot[inte] = new TH1D(InteractionLabels[inte]+"TrueMuonCosThetaSingleBinPlot",";",1,0,1);
 
 	  // 3D Fine & Nominal Binning Uncorrelated
 
@@ -339,11 +340,12 @@ void FlatTreeAnalyzer::Loop() {
 
 	    TrueFineBinMuonCosThetaPlot[0]->Fill(MuonCosTheta,weight);
 	    TrueFineBinECalPlot[0]->Fill(ECal,weight);
-	    
+	    TrueFineBinMuonCosThetaSingleBinPlot[0]->Fill(0.5,weight);
+
 	    // Nominal binning
 	    TrueECalPlot[0]->Fill(ECal,weight);
 	    TrueMuonCosThetaPlot[0]->Fill(MuonCosTheta,weight);
-	    TrueFineBinMuonCosThetaSingleBinPlot[0]->Fill(0.5,weight);
+	    TrueMuonCosThetaSingleBinPlot[0]->Fill(0.5,weight);
 
 	    TrueFineBinECal2DPlot[0]->Fill(Enu_true,ECal,weight);
 	    TrueFineBinq2DPlot[0]->Fill(qtrue,qreco,weight);
@@ -354,11 +356,13 @@ void FlatTreeAnalyzer::Loop() {
 
 	    TrueFineBinMuonCosThetaPlot[genie_mode]->Fill(MuonCosTheta,weight);
 	    TrueFineBinECalPlot[genie_mode]->Fill(ECal,weight);
-	  
+	    TrueFineBinMuonCosThetaSingleBinPlot[genie_mode]->Fill(0.5,weight);
+
+  
 	    // Nominal binning
 	    TrueECalPlot[genie_mode]->Fill(ECal,weight);
 	    TrueMuonCosThetaPlot[genie_mode]->Fill(MuonCosTheta,weight);
-	    TrueFineBinMuonCosThetaSingleBinPlot[genie_mode]->Fill(0.5,weight);
+	    TrueMuonCosThetaSingleBinPlot[genie_mode]->Fill(0.5,weight);
 
 	    TrueFineBinECal2DPlot[genie_mode]->Fill(Enu_true,ECal,weight);
             TrueFineBinq2DPlot[genie_mode]->Fill(qtrue,qreco,weight);

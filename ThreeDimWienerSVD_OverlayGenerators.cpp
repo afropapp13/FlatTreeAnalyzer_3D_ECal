@@ -40,7 +40,7 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 	TH1D::SetDefaultSumw2();
 	gStyle->SetEndErrorSize(6);		
 
-        TString PathToFiles = "/exp/uboone/data/users/apapadop/mySTVAnalysis/myXSec/v08_00_00_52/";
+        TString PathToFiles = "/exp/uboone/data/users/apapadop/my3DSTVAnalysis/myXSec/v08_00_00_70/";
 
 	TString Extra = "";
 	if (PlotGen) { Extra = "Gene"; }
@@ -67,12 +67,6 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 	//----------------------------------------//
 
 	vector<TString> Runs;
-//	Runs.push_back("Run1");
-//	Runs.push_back("Run2");	
-//	Runs.push_back("Run3");
-//	Runs.push_back("Run4");
-//	Runs.push_back("Run4a");
-//	Runs.push_back("Run5");
 	Runs.push_back("Combined");
 
 	int NRuns = (int)(Runs.size());
@@ -110,7 +104,6 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
                 if (PlotGENIE) {
 
 		  NameOfSamples.push_back("GENIE_v3_4_0_AR23_20i_00_000");  Colors.push_back(GENIEv2Color); Labels.push_back("AR23 ");
-		  //NameOfSamples.push_back("GENIE_v2_12_10_MEC");  Colors.push_back(GENIEv2Color); Labels.push_back("Gv2 ");
 		  NameOfSamples.push_back("GENIE_v3_0_6"); Colors.push_back(Geniev3OutOfTheBoxColor); Labels.push_back("G18 NoTune ");
 		  NameOfSamples.push_back("GENIE_v3_0_6_G21_11b_00_000"); Colors.push_back(SuSav2Color); Labels.push_back("G21hN ");
 		  
@@ -121,7 +114,7 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
                 if (PlotGen) {
 
 		  NameOfSamples.push_back("NuWro_19_02_1"); Colors.push_back(NuWroColor); Labels.push_back("NuWro ");
-		  NameOfSamples.push_back("GiBUU_2021"); Colors.push_back(GiBUUColor); Labels.push_back("GiBUU ");
+		  NameOfSamples.push_back("GiBUU_2023"); Colors.push_back(GiBUUColor); Labels.push_back("GiBUU ");
 		  NameOfSamples.push_back("NEUT_5_4_0_1"); Colors.push_back(kMagenta); Labels.push_back("NEUT ");
 		  
                 }
@@ -301,22 +294,23 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 
 			}
 
-			if (PlotNames[WhichPlot] == "ECal_DeltaPtxDeltaPtyPlot") {
+			if (PlotNames[WhichPlot] == "ECal_DeltaPnDeltaAlpha3DqPlot") {
 
-			  SliceDiscriminators.push_back(TwoDArrayNBinsDeltaPtx);
-			  SliceBinning.push_back(TwoDArrayNBinsECalInDeltaPtxDeltaPtySlices[FirstDiscrIndex]);
+			  SliceDiscriminators.push_back(TwoDArrayNBinsDeltaAlpha3Dq);
+			  SliceBinning.push_back(TwoDArrayNBinsECalInDeltaPnDeltaAlpha3DqSlices[FirstDiscrIndex]);
 
 			  for (int ig = 0; ig < FirstDiscrIndex; ig++) {
 
-			    for (int icolumn = 0; icolumn < TwoDArrayNBinsECalInDeltaPtxDeltaPtySlices[ig].size(); icolumn++) {
+			    for (int icolumn = 0; icolumn < TwoDArrayNBinsECalInDeltaPnDeltaAlpha3DqSlices[ig].size(); icolumn++) {
 
-			      GlobalIndex += TwoDArrayNBinsECalInDeltaPtxDeltaPtySlices[ig][icolumn].size()-1;
+			      GlobalIndex += TwoDArrayNBinsECalInDeltaPnDeltaAlpha3DqSlices[ig][icolumn].size()-1;
 
 			    }
 
 			  }
 
 			}
+
 
 			if (PlotNames[WhichPlot] == "ECal_MuonCosThetaMuonMomentumPlot") {
 
@@ -378,10 +372,6 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 
 			TH2D* ShapeCov = (TH2D*)FileSample[0]->Get("ShapeUnfCovSerial"+PlotNames[WhichPlot]);	
 			ShapeCov->Scale(1./TMath::Power(MultiDimScaleFactor["Serial"+PlotNames[WhichPlot]],2.)); // includes scaling factor for multi dimensional analysis
-
-			//----------------------------------------//
-
-//			TH1D* UncHist = (TH1D*)(fUnc->Get("UnfUnc_"+PlotNames[WhichPlot]));
 
 			//----------------------------------------//
 
@@ -653,6 +643,7 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 				double Chi2[NSamples];			
 				int Ndof[NSamples];
 				double pval[NSamples];
+				double sigma[NSamples];
 
 				//------------------------------//									
 		
@@ -672,7 +663,7 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 					DISMC[WhichPlot][NDimSlice][WhichSample] = tools.GetHistoBins(DISPlotsTrue[WhichSample][WhichPlot],SerialVectorLowBin.at(NDimSlice),SerialVectorHighBin.at(NDimSlice), MultiDimScaleFactor[ MapUncorCor[ NameCopy ] ], SerialSliceBinning, NameOfSamples[WhichSample]);
 					COHMC[WhichPlot][NDimSlice][WhichSample] = tools.GetHistoBins(COHPlotsTrue[WhichSample][WhichPlot],SerialVectorLowBin.at(NDimSlice),SerialVectorHighBin.at(NDimSlice), MultiDimScaleFactor[ MapUncorCor[ NameCopy ] ], SerialSliceBinning, NameOfSamples[WhichSample]);
 					
-					CalcChiSquared(MC[WhichPlot][NDimSlice][WhichSample],BeamOnStatShape[WhichPlot][NDimSlice],SliceCovMatrix,Chi2[WhichSample],Ndof[WhichSample],pval[WhichSample]);
+					CalcChiSquared(MC[WhichPlot][NDimSlice][WhichSample],BeamOnStatShape[WhichPlot][NDimSlice],SliceCovMatrix,Chi2[WhichSample],Ndof[WhichSample],pval[WhichSample],sigma[WhichSample]);
 					TString Chi2NdofAlt = "(" + to_string_with_precision(Chi2[WhichSample],1) + "/" + TString(std::to_string(Ndof[WhichSample])) +")";
 					TLegendEntry* lGenie = leg->AddEntry(MC[WhichPlot][NDimSlice][WhichSample],Labels[WhichSample] + Chi2NdofAlt,"l");
 					lGenie->SetTextColor(Colors[WhichSample]); 										
@@ -695,7 +686,7 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 				DISMC[WhichPlot][NDimSlice][0] = tools.GetHistoBins(DISPlotsTrue[0][WhichPlot],SerialVectorLowBin.at(NDimSlice),SerialVectorHighBin.at(NDimSlice), MultiDimScaleFactor[ MapUncorCor[ NameCopy ] ], SerialSliceBinning,"Overlay");
 				COHMC[WhichPlot][NDimSlice][0] = tools.GetHistoBins(COHPlotsTrue[0][WhichPlot],SerialVectorLowBin.at(NDimSlice),SerialVectorHighBin.at(NDimSlice), MultiDimScaleFactor[ MapUncorCor[ NameCopy ] ], SerialSliceBinning,"Overlay");
 
-				CalcChiSquared(MC[WhichPlot][NDimSlice][0],BeamOnStatShape[WhichPlot][NDimSlice],SliceCovMatrix,Chi2[0],Ndof[0],pval[0]);
+				CalcChiSquared(MC[WhichPlot][NDimSlice][0],BeamOnStatShape[WhichPlot][NDimSlice],SliceCovMatrix,Chi2[0],Ndof[0],pval[0],sigma[0]);
 				TString Chi2NdofAlt = "(" + to_string_with_precision(Chi2[0],1) + "/" + TString(std::to_string(Ndof[0])) +")";
 				TLegendEntry* lGenie = leg->AddEntry(MC[WhichPlot][NDimSlice][0],Labels[0] + Chi2NdofAlt,"l");
 				lGenie->SetTextColor(Colors[0]); 										
@@ -820,8 +811,7 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 				
 				// Saving the canvas with the data (total uncertainties) vs overlay & generator predictions
 
-                                PlotCanvas->SaveAs("/exp/uboone/data/users/apapadop/FlatTTreePlots/ECal_3D_XSec/ThreeDXSections_"+CanvasName+"_"+Runs[WhichRun]+"_"+UBCodeVersion+".pdf");
-
+                                PlotCanvas->SaveAs("/exp/uboone/data/users/apapadop/FlatTTreePlots/ECal_3D_XSec/XSections_"+CanvasName+"_"+Runs[WhichRun]+"_"+UBCodeVersion+".pdf");
 				delete PlotCanvas;
 
 				//------------------------------------//

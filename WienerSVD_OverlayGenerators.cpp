@@ -52,7 +52,11 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 	vector<TString> PlotNames;
 	PlotNames.push_back("ECalPlot");
 	PlotNames.push_back("MuonCosThetaPlot");
-
+	PlotNames.push_back("MuonCosThetaSingleBinPlot");
+	PlotNames.push_back("SerialECal_DeltaPTDeltaAlphaTPlot");
+	PlotNames.push_back("SerialECal_DeltaPnDeltaAlpha3DqPlot");
+	PlotNames.push_back("SerialECal_MuonCosThetaMuonMomentumPlot");
+	PlotNames.push_back("SerialECal_ProtonCosThetaProtonMomentumPlot");
 
 	const int N1DPlots = PlotNames.size();
 	cout << "Number of 1D Plots = " << N1DPlots << endl;
@@ -188,20 +192,20 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 					if (PlotNames[WhichPlot] == "MuonCosThetaSingleBinPlot") { histReco = (TH1D*)(FileSample[WhichSample]->Get("RecoFullUnc"+PlotNames[WhichPlot])); }
 					CurrentPlotsReco.push_back(histReco);
 
-					TString TrueString = "True";
+					TString TrueString = "True" + PlotNames[WhichPlot];
 
-					TH1D* histTrue = (TH1D*)(FileSample[WhichSample]->Get(TrueString+PlotNames[WhichPlot]));
+					TH1D* histTrue = (TH1D*)(FileSample[WhichSample]->Get(TrueString));
 					CurrentPlotsTrue.push_back(histTrue);
 
-					TH1D* QEhistTrue = (TH1D*)(FileSample[WhichSample]->Get("QE"+TrueString+PlotNames[WhichPlot]));
+					TH1D* QEhistTrue = (TH1D*)(FileSample[WhichSample]->Get("QE"+TrueString));
 					QECurrentPlotsTrue.push_back(QEhistTrue);
-					TH1D* MEChistTrue = (TH1D*)(FileSample[WhichSample]->Get("MEC"+TrueString+PlotNames[WhichPlot]));
+					TH1D* MEChistTrue = (TH1D*)(FileSample[WhichSample]->Get("MEC"+TrueString));
 					MECCurrentPlotsTrue.push_back(MEChistTrue);
-					TH1D* REShistTrue = (TH1D*)(FileSample[WhichSample]->Get("RES"+TrueString+PlotNames[WhichPlot]));
+					TH1D* REShistTrue = (TH1D*)(FileSample[WhichSample]->Get("RES"+TrueString));
 					RESCurrentPlotsTrue.push_back(REShistTrue);
-					TH1D* DIShistTrue = (TH1D*)(FileSample[WhichSample]->Get("DIS"+TrueString+PlotNames[WhichPlot]));
+					TH1D* DIShistTrue = (TH1D*)(FileSample[WhichSample]->Get("DIS"+TrueString));
 					DISCurrentPlotsTrue.push_back(DIShistTrue);
-					TH1D* COHhistTrue = (TH1D*)(FileSample[WhichSample]->Get("COH"+TrueString+PlotNames[WhichPlot]));
+					TH1D* COHhistTrue = (TH1D*)(FileSample[WhichSample]->Get("COH"+TrueString));
 					COHCurrentPlotsTrue.push_back(COHhistTrue);																								     
 		
 				}
@@ -277,23 +281,27 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 					TH1D* histCC1pReco = nullptr;
 					CurrentPlotsCC1pReco.push_back(histCC1pReco);
 
-					TString TrueString = "True";
-					if (string(PlotNames[WhichPlot]).find("Serial") != std::string::npos) { TrueString = "SerialTrue"; }
-				        TString CloneString = PlotNames[WhichPlot];
-					CloneString.ReplaceAll("Serial","");
+					TString TrueString = "True"+PlotNames[WhichPlot];
 
-					TH1D* histTrue = (TH1D*)(FileSample[WhichSample]->Get(TrueString+CloneString));
+					if (string(PlotNames[WhichPlot]).find("Serial") != std::string::npos) {
+
+						TString CloneString = TrueString;
+						CloneString.ReplaceAll("Serial","");
+						TrueString = "Serial" + CloneString;
+					}
+					
+					TH1D* histTrue = (TH1D*)(FileSample[WhichSample]->Get(TrueString));
 					CurrentPlotsTrue.push_back(histTrue);
 
-					TH1D* QEhistTrue = (TH1D*)(FileSample[WhichSample]->Get("QE"+TrueString+CloneString));
+					TH1D* QEhistTrue = (TH1D*)(FileSample[WhichSample]->Get("QE"+TrueString));
 					QECurrentPlotsTrue.push_back(QEhistTrue);
-					TH1D* MEChistTrue = (TH1D*)(FileSample[WhichSample]->Get("MEC"+TrueString+CloneString));
+					TH1D* MEChistTrue = (TH1D*)(FileSample[WhichSample]->Get("MEC"+TrueString));
 					MECCurrentPlotsTrue.push_back(MEChistTrue);
-					TH1D* REShistTrue = (TH1D*)(FileSample[WhichSample]->Get("RES"+TrueString+CloneString));
+					TH1D* REShistTrue = (TH1D*)(FileSample[WhichSample]->Get("RES"+TrueString));
 					RESCurrentPlotsTrue.push_back(REShistTrue);
-					TH1D* DIShistTrue = (TH1D*)(FileSample[WhichSample]->Get("DIS"+TrueString+CloneString));
+					TH1D* DIShistTrue = (TH1D*)(FileSample[WhichSample]->Get("DIS"+TrueString));
 					DISCurrentPlotsTrue.push_back(DIShistTrue);
-					TH1D* COHhistTrue = (TH1D*)(FileSample[WhichSample]->Get("COH"+TrueString+CloneString));
+					TH1D* COHhistTrue = (TH1D*)(FileSample[WhichSample]->Get("COH"+TrueString));
 					COHCurrentPlotsTrue.push_back(COHhistTrue);					
 		
 				}
@@ -668,7 +676,7 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 
 			// Saving the canvas with the data (total uncertainties) vs overlay & generator predictions
 
-			PlotCanvas->SaveAs("/exp/uboone/data/users/apapadop/FlatTTreePlots/ECal_3D_XSec/"+Extra+"XSections_"+PlotNames[WhichPlot]+"_"+Runs[WhichRun]+"_"+UBCodeVersion+".pdf");
+			PlotCanvas->SaveAs("/exp/uboone/data/users/apapadop/FlatTTreePlots/ECal_3D_XSec/XSections_"+Extra+ "_"+PlotNames[WhichPlot]+"_"+Runs[WhichRun]+"_"+UBCodeVersion+".pdf");
 			delete PlotCanvas;
 
 			//----------------------------------------//
