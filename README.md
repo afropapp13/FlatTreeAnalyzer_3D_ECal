@@ -11,3 +11,6 @@ root -b GeneratorInteBreakDown.cxx
 # XSecs with Ac multiplication
 root -b script_WienerSVD_OverlayGenerators.C
 root -b script_ThreeDimWienerSVD_OverlayGenerators.C
+
+# PDFs
+root -b script_overlay_slices.cxx

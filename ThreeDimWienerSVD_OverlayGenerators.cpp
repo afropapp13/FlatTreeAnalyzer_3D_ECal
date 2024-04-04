@@ -39,6 +39,7 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 
 	TH1D::SetDefaultSumw2();
 	gStyle->SetEndErrorSize(6);		
+	gStyle->SetOptStat(0);
 
         TString PathToFiles = "/exp/uboone/data/users/apapadop/my3DSTVAnalysis/myXSec/v08_00_00_70/";
 
@@ -119,6 +120,15 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 		  
                 }
 
+		//----------------------------------------//	
+
+		if (plot_closure) {
+
+			NameOfSamples.push_back("GENIE_v3_0_6"); Colors.push_back(kGreen+2); Labels.push_back("G18 "); 
+			NameOfSamples.push_back("NoTuneOverlay9"); Colors.push_back(kOrange+7); Labels.push_back("G18D ");
+		
+		}
+
 		//----------------------------------------//
 
 		const int NSamples = NameOfSamples.size();
@@ -190,6 +200,51 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 				}
 
 			} 
+
+			else if (NameOfSamples[WhichSample] == "NoTuneOverlay9") { // CV with statistical uncertainties only for now
+
+				TString FileSampleName = PathToFiles+"/NoTuneOverlay9WienerSVD_ExtractedXSec_Overlay9_"+Runs[WhichRun]+"_"+UBCodeVersion+".root"; 
+				FileSample.push_back(TFile::Open(FileSampleName,"readonly")); 
+
+				for (int WhichPlot = 0; WhichPlot < N1DPlots; WhichPlot ++) {
+
+					TH1D* histTotalReco = (TH1D*)(FileSample[WhichSample]->Get("StatRecoSerial"+PlotNames[WhichPlot]));
+					CurrentPlotsTotalReco.push_back(histTotalReco);
+
+					TH1D* histXSecReco = (TH1D*)(FileSample[WhichSample]->Get("XSecRecoSerial"+PlotNames[WhichPlot]));
+					CurrentPlotsXSecReco.push_back(histXSecReco);
+
+					TH1D* histFullUncReco = (TH1D*)(FileSample[WhichSample]->Get("RecoFullUncSerial"+PlotNames[WhichPlot]));
+					CurrentPlotsFullUncReco.push_back(histFullUncReco);										
+
+					TH1D* histNormOnly = (TH1D*)(FileSample[WhichSample]->Get("NormOnlyRecoSerial"+PlotNames[WhichPlot]));
+					CurrentPlotsNormOnly.push_back(histNormOnly);					
+
+					TH1D* histReco = (TH1D*)(FileSample[WhichSample]->Get("RecoSerial"+PlotNames[WhichPlot]));
+					CurrentPlotsReco.push_back(histReco);
+
+					TString TrueString = "NoSmearAltTrueSerial";
+
+					TH1D* histTrue = (TH1D*)(FileSample[WhichSample]->Get(TrueString+PlotNames[WhichPlot]));
+					rm_bin_width(histTrue);
+					CurrentPlotsTrue.push_back(histTrue);
+
+					TH1D* QEhistTrue = (TH1D*)(FileSample[WhichSample]->Get("QE"+TrueString+PlotNames[WhichPlot]));
+					QECurrentPlotsTrue.push_back(QEhistTrue);
+					TH1D* MEChistTrue = (TH1D*)(FileSample[WhichSample]->Get("MEC"+TrueString+PlotNames[WhichPlot]));
+					MECCurrentPlotsTrue.push_back(MEChistTrue);
+					TH1D* REShistTrue = (TH1D*)(FileSample[WhichSample]->Get("RES"+TrueString+PlotNames[WhichPlot]));
+					RESCurrentPlotsTrue.push_back(REShistTrue);
+					TH1D* DIShistTrue = (TH1D*)(FileSample[WhichSample]->Get("DIS"+TrueString+PlotNames[WhichPlot]));
+					DISCurrentPlotsTrue.push_back(DIShistTrue);
+					TH1D* COHhistTrue = (TH1D*)(FileSample[WhichSample]->Get("COH"+TrueString+PlotNames[WhichPlot]));
+					COHCurrentPlotsTrue.push_back(COHhistTrue);																								     
+		
+				}
+
+			}
+
+
 			else {
 
                           FileSample.push_back(TFile::Open("OutputFiles/FlatTreeAnalyzerOutput_"+NameOfSamples[WhichSample]+".root"));
@@ -587,7 +642,7 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 				TLegend* leg = new TLegend(0.62,0.52,0.72,0.85);
 				//TLegend* legChi2 = new TLegend(0.8,0.72,0.9,0.85);
 				if (
-				    (PlotNames[WhichPlot] == "ECal_ProtonCosThetaProtonMomentumPlot" && NDimSlice == 2) ||
+				    (PlotNames[WhichPlot] == "SerialECal_ProtonCosThetaProtonMomentumPlot") ||
 				    (PlotNames[WhichPlot] == "ECal_MuonCosThetaMuonMomentumPlot" && NDimSlice == 2)
 				    ) { 
 				  
@@ -653,6 +708,7 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 
 				  MC[WhichPlot][NDimSlice][WhichSample] = tools.GetHistoBins(PlotsTrue[WhichSample][WhichPlot],SerialVectorLowBin.at(NDimSlice),SerialVectorHighBin.at(NDimSlice), MultiDimScaleFactor[ MapUncorCor[ NameCopy ] ], SerialSliceBinning, NameOfSamples[WhichSample]);
 					MC[WhichPlot][NDimSlice][WhichSample]->SetLineColor(Colors[WhichSample]);
+					MC[WhichPlot][NDimSlice][WhichSample]->SetLineWidth(3);
 					MC[WhichPlot][NDimSlice][WhichSample]->SetMarkerColor(Colors[WhichSample]);
 					MC[WhichPlot][NDimSlice][WhichSample]->Draw("hist same");
 				  				
@@ -677,6 +733,7 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 				MC[WhichPlot][NDimSlice][0] = tools.GetHistoBins(PlotsTrue[0][WhichPlot],SerialVectorLowBin.at(NDimSlice),SerialVectorHighBin.at(NDimSlice), MultiDimScaleFactor[ MapUncorCor[ NameCopy ] ], SerialSliceBinning,"Overlay");
 				PrettyPlot(MC[WhichPlot][NDimSlice][0]);
 				MC[WhichPlot][NDimSlice][0]->SetLineColor(Colors[0]);
+				MC[WhichPlot][NDimSlice][0]->SetLineWidth(3);
 				MC[WhichPlot][NDimSlice][0]->SetMarkerColor(Colors[0]);	
 				MC[WhichPlot][NDimSlice][0]->Draw("hist same");	
 				
