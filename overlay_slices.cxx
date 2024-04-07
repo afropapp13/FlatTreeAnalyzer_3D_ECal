@@ -82,7 +82,7 @@ void overlay_slices(TString sample = "") {
 		TString canvas_name = "canvas_overlay_slices_" + combo.first;
 		TCanvas* canvas = new TCanvas(canvas_name,canvas_name,205,34,1024,768);
 		canvas->cd();
-		canvas->SetTopMargin(0.13);
+		canvas->SetTopMargin(0.14);
 		canvas->SetLeftMargin(0.15);
 		canvas->SetBottomMargin(0.14);		
 		canvas->Draw();	

@@ -570,7 +570,7 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 
 				//Clone[WhichSample-1] = PlotsTrue[WhichSample][WhichPlot];				
 				Clone[WhichSample-1]->SetLineColor(Colors[WhichSample]);
-				Clone[WhichSample-1]->SetLineStyle(LineStyle[WhichSample]);
+				Clone[WhichSample-1]->SetLineStyle(kSolid);
 				Clone[WhichSample-1]->SetMarkerColor(Colors[WhichSample]);
 
 				PrettyPlot(Clone[WhichSample-1]); // includes scaling factor for multi dimensional analysis
