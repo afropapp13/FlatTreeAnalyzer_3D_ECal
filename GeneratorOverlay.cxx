@@ -192,7 +192,7 @@ void GeneratorOverlay(TString Tag = "") {
 			TString PlotNameDuplicate = PlotNames[iPlot];
 			TString ReducedPlotName = PlotNameDuplicate.ReplaceAll("TrueFineBin","") ;
 
-			textSlice->DrawLatexNDC(0.26, 0.8, LatexLabel[ReducedPlotName].ReplaceAll("All events",""));
+			textSlice->DrawLatexNDC(0.26, 0.8, LatexLabel[ReducedPlotName]);
 
 			//----------------------------------------//					
 

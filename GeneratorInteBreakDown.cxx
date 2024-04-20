@@ -198,7 +198,7 @@ void GeneratorInteBreakDown() {
                   textSlice->SetTextSize(TextSize);
                   TString PlotNameDuplicate = PlotNames[iPlot];
                   TString ReducedPlotName = PlotNameDuplicate.ReplaceAll("TrueFineBin","") ;
-                  textSlice->DrawLatexNDC(0.26, 0.8, LatexLabel[ReducedPlotName].ReplaceAll("All events",""));
+                  textSlice->DrawLatexNDC(0.26, 0.8, LatexLabel[ReducedPlotName]);
 
 		  TLegend* leggen = new TLegend(0.8,0.89,0.95,0.98);
 		  leggen->SetNColumns(5);

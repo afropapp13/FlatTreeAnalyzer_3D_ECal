@@ -105,7 +105,7 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
                 if (PlotGENIE) {
 
 		  NameOfSamples.push_back("GENIE_v3_4_0_AR23_20i_00_000");  Colors.push_back(GENIEv2Color); Labels.push_back("AR23 ");
-		  NameOfSamples.push_back("GENIE_v3_0_6"); Colors.push_back(Geniev3OutOfTheBoxColor); Labels.push_back("G18 ");
+		  NameOfSamples.push_back("GENIE_v3_0_6"); Colors.push_back(kGreen+2); Labels.push_back("G18 ");
 		  NameOfSamples.push_back("GENIE_v3_0_6_G21_11b_00_000"); Colors.push_back(SuSav2Color); Labels.push_back("G21 ");
 		  
                 }
@@ -115,8 +115,8 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
                 if (PlotGen) {
 
 		  NameOfSamples.push_back("NuWro_19_02_1"); Colors.push_back(NuWroColor); Labels.push_back("NuWro ");
-		  NameOfSamples.push_back("GiBUU_2023"); Colors.push_back(GiBUUColor); Labels.push_back("GiBUU ");
-		  NameOfSamples.push_back("NEUT_5_4_0_1"); Colors.push_back(kMagenta); Labels.push_back("NEUT ");
+		  NameOfSamples.push_back("GiBUU_2023"); Colors.push_back(kMagenta+1); Labels.push_back("GiBUU ");
+		  NameOfSamples.push_back("NEUT_5_4_0_1"); Colors.push_back(kYellow-6); Labels.push_back("NEUT ");
 		  
                 }
 
@@ -643,10 +643,10 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 				//TLegend* legChi2 = new TLegend(0.8,0.72,0.9,0.85);
 				if (
 				    (PlotNames[WhichPlot] == "SerialECal_ProtonCosThetaProtonMomentumPlot") ||
-				    (PlotNames[WhichPlot] == "ECal_MuonCosThetaMuonMomentumPlot" && NDimSlice == 2)
+				    (PlotNames[WhichPlot] == "ECal_MuonCosThetaMuonMomentumPlot" && SecondDiscrIndex + NDimSlice == 3)
 				    ) { 
 				  
-				  leg = new TLegend(0.22,0.52,0.32,0.85); 
+					leg = new TLegend(0.22,0.52,0.32,0.85); 
 				  
 				}
 
