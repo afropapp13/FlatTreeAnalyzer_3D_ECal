@@ -27,7 +27,8 @@ using namespace Constants;
 
 //----------------------------------------//
 
-void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bool PlotACHILLES = false, bool PlotANL_SF = false, bool plot_closure = false) {
+void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bool PlotACHILLES = false, bool PlotANL_SF = false, bool plot_closure = false, bool plot_gibuu = false, bool plot_mec  = false, bool plot_nuclear = false) {
+
 
 	//----------------------------------------//
 
@@ -46,6 +47,10 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 	if (PlotACHILLES) { Extra = "ACHILLES"; }
 	if (PlotANL_SF) { Extra = "ANL_SF"; }
 	if (plot_closure) { Extra = "Closure"; }
+	if (plot_gibuu) { Extra = "gibuu"; }
+	if (plot_mec) { Extra = "mec"; }
+	if (plot_nuclear) { Extra = "nuclear"; }
+
 
 	//----------------------------------------//
 
@@ -128,6 +133,36 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 			NameOfSamples.push_back("NEUT_5_4_0_1"); Colors.push_back(kYellow-6); Labels.push_back("NEUT "); LineStyle.push_back(NEUTLineStyle); weighted.push_back("");
 
 		}	
+
+		//----------------------------------------//		
+
+		if (plot_gibuu) {
+
+			NameOfSamples.push_back("GiBUU_2023_medium"); Colors.push_back(kOrange+7); Labels.push_back("GiBUU in medium "); LineStyle.push_back(kSolid); weighted.push_back(""); 
+			NameOfSamples.push_back("GiBUU_2023"); Colors.push_back(kGreen+1); Labels.push_back("GiBUU "); LineStyle.push_back(GiBUULineStyle); weighted.push_back(""); 
+
+		}	
+
+		//----------------------------------------//		
+
+		if (plot_mec) {
+
+			NameOfSamples.push_back("GENIE_v3_0_6"); Colors.push_back(kMagenta+1); Labels.push_back("Nieves "); LineStyle.push_back(kOrange+7); weighted.push_back(""); 
+			NameOfSamples.push_back("GENIE_v3_0_6_Empirical"); Colors.push_back(kGreen+1); Labels.push_back("Empirical "); LineStyle.push_back(GiBUULineStyle); weighted.push_back(""); 
+			NameOfSamples.push_back("GENIE_v3_0_6_SuSAv2"); Colors.push_back(kOrange+7); Labels.push_back("SuSAv2 "); LineStyle.push_back(kOrange+7); weighted.push_back(""); 
+
+		}	
+
+		//----------------------------------------//		
+
+		if (plot_nuclear) {
+
+			NameOfSamples.push_back("GENIE_v3_0_6"); Colors.push_back(kMagenta+1); Labels.push_back("LFG "); LineStyle.push_back(kOrange+7); weighted.push_back(""); 
+			NameOfSamples.push_back("G18_10a_02_11a_SF_Fortran"); Colors.push_back(kGreen+1); Labels.push_back("SF "); LineStyle.push_back(GiBUULineStyle); weighted.push_back(""); 
+			NameOfSamples.push_back("GENIE_v3_0_6_RFG"); Colors.push_back(kOrange+7); Labels.push_back("RFG "); LineStyle.push_back(kOrange+7); weighted.push_back(""); 
+
+		}	
+
 
 		//----------------------------------------//		
 
@@ -421,27 +456,18 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 			midPad->SetRightMargin(0.03);			
 			midPad->Draw();
 
-			TLegend* leg = new TLegend(0.39,0.69,0.72,0.85);
-			TLegend* legMC = new TLegend(0.7,0.69,0.8,0.85);
+			TLegend* leg = new TLegend(0.39,0.68,0.72,0.85);
+			TLegend* legMC = new TLegend(0.7,0.68,0.8,0.85);
 			
 			if (
 
 				PlotNames[WhichPlot] == "SerialECal_ProtonCosThetaProtonMomentumPlot" ||
+				PlotNames[WhichPlot] == "ECalPlot" ||
 				PlotNames[WhichPlot] == "MuonCosThetaPlot"
 				) { 
 				
-			  leg = new TLegend(0.22,0.69,0.55,0.85);	
-			  legMC = new TLegend(0.53,0.69,0.63,0.85);
-
-			}
-
-			if (
-
-				PlotNames[WhichPlot] == "DeltaAlpha3DqPlot"
-			) { 
-
-			  leg = new TLegend(0.22,0.69,0.55,0.85);					
-			  legMC = new TLegend(0.22,0.53,0.38,0.69);
+			  leg = new TLegend(0.22,0.68,0.55,0.85);	
+			  legMC = new TLegend(0.53,0.68,0.63,0.85);
 
 			}
 
@@ -468,7 +494,9 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 			double MaxValueError = PlotsReco[0][WhichPlot]->GetBinError(MaxValueBin);
 
 			double MinValue = PlotsReco[0][WhichPlot]->GetMinimum();
-													
+	
+			PlotsReco[0][WhichPlot]->GetXaxis()->SetLabelOffset(0.02);													
+			PlotsReco[0][WhichPlot]->GetYaxis()->SetLabelOffset(0.02);									
 			PlotsReco[0][WhichPlot]->GetYaxis()->SetRangeUser(XSecRange[PlotNames[WhichPlot]].first,XSecRange[PlotNames[WhichPlot]].second);
 
 			PlotsReco[0][WhichPlot]->SetLineColor(BeamOnColor);
@@ -489,12 +517,15 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 				TString XaxisTitle = PlotsReco[0][WhichPlot]->GetXaxis()->GetTitle();
 				XaxisTitle.ReplaceAll("deg","bin #");
 				XaxisTitle.ReplaceAll("GeV/c","bin #");
+				XaxisTitle.ReplaceAll("(GeV/c)^{2}","bin #");
 				XaxisTitle.ReplaceAll("GeV","bin #");				
 				PlotsReco[0][WhichPlot]->GetXaxis()->SetTitle(XaxisTitle);
 
 				TString YaxisTitle = VarLabel[PlotNames[WhichPlot]];
 				YaxisTitle.ReplaceAll("deg","");
 				YaxisTitle.ReplaceAll("GeV/c","");
+				YaxisTitle.ReplaceAll("(GeV/c)^{2}","");
+				YaxisTitle.ReplaceAll("GeV^{2}/c","");
 				YaxisTitle.ReplaceAll("GeV","");
 				YaxisTitle.ReplaceAll("/c","");
 				//YaxisTitle.ReplaceAll("^{2}","");												
@@ -536,6 +567,10 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 			PlotsTrue[0][WhichPlot]->SetMarkerColor(Colors[0]);
 			PlotsTrue[0][WhichPlot]->SetLineStyle(LineStyle[0]);
 
+			// Area normalize MC to Data
+			double sf = PlotsTotalReco[0][WhichPlot]->Integral("width") / PlotsTrue[0][WhichPlot]->Integral("width");
+			//PlotsTrue[0][WhichPlot]->Scale(sf);
+
 			// -----------------------------------------------------------------------------------------------------------------
 
 			// arrays for NSamples
@@ -567,6 +602,14 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 				Reweight(RESPlotsTrue[WhichSample][WhichPlot],1.);
 				Reweight(DISPlotsTrue[WhichSample][WhichPlot],1.);
 				Reweight(COHPlotsTrue[WhichSample][WhichPlot],1.);																		
+				// Area normalize MC to data															
+				double mc_sf = PlotsTotalReco[0][WhichPlot]->Integral() / Clone[WhichSample-1]->Integral();
+				//Clone[WhichSample-1]->Scale(mc_sf);				
+				//QEPlotsTrue[WhichSample][WhichPlot]->Scale(mc_sf);				
+				//MECPlotsTrue[WhichSample][WhichPlot]->Scale(mc_sf);				
+				//RESPlotsTrue[WhichSample][WhichPlot]->Scale(mc_sf);				
+				//DISPlotsTrue[WhichSample][WhichPlot]->Scale(mc_sf);				
+				//COHPlotsTrue[WhichSample][WhichPlot]->Scale(mc_sf);				
 
 				//Clone[WhichSample-1] = PlotsTrue[WhichSample][WhichPlot];				
 				Clone[WhichSample-1]->SetLineColor(Colors[WhichSample]);
@@ -598,7 +641,7 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 			if (Runs[WhichRun] == "Run3") { tor860_wcut = Fulltor860_wcut_Run3; }
 			if (Runs[WhichRun] == "Run5") { tor860_wcut = Fulltor860_wcut_Run5; }
 			if (Runs[WhichRun] == "Combined") { tor860_wcut = Fulltor860_wcut_Combined; }
-			TString Label = ToString(tor860_wcut)+" POT";
+			TString Label = ToString(tor860_wcut).ReplaceAll("e"," #times 10").ReplaceAll("+","^{")+"} POT";
 
 			// ---------------------------------------------------------------------------------------------------------
 
@@ -663,6 +706,47 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 			}
 
 			//----------------------------------------//
+/*
+			// Plot vertical lines
+			// Add latex label with phase space limits
+
+			if (string(PlotNames[WhichPlot]).find("Serial") != std::string::npos) {	
+
+				TString clone_name = PlotNames[WhichPlot];
+				clone_name.ReplaceAll("Reco","");
+				vector<int> bin_break_points = get_3d_bin_break_points( map_to_3d_bin.at(clone_name) );
+
+				int nbreaks = bin_break_points.size() - 1;
+				vector<TLine*> line; line.resize(nbreaks);
+
+				for (int ipoint = 0; ipoint < nbreaks; ipoint ++) {
+
+					line.at(ipoint) = new TLine( bin_break_points.at(ipoint) + 0.5,0., bin_break_points.at(ipoint) + 0.5, PlotsReco[0][WhichPlot]->GetMaximum() );
+					midPad->cd();
+					line.at(ipoint)->SetLineStyle(kDashed);
+					line.at(ipoint)->Draw("same");
+
+				}
+	
+				//----------------------------------------//
+
+				vector<TLatex*> slice; slice.resize(nbreaks+1);
+
+				for (int ipoint = 0; ipoint < nbreaks + 1; ipoint ++) {
+
+					slice.at(ipoint) = new TLatex();
+					slice.at(ipoint)->SetTextFont(FontStyle);
+					slice.at(ipoint)->SetTextSize(0.025);
+					TString phase_space = MapUncorCor[ clone_name + "_" + TString(std::to_string(ipoint) ) ];
+					midPad->cd();
+					if (ipoint == 0) { slice.at(ipoint)->DrawLatex( bin_break_points.at(ipoint) / 5. , 0.7 * PlotsReco[0][WhichPlot]->GetMaximum(), LatexLabel[phase_space ]); }
+					else { slice.at(ipoint)->DrawLatex( bin_break_points.at(ipoint - 1) + ( bin_break_points.at(ipoint) - bin_break_points.at(ipoint-1) ) / 5. , 0.7 * PlotsReco[0][WhichPlot]->GetMaximum(), LatexLabel[phase_space ]); }
+
+				}
+
+			}
+
+*/			//----------------------------------------//
 
 			// Saving the canvas with the data (total uncertainties) vs overlay & generator predictions
 

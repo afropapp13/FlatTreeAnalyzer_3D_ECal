@@ -27,7 +27,7 @@ using namespace Constants;
 
 //----------------------------------------//
 
-void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIndex = 0, int SecondDiscrIndex = 0, bool PlotGENIE = true, bool PlotGen = false, bool plot_closure = false) {
+void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIndex = 0, int SecondDiscrIndex = 0, bool PlotGENIE = true, bool PlotGen = false, bool plot_closure = false, bool plot_gibuu = false, bool plot_mec = false, bool plot_nuclear = false) {
 
 	//----------------------------------------//
 
@@ -47,6 +47,9 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 	if (PlotGen) { Extra = "Gene"; }
 	if (PlotGENIE) { Extra = "Genie"; }
 	if (plot_closure) { Extra = "Closure"; }
+	if (plot_gibuu) { Extra = "gibuu"; }
+	if (plot_mec) { Extra = "mec"; }
+	if (plot_nuclear) { Extra = "nuclear"; }
 
 	//----------------------------------------//
 
@@ -98,7 +101,7 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 
 		// CV
 
-		NameOfSamples.push_back("Overlay9"); Colors.push_back(OverlayColor); Labels.push_back("G18 ");                    
+		NameOfSamples.push_back("Overlay9"); Colors.push_back(OverlayColor); Labels.push_back("G18T ");                    
 
 		//----------------------------------------//	
 
@@ -128,6 +131,36 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 			NameOfSamples.push_back("NoTuneOverlay9"); Colors.push_back(kOrange+7); Labels.push_back("G18D ");
 		
 		}
+
+		//----------------------------------------//		
+
+		if (plot_gibuu) {
+
+			NameOfSamples.push_back("GiBUU_2023_medium"); Colors.push_back(kOrange+7); Labels.push_back("GiBUU in medium "); 
+			NameOfSamples.push_back("GiBUU_2023"); Colors.push_back(kGreen+1); Labels.push_back("GiBUU "); 
+
+		}	
+
+		//----------------------------------------//		
+
+		if (plot_mec) {
+
+			NameOfSamples.push_back("GENIE_v3_0_6"); Colors.push_back(kMagenta+1); Labels.push_back("Nieves ");  
+			NameOfSamples.push_back("GENIE_v3_0_6_Empirical"); Colors.push_back(kGreen+1); Labels.push_back("Empirical "); 
+			NameOfSamples.push_back("GENIE_v3_0_6_SuSAv2"); Colors.push_back(kOrange+7); Labels.push_back("SuSAv2 ");  
+
+		}	
+
+		//----------------------------------------//		
+
+		if (plot_nuclear) {
+
+			NameOfSamples.push_back("GENIE_v3_0_6"); Colors.push_back(kMagenta+1); Labels.push_back("LFG ");  
+			NameOfSamples.push_back("G18_10a_02_11a_SF_Fortran"); Colors.push_back(kGreen+1); Labels.push_back("SF "); 
+			NameOfSamples.push_back("GENIE_v3_0_6_RFG"); Colors.push_back(kOrange+7); Labels.push_back("RFG ");  
+
+		}	
+
 
 		//----------------------------------------//
 
@@ -576,6 +609,16 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 				RESPlotsTrue[WhichSample][WhichPlot] = Multiply(RESPlotsTrue[WhichSample][WhichPlot],Ac);
 				DISPlotsTrue[WhichSample][WhichPlot] = Multiply(DISPlotsTrue[WhichSample][WhichPlot],Ac);
 				COHPlotsTrue[WhichSample][WhichPlot] = Multiply(COHPlotsTrue[WhichSample][WhichPlot],Ac);																					
+				// Area normalize MC to data
+				double mc_sf = PlotsReco[0][WhichPlot]->Integral("width") / PlotsTrue[WhichSample][WhichPlot]->Integral("width");
+				//PlotsTrue[WhichSample][WhichPlot]->Scale(mc_sf);
+				//QEPlotsTrue[WhichSample][WhichPlot]->Scale(mc_sf);
+				//MECPlotsTrue[WhichSample][WhichPlot]->Scale(mc_sf);
+				//RESPlotsTrue[WhichSample][WhichPlot]->Scale(mc_sf);
+				//DISPlotsTrue[WhichSample][WhichPlot]->Scale(mc_sf);
+				//COHPlotsTrue[WhichSample][WhichPlot]->Scale(mc_sf);
+			
+
 			}							
 
 			//------------------------------------//
@@ -688,6 +731,9 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 				BeamOnStatShape[WhichPlot][NDimSlice]->GetYaxis()->SetRangeUser(XSecRange[ MapUncorCor[ NameCopy ] ].first,XSecRange[ MapUncorCor[ NameCopy ] ].second);
 				BeamOnStatShape[WhichPlot][NDimSlice]->GetYaxis()->SetTitle(VarLabel["Serial"+PlotNames[WhichPlot]]);							
 				BeamOnStatShape[WhichPlot][NDimSlice]->GetYaxis()->CenterTitle();	
+	
+				BeamOnStatShape[WhichPlot][NDimSlice]->GetYaxis()->CenterTitle();	
+				BeamOnStatShape[WhichPlot][NDimSlice]->GetXaxis()->SetLabelOffset(0.02);	
 				
 				BeamOnStatShape[WhichPlot][NDimSlice]->Draw("e1x0 same"); // Total Unc (Shape + Stat)
 
@@ -728,6 +774,10 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 
 				//------------------------------//
 
+				// Area normalize MC to data
+				double sf = PlotsReco[0][WhichPlot]->Integral("width") / PlotsTrue[0][WhichPlot]->Integral("width");
+				//PlotsTrue[0][WhichPlot]->Scale(sf);
+	
 				// Overlay
 				
 				MC[WhichPlot][NDimSlice][0] = tools.GetHistoBins(PlotsTrue[0][WhichPlot],SerialVectorLowBin.at(NDimSlice),SerialVectorHighBin.at(NDimSlice), MultiDimScaleFactor[ MapUncorCor[ NameCopy ] ], SerialSliceBinning,"Overlay");
@@ -806,7 +856,7 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 				if (Runs[WhichRun] == "Run4d") { tor860_wcut = Fulltor860_wcut_Run4d; }
 				if (Runs[WhichRun] == "Run5") { tor860_wcut = Fulltor860_wcut_Run5; }
 				if (Runs[WhichRun] == "Combined") { tor860_wcut = Fulltor860_wcut_Combined; }
-				TString Label = ToString(tor860_wcut)+" POT";			
+				TString Label = ToString(tor860_wcut).ReplaceAll("e"," #times10").ReplaceAll("+","^{")+"} POT";			
 
 				// ---------------------------------------------------------------------------------------------------------
 				// ---------------------------------------------------------------------------------------------------------
@@ -814,7 +864,7 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 				leg->AddEntry(BeamOnStatShape[WhichPlot][NDimSlice],"MicroBooNE Data","ep");
 				leg->AddEntry(BeamOnStatShape[WhichPlot][NDimSlice],"(Stat #oplus Shape Unc)","");
 				leg->AddEntry(BeamOnStatShape[WhichPlot][NDimSlice],Label,"");
-				leg->AddEntry(BeamOnNormOnly[WhichPlot][NDimSlice],"Norm Unc","f");
+				//leg->AddEntry(BeamOnNormOnly[WhichPlot][NDimSlice],"Norm Unc","f");
 				leg->Draw();			
 								
 				TLatex *textSlice = new TLatex();

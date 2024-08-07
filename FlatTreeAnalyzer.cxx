@@ -214,7 +214,8 @@ void FlatTreeAnalyzer::Loop() {
 	  //----------------------------------------//			
 
 	  double weight = fScaleFactor*Units*A*Weight;	
-	  if (fOutputFile == "GiBUU_2023") { weight = weight/500.; } // To increase the stats, the GiBUU sample has been produced in 500 samples	
+	  if (fOutputFile == "GiBUU_2023") { weight = weight/105.; } // To increase the stats, the GiBUU sample has been produced in 105 samples	
+	  if (fOutputFile == "GiBUU_2023_medium") { weight = weight/150.; } 
 
 	  //----------------------------------------//	
 

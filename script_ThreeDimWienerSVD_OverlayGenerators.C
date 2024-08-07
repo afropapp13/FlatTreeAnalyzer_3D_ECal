@@ -22,6 +22,13 @@
 	    gROOT->ProcessLine("ThreeDimWienerSVD_OverlayGenerators(\""+PlotNames[i]+"\","+TString(std::to_string(j))+","+TString( std::to_string(j * NumberSecondDiscrSlices[i]) ) +",false,true)");
 	    //Closure
 	    gROOT->ProcessLine("ThreeDimWienerSVD_OverlayGenerators(\""+PlotNames[i]+"\","+TString(std::to_string(j))+","+TString( std::to_string(j * NumberSecondDiscrSlices[i]) ) +",false,false,true)");
+	    //GiBUU
+	    gROOT->ProcessLine("ThreeDimWienerSVD_OverlayGenerators(\""+PlotNames[i]+"\","+TString(std::to_string(j))+","+TString( std::to_string(j * NumberSecondDiscrSlices[i]) ) +",false,false,false,true)");
+	    //MEC
+	    gROOT->ProcessLine("ThreeDimWienerSVD_OverlayGenerators(\""+PlotNames[i]+"\","+TString(std::to_string(j))+","+TString( std::to_string(j * NumberSecondDiscrSlices[i]) ) +",false,false,false,false,true)");
+	    //nuclear model
+	    gROOT->ProcessLine("ThreeDimWienerSVD_OverlayGenerators(\""+PlotNames[i]+"\","+TString(std::to_string(j))+","+TString( std::to_string(j * NumberSecondDiscrSlices[i]) ) +",false,false,false,false,false,true)");
+
 
 	  }
 
