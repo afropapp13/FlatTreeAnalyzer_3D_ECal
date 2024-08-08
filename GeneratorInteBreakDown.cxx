@@ -211,7 +211,7 @@ void GeneratorInteBreakDown() {
 		  le1->SetTextAlign(22);
 		  leggen->Draw();
 
-		  PlotCanvas->SaveAs("/exp/uboone/data/users/apapadop/ThreeDXSec_FlatTTreePlots/"+CanvasName+".pdf");
+		  PlotCanvas->SaveAs("/exp/uboone/data/users/"+UserID+"/ThreeDXSec_FlatTTreePlots/"+CanvasName+".pdf");
 		  delete PlotCanvas;
 
 		} // End of the loop over the samples grabing the plots	

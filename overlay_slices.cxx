@@ -144,7 +144,7 @@ void overlay_slices(TString sample = "") {
 		canvas->cd();
 		leg->Draw();
 
-		canvas->SaveAs("/exp/uboone/data/users/apapadop/ThreeDXSec_FlatTTreePlots/"+canvas_name+".pdf");
+		canvas->SaveAs("/exp/uboone/data/users/"+UserID+"/ThreeDXSec_FlatTTreePlots/"+canvas_name+".pdf");
 		//delete canvas;
 
 	} // End of the loop over the combos

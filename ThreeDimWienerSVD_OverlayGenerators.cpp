@@ -23,7 +23,7 @@
 using namespace std;
 using namespace Constants;
 
-#include "/exp/uboone/app/users/apapadop/uboonecode_v08_00_00_52/srcs/ubana/ubana/myClasses/Util.h"
+#include "../myClasses/Util.h"
 
 //----------------------------------------//
 
@@ -41,7 +41,7 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 	gStyle->SetEndErrorSize(6);		
 	gStyle->SetOptStat(0);
 
-        TString PathToFiles = "/exp/uboone/data/users/apapadop/my3DSTVAnalysis/myXSec/v08_00_00_70/";
+        TString PathToFiles = "/exp/uboone/data/users/"+UserID+"/my3DSTVAnalysis/myXSec/v08_00_00_70/";
 
 	TString Extra = "";
 	if (PlotGen) { Extra = "Gene"; }
@@ -918,7 +918,7 @@ void ThreeDimWienerSVD_OverlayGenerators(TString PlotName = "", int FirstDiscrIn
 				
 				// Saving the canvas with the data (total uncertainties) vs overlay & generator predictions
 
-                                PlotCanvas->SaveAs("/exp/uboone/data/users/apapadop/FlatTTreePlots/ECal_3D_XSec/XSections_"+CanvasName+"_"+Runs[WhichRun]+"_"+UBCodeVersion+".pdf");
+                                PlotCanvas->SaveAs("/exp/uboone/data/users/"+UserID+"/FlatTTreePlots/ECal_3D_XSec/XSections_"+CanvasName+"_"+Runs[WhichRun]+"_"+UBCodeVersion+".pdf");
 				delete PlotCanvas;
 
 				//------------------------------------//

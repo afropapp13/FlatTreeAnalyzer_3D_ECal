@@ -201,7 +201,7 @@ void GeneratorOverlay(TString Tag = "") {
 		PlotCanvas->cd();
 		leg->Draw();
 
-		PlotCanvas->SaveAs("/exp/uboone/data/users/apapadop/ThreeDXSec_FlatTTreePlots/"+Tag+CanvasName+".pdf");
+		PlotCanvas->SaveAs("/exp/uboone/data/users/"+UserID+"/ThreeDXSec_FlatTTreePlots/"+Tag+CanvasName+".pdf");
 		delete PlotCanvas;
 
 	} // End of the loop over the plots

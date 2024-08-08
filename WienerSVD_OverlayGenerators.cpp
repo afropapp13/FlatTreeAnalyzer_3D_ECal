@@ -37,7 +37,7 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 	TH1D::SetDefaultSumw2();
 	gStyle->SetEndErrorSize(6);		
 
-	TString PathToFiles = "/exp/uboone/data/users/apapadop/my3DSTVAnalysis/myXSec/v08_00_00_70/";
+	TString PathToFiles = "/exp/uboone/data/users/"+UserID+"/my3DSTVAnalysis/myXSec/v08_00_00_70/";
 
 	//----------------------------------------//
 
@@ -750,7 +750,7 @@ void WienerSVD_OverlayGenerators(bool PlotGENIE = true, bool PlotGen = false, bo
 
 			// Saving the canvas with the data (total uncertainties) vs overlay & generator predictions
 
-			PlotCanvas->SaveAs("/exp/uboone/data/users/apapadop/FlatTTreePlots/ECal_3D_XSec/XSections_"+Extra+ "_"+PlotNames[WhichPlot]+"_"+Runs[WhichRun]+"_"+UBCodeVersion+".pdf");
+			PlotCanvas->SaveAs("/exp/uboone/data/users/"+UserID+"/FlatTTreePlots/ECal_3D_XSec/XSections_"+Extra+ "_"+PlotNames[WhichPlot]+"_"+Runs[WhichRun]+"_"+UBCodeVersion+".pdf");
 			delete PlotCanvas;
 
 			//----------------------------------------//
